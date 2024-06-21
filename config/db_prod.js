@@ -4,10 +4,10 @@ function Connection() {
   this.pool = null;
 
   var konek = {
-    host: "",
+    host: "localhost",
     user: "root",
     password: "",
-    database: "",
+    database: "flp_ahass",
   };
 
   this.init = function () {

@@ -94,6 +94,8 @@ function Todo() {
 
         connection.acquire(function(err, con) {
             con.query('SELECT id, versi, branch_id from users where username = ?  ', [username], function(error, results, fields) {
+               console.log(result)
+               
                 if (results.length == 0) {
                     res.redirect('/login?toast=' + 'noUser');
                 } else {
