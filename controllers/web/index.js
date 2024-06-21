@@ -8,6 +8,8 @@ function Todo() {
         // connection.acquire(function(err, con) {
         //     res.render('index');
         // });
+
+        //g make bearer
         request({
             uri: baseHostDMS + baseUrlDMS + 'api_branch_all.php',
             auth: {
@@ -85,7 +87,7 @@ function Todo() {
         });
     };
 
-
+    // langsung kesini
     this.submitLogin = function(req, res) {
         var username = req.body.username;
         var password = req.body.password;
