@@ -1,0 +1,147 @@
+[
+  {
+    "group": "Admin Main Dealer",
+    "permissions": [
+      {
+        "resource": "*",
+        "methods": "*",
+        "action": "allow"
+      }
+    ]
+  },
+  {
+    "group": "Salesman",
+    "permissions": [
+      {
+        "resource": "MasterTraining",
+        "methods": "*",
+        "action": "deny"
+      }
+    ]
+  },
+  {
+    "group": "Supervisor",
+    "permissions": [
+      {
+        "resource": "MasterCustomerProspect",
+        "methods": "*",
+        "action": "allow"
+      },
+      {
+        "resource": "MasterTarget",
+        "methods": "*",
+        "action": "allow"
+      },
+      {
+        "resource": "MasterTargetMotorSpv",
+        "methods": "*",
+        "action": "allow"
+      }
+    ]
+  },
+  {
+    "group": "Admin Dealer",
+    "permissions": [
+      {
+        "resource": "*",
+        "methods": "*",
+        "action": "allow"
+      }
+    ]
+  },
+  {
+    "group": "Admin IMS",
+    "permissions": [
+      {
+        "resource": "UploadGalery",
+        "methods": "*",
+        "action": "allow"
+      }
+    ]
+  },
+  {
+    "group": "Admin Innovasi",
+    "permissions": [
+      {
+        "resource": "UploadPoints",
+        "methods": "*",
+        "action": "allow"
+      }
+    ]
+  },
+  {
+    "group": "Admin WARI",
+    "permissions": [
+      {
+        "resource": "*",
+        "methods": "*",
+        "action": "allow"
+      }
+    ]
+  },
+  {
+    "group": "Admin CRM",
+    "permissions": [
+      {
+        "resource": "MasterCustomerProspectCrm",
+        "methods": "*",
+        "action": "allow"
+      },
+      {
+        "resource": "ReportCustomerProspectCrm",
+        "methods": "*",
+        "action": "allow"
+      }
+    ]
+  },
+  {
+    "group": "Kasir",
+    "permissions": [
+      {
+        "resource": "ApprovalKasir",
+        "methods": "*",
+        "action": "allow"
+      }
+    ]
+  },
+  {
+    "group": "SA",
+    "permissions": [
+      {
+        "resource": "MasterBatasanDiskon",
+        "methods": "*",
+        "action": "allow"
+      },
+      {
+        "resource": "ReportEventGIIASS",
+        "methods": "*",
+        "action": "allow"
+      },
+      {
+        "resource": "ReportProspectEvent",
+        "methods": "*",
+        "action": "allow"
+      }
+    ]
+  },
+  {
+    "group": "Marketing",
+    "permissions": [
+      {
+        "resource": "ReportMkt",
+        "methods": "*",
+        "action": "allow"
+      },
+      {
+        "resource": "MasterTargetByTipeMtr",
+        "methods": "*",
+        "action": "allow"
+      },
+      {
+        "resource": "debugSqlite",
+        "methods": "*",
+        "action": "allow"
+      }
+    ]
+  }
+]

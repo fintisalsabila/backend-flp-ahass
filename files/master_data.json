@@ -1,0 +1,158 @@
+[
+  {
+    "kd_mdl": "ESF",
+    "nm_psr": "CRF150L"
+  },
+  {
+    "kd_mdl": "ET3",
+    "nm_psr": "GL1800DN 3IN A/T"
+  },
+  {
+    "kd_mdl": "JD2",
+    "nm_psr": "CB650RAN IN M/T"
+  },
+  {
+    "kd_mdl": "JH2",
+    "nm_psr": "CRF1100AL2N 3IN M/T"
+  },
+  {
+    "kd_mdl": "JJ2",
+    "nm_psr": "CRF1100DL2N 3IN A/T"
+  },
+  {
+    "kd_mdl": "JK1",
+    "nm_psr": "CBR1000SPN 3IN M/T"
+  },
+  {
+    "kd_mdl": "JM1",
+    "nm_psr": "CBR 150R STD"
+  },
+  {
+    "kd_mdl": "JMG",
+    "nm_psr": "CBR 150R STD"
+  },
+  {
+    "kd_mdl": "JMH",
+    "nm_psr": "CBR 150R STD"
+  },
+  {
+    "kd_mdl": "JMJ",
+    "nm_psr": "CBR 150R STD"
+  },
+  {
+    "kd_mdl": "JN1",
+    "nm_psr": "CBR 150R ABS"
+  },
+  {
+    "kd_mdl": "JNT",
+    "nm_psr": "CBR 150R ABS"
+  },
+  {
+    "kd_mdl": "JNU",
+    "nm_psr": "CBR 150R ABS"
+  },
+  {
+    "kd_mdl": "JT1",
+    "nm_psr": "CRF250LRP IN M/T"
+  },
+  {
+    "kd_mdl": "JTA",
+    "nm_psr": "CRF250LP IN M/T"
+  },
+  {
+    "kd_mdl": "JV1",
+    "nm_psr": "CMX500AN IN M/T"
+  },
+  {
+    "kd_mdl": "JX0",
+    "nm_psr": "CB150X STD"
+  },
+  {
+    "kd_mdl": "JYA",
+    "nm_psr": "Z125MAN 2IN M/T"
+  },
+  {
+    "kd_mdl": "JZ0",
+    "nm_psr": "ST125AP IN M/T"
+  },
+  {
+    "kd_mdl": "KA0",
+    "nm_psr": "CBR 250RR STD"
+  },
+  {
+    "kd_mdl": "KAA",
+    "nm_psr": "CBR 250RR STD"
+  },
+  {
+    "kd_mdl": "KB0",
+    "nm_psr": "CBR 250RR ABS"
+  },
+  {
+    "kd_mdl": "KC0",
+    "nm_psr": "CBR 250RR ABS+QS"
+  },
+  {
+    "kd_mdl": "KCA",
+    "nm_psr": "CBR 250RR ABS+QS"
+  },
+  {
+    "kd_mdl": "KCB",
+    "nm_psr": "CBR 250RR ABS+QS"
+  },
+  {
+    "kd_mdl": "LH2",
+    "nm_psr": "BEAT SPORTY CBS"
+  },
+  {
+    "kd_mdl": "LJ2",
+    "nm_psr": "BEAT STREET"
+  },
+  {
+    "kd_mdl": "LK2",
+    "nm_psr": "BEAT SPORTY CBS ISS DELUXE"
+  },
+  {
+    "kd_mdl": "LN2",
+    "nm_psr": "NEW SCOOPY SPORTY"
+  },
+  {
+    "kd_mdl": "LNG",
+    "nm_psr": "NEW SCOOPY FASHION"
+  },
+  {
+    "kd_mdl": "LP2",
+    "nm_psr": "NEW SCOOPY PRESTIGE"
+  },
+  {
+    "kd_mdl": "LPC",
+    "nm_psr": "NEW SCOOPY STYLISH"
+  },
+  {
+    "kd_mdl": "LR1",
+    "nm_psr": "PCX 160 CBS"
+  },
+  {
+    "kd_mdl": "LS1",
+    "nm_psr": "PCX 160 ABS"
+  },
+  {
+    "kd_mdl": "MA0",
+    "nm_psr": "ADV160 CBS"
+  },
+  {
+    "kd_mdl": "MB0",
+    "nm_psr": "ADV160 ABS"
+  },
+  {
+    "kd_mdl": "MC0",
+    "nm_psr": "VARIO 125 CBS"
+  },
+  {
+    "kd_mdl": "MD0",
+    "nm_psr": "VARIO 125 CBS ISS"
+  },
+  {
+    "kd_mdl": "MDA",
+    "nm_psr": "VARIO 125 CBS ISS SP"
+  }
+]

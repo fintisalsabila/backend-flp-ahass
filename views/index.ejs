@@ -1,0 +1,54 @@
+<% layout('./partials/layout') -%>
+    <script type="text/javascript">
+        $().ready(function() {
+            if (document.referrer != '<%= link %>') {
+                history.pushState(null, null, '/');
+                window.addEventListener('popstate', function() {
+                    history.pushState(null, null, '/');
+                });
+            }
+        });
+    </script>
+    <form action="/dashboard" method="post" enctype="multipart/form-data" id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" novalidate>
+        <div class="right_col" role="main">
+            <div id="alertSuccess" class="alert alert-success alert-dismissible fade in" role="alert" style="display: none;">
+                <a href="/Dashboard/Index" type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+                            </a>
+                <%- JSON.stringify(message) %>
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <h3>Web Console Wanda FLP Ahass</h3>
+                </div>
+            </div>
+            <br />
+
+            <!-- footer content -->
+            <%- partial('partials/footer') %>
+                <!-- /footer content -->
+        </div>
+    </form>
+
+    <script src="../js/chartjs/chart.min_28.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/maps/jquery-jvectormap-2.0.3.css" />
+
+    <script>
+        window.onload = function() {
+            what();
+
+            function what() {
+                document.getElementById('branch').innerHTML = <%- JSON.stringify(branch_name) %>;;
+            };
+        }
+    </script>
+
+
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            let myVar = <%- JSON.stringify(message) %>;
+            if (myVar != null) {
+                document.getElementById('alertSuccess').style.display = 'block';
+            }
+        });
+    </script>

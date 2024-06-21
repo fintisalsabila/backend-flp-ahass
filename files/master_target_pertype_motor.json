@@ -1,0 +1,62 @@
+[
+  {
+    "kd_mdl": "GD4",
+    "nm_psr": "REVO X",
+    "target_unit": 0
+  },
+  {
+    "kd_mdl": "LH2",
+    "nm_psr": "BEAT SPORTY CBS",
+    "target_unit": 1
+  },
+  {
+    "kd_mdl": "Y15",
+    "nm_psr": "BEAT SPORTY CBS ISS ACC",
+    "target_unit": 1
+  },
+  {
+    "kd_mdl": "X90",
+    "nm_psr": "BEAT SPORTY CBS ISS DELUXE ACC",
+    "target_unit": 1
+  },
+  {
+    "kd_mdl": "X89",
+    "nm_psr": "BEAT STREET ACC",
+    "target_unit": 1
+  },
+  {
+    "kd_mdl": "X99",
+    "nm_psr": "Scoopy Sporty ACC",
+    "target_unit": 0
+  },
+  {
+    "kd_mdl": "X98",
+    "nm_psr": "Scoopy Fashion ACC",
+    "target_unit": 1
+  },
+  {
+    "kd_mdl": "X97",
+    "nm_psr": "Scoopy Prestige ACC",
+    "target_unit": 1
+  },
+  {
+    "kd_mdl": "X96",
+    "nm_psr": "Scoopy Stylish ACC",
+    "target_unit": 1
+  },
+  {
+    "kd_mdl": "MDA",
+    "nm_psr": "Vario 125 CBS ISS SP",
+    "target_unit": 1
+  },
+  {
+    "kd_mdl": "LR1",
+    "nm_psr": "PCX 160 CBS",
+    "target_unit": 2
+  },
+  {
+    "kd_mdl": "JXA",
+    "nm_psr": "CBX150 SE",
+    "target_unit": 1
+  }
+]

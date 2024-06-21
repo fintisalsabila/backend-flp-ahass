@@ -1,0 +1,1744 @@
+<% layout('../partials/layout') -%>
+    <link rel="stylesheet" type="text/css" href="../css/pagination.css" />
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script>
+    <div class="right_col" role="main">
+        <div class="">
+            <div class="clearfix"></div>
+
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <h2>Master User<small>edit</small></h2>
+
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
+                            <% obj.forEach(function (user) { 
+                                %>
+                                <form action="/MasterUser/EditSubmit?id=<%= user.id %>" id="demo-form2" data-parsley-validate method="post" class="form-horizontal form-label-left" novalidate>
+                                    <!-- <input type="hidden" name="_METHOD" value="PUT" /> -->
+                                    <div class="item form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Name <span class="required">*</span>
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <input id="name" value="<%= user.name %>" class="form-control col-md-7 col-xs-12" name="name" placeholder="Name" required="required" type="text">
+                                        </div>
+                                    </div>
+                                    <div class="item form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="username">Username
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <input id="username" value="<%= user.username %>" class="form-control col-md-7 col-xs-12" name="username" placeholder="Username" type="text" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="item form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="password">Password <span class="required">*</span>
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-8">
+                                            <input id="password" class="form-control col-md-7 col-xs-12" name="password" placeholder="Password" required="required" type="hidden" >
+                                        </div>
+                                        
+                                        <div class="col-md-6 col-sm-6 col-xs-8">
+                                            <button type="button" class="btn btn-danger btn-xs"onclick="resetPassword()">Reset Password</button>
+                                        </div>
+                                        <label name="label_pass" id="label_pass" class="control-label col-md-3 col-sm-3 col-xs-4" for="label_pass"> 
+                                        </label>
+                                    </div>
+                                    <div class="item form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="phone_number">Phone Number <span ></span>
+                                         </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <input id="phone_number" value="<%= user.phone_number %>" name="phone_number" placeholder="Phone Number" class="form-control col-md-7 col-xs-12">
+                                        </div>
+                                    </div>
+                                    <div class="item form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">Email <span ></span>
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <input id="email" value="<%= user.email %>" name="email" placeholder="Email" class="form-control col-md-7 col-xs-12">
+                                        </div>
+                                    </div>
+
+                                    <div class="item form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="gender">Gender</label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <select class="select2_single form-control" tabindex="-1" name="gender">
+                                                <option value="L" <%= user.gender=='L' ? 'selected' : '' %>>L</option>
+                                                <option value="P" <%= user.gender=='P' ? 'selected' : '' %>>P</option>
+                                              </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="item form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="birth_date">Birth Date <span ></span>
+                                         </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <input id="birth_date" type="date" value="<%= user.birth_date %>" name="birth_date" placeholder="Birth Date" class="form-control col-md-7 col-xs-12">
+                                        </div>
+                                    </div>
+                                    <!-- branch -->
+                                    <div class="item form-group" id="BranchName">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="branch_name">Branch Name <span class="required">*</span>
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <input id="branch_name" value="<%= user.branch_name %>" class="form-control col-md-7 col-xs-12" name="branch_name" placeholder="Branch Name" required="required" type="text" type="text" readonly>
+                                        </div>
+
+                                        <div class="col-md-1 col-md-1 col-xs-1">
+                                            <button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#myModal3" id="buttonBranchModal">...</button>
+
+                                            <div class="modal fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                <div class="modal-dialog modal-md" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                            <h4 class="modal-title" id="myModalLabel">Branch</h4>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <div class="item form-group">
+                                                                <label class="col-md-3 col-sm-3 col-xs-12">Branch Code
+                                                                </label>
+                                                                <div class="col-md-8 col-sm-6 col-xs-11">
+                                                                    <input id="input_branch_code" onkeyup="searchDataByBranchCode()" placeholder="Search for Branch Code" class="form-controls col-md-6 col-xs-9">
+                                                                </div>
+                                                            </div>
+                                                            <div class="item form-group">
+                                                                <label class="col-md-3 col-sm-3 col-xs-12">Branch Name
+                                                                    </label>
+                                                                <div class="col-md-8 col-sm-6 col-xs-11">
+                                                                    <input id="input_branch_name" onkeyup="searchDataByBranchName()" placeholder="Search for Branch Name" class="form-controls col-md-6 col-xs-9">
+                                                                </div>
+                                                            </div>
+                                                            <table id="table_branch" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>Branch ID</th>
+                                                                        <th>Branch Code</th>
+                                                                        <th>Branch Name</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody data-position="0" data-jump="5">
+                                                                    <tr id="tr0BranchAll">
+                                                                        <td colspan="3">
+                                                                            Loading Data .....
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                            <div id="pagination_branch"></div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="item form-group" id="BranchId">
+                                        <label id="label_id_branch" class="control-label col-md-3 col-sm-3 col-xs-12" for="branch_id" style="display:none">Branch ID<span class="required">*</span>
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-11">
+                                            <input id="branch_id" name="branch_id" value="<%= user.branch_id %>" placeholder="Id Branch" required="required" class="form-control col-md-7 col-xs-12" readonly="readonly" type="hidden">
+                                        </div>
+                                    </div>
+                                    <div class="item form-group" id="BranchCode">
+                                        <label id="label_id_branch" class="control-label col-md-3 col-sm-3 col-xs-12" for="branch_code">Branch Code<span class="required">*</span>
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-11">
+                                            <input value="<%= user.branch_code %>" id="branch_code" name="branch_code" placeholder="Branch Code" required="required" class="form-control col-md-7 col-xs-12" readonly="readonly">
+                                        </div>
+                                    </div>
+                                    <!-- akhir branch -->
+
+                                    <!-- Ahass -->
+                                    <div class="item form-group" id="AhassName">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ahass_auto">Ahass Name<span class="required">*</span>
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-11">
+                                            <input id="ahass_name" value="<%= user.ahass_name %>" name="ahass_name" placeholder="Ahass Name" class="form-control col-md-7 col-xs-12" readonly="readonly">
+                                        </div>
+
+                                        <div class="col-md-1 col-md-1 col-xs-1">
+                                            <button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#myModalAhass" id="buttonAhassModal">...</button>
+
+                                            <div class="modal fade" id="myModalAhass" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                <div class="modal-dialog modal-md" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                            <h4 class="modal-title" id="myModalLabel">Ahass</h4>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <div class="item form-group">
+                                                                <label class="col-md-3 col-sm-3 col-xs-12">Ahass Code
+                                                                </label>
+                                                                <div class="col-md-8 col-sm-6 col-xs-11">
+                                                                    <input id="input_ahass_code" onkeyup="searchDataByAhassCode()" placeholder="Search for Ahass Code" class="form-controls col-md-6 col-xs-9">
+                                                                </div>
+                                                            </div>
+                                                            <div class="item form-group">
+                                                                <label class="col-md-3 col-sm-3 col-xs-12">Ahass Name
+                                                                    </label>
+                                                                <div class="col-md-8 col-sm-6 col-xs-11">
+                                                                    <input id="input_ahass_name" onkeyup="searchDataByAhassName()" placeholder="Search for Ahass Name" class="form-controls col-md-6 col-xs-9">
+                                                                </div>
+                                                            </div>
+                                                            <table id="table_ahass" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>Ahass ID</th>
+                                                                        <th>Ahass Code</th>
+                                                                        <th>Ahass Name</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody data-position="0" data-jump="5">
+                                                                    <tr id="tr0AhassAll">
+                                                                        <td colspan="3">
+                                                                            Loading Data .....
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                            <div id="pagination_ahass"></div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="item form-group" id="AhassId">
+                                        <label id="label_id_ahass" class="control-label col-md-3 col-sm-3 col-xs-12" for="ahass_id" style="display:none">Ahass ID<span class="required">*</span>
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-11">
+                                            <input id="ahass_id" value="<%= user.ahass_id %>" name="ahass_id" placeholder="Id Ahass" class="form-control col-md-7 col-xs-12" readonly="readonly" type="hidden">
+                                        </div>
+                                    </div>
+                                    <div class="item form-group" id="AhassCode">
+                                        <label id="label_id_ahass" class="control-label col-md-3 col-sm-3 col-xs-12" for="ahass_code">Ahass Code<span class="required">*</span>
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-11">
+                                            <input id="ahass_code" name="ahass_code" value="<%= user.ahass_code %>" placeholder="Ahass Code"  class="form-control col-md-7 col-xs-12" readonly="readonly">
+                                        </div>
+                                    </div>
+                                    <!-- Akhir Ahass -->
+
+                                    <!-- Mulai Employee -->
+
+                                    <div class="item form-group" id="EmployeeId">
+                                        <label id="label_id_employee" class="control-label col-md-3 col-sm-3 col-xs-12" for="employee_id" style="display:none">Id Employee <span class="required">*</span>
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-11">
+                                            <input id="employee_id" name="employee_id" value="<%= user.employee_id %>" placeholder="Id Employee" class="form-control col-md-7 col-xs-12" readonly="readonly" type="hidden">
+                                        </div>
+                                    </div>
+
+                                    <div class="item form-group" id="EmployeeId">
+                                        <label id="label_id_employee" class="control-label col-md-3 col-sm-3 col-xs-12" for="stall_code" style="display:none">Stall Code <span class="required">*</span>
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-11">
+                                            <input id="stall_code" name="stall_code" value="<%= user.stall_code %>" placeholder="Id Employee" class="form-control col-md-7 col-xs-12" readonly="readonly" type="hidden">
+                                        </div>
+                                    </div>
+
+                                    <div class="item form-group" id="EmployeeModal">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="employee_nama">Employee Name <span class="required">*</span>
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-11">
+                                            <input id="employee_nama" name="employee_nama" value="<%= user.employee_nama %>" placeholder="Employee Name" class="form-control col-md-7 col-xs-12" readonly="readonly">
+                                        </div>
+
+                                        <div class="col-md-1 col-md-1 col-xs-1">
+                                            <button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#myModalEmp" id="btnEmployee">...</button>
+                                            <!-- Modal -->
+                                            <div class="modal fade" id="myModalEmp" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                <div class="modal-dialog modal-md" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                            <h4 class="modal-title" id="myModalLabel">Employee</h4>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <table id="table_employee" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>Employee Code</th>
+                                                                        <th>Employee Name</th>
+                                                                        <th>Tipe Employee</th>
+                                                                        <th>Jabatan</th>
+                                                                        <th style="display: none;">Employee ID</th>
+                                                                    </tr>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody data-position="0" data-jump="5">
+                                                                    <tr id="tr0Employee">
+                                                                        <td colspan="4">
+                                                                            Loading Data .....
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                            <div id="pagination_employee"></div>
+
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="item form-group" id="employee_kode">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="emp_kode">Employee Kode <span class="required">*</span>
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-11">
+                                            <input id="emp_kode" name="emp_kode" value="<%= user.employee_kode %>" placeholder="Employee Kode" class="form-control col-md-7 col-xs-12" readonly="readonly">
+                                        </div>
+                                    </div>
+                                    <!-- Akhir Employee -->
+
+
+
+                                    <div class="item form-group" id="id_group_">
+                                        <label id="label_id_group" class="control-label col-md-3 col-sm-3 col-xs-12" for="id_group">Id Group Name <span class="required">*</span>
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-11">
+                                            <input id="id_group_input" name="id_group" placeholder="Id Group Name" required="required" class="form-control col-md-7 col-xs-12" readonly="readonly" value="<%= user.group_id %>">
+                                        </div>
+                                    </div>
+                                    <div class="item form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="group_name">Group Name <span class="required">*</span>
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <input id="group_name" value="<%= user.group_name %>" class="form-control col-md-7 col-xs-12" name="group_name" placeholder="Group Name" required="required" type="text" type="text" readonly>
+                                        </div>
+                                    </div>
+
+                                    <div class="item form-group" id="SalesmanId">
+                                        <label id="label_id_salesmen" class="control-label col-md-3 col-sm-3 col-xs-12" for="salesman_id" style="display:none">Id Salesmen <span class="required">*</span>
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-11">
+                                            <input id="salesman_id" name="salesman_id" placeholder="Id Salesmen" class="form-control col-md-7 col-xs-12" readonly="readonly" type="hidden">
+                                        </div>
+                                    </div>
+
+                                    <div class="item form-group" id="sales_kode">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="salesmen_code">Salesman Code <span class="required">*</span>
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <% if(user.sls_kode== null) { %>
+                                                <input class="form-control col-md-7 col-xs-12" id="sls_kode" name="sls_kode" value="-" type="text" readonly></input>
+                                                <% } else { %>
+                                                    <input class="form-control col-md-7 col-xs-12" id="sls_kode" name="sls_kode" type="text" readonly value="<%= user.sls_kode %>"></input>
+                                                    <% } %>
+                                        </div>
+
+                                    </div>
+                                    <div class="item form-group" id="SalesmenModal">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="salesmen_name">Salesman Name <span class="required">*</span>
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <% if(user.sls_nama == null) { %>
+                                                <input class="form-control col-md-7 col-xs-12" id="sls_nama" name="sls_nama" value="-" type="text" readonly></input>
+                                                <% } else { %>
+                                                    <input class="form-control col-md-7 col-xs-12" id = "sls_nama" name="sls_nama"  type="text" readonly value="<%= user.sls_nama %>"></input>
+                                                    <% } %>
+                                        </div>
+
+                                        <div class="col-md-1 col-md-1 col-xs-1">
+                                            <button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#myModal" id="btnSalesman">...</button>
+                                            <!-- Modal -->
+                                            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                <div class="modal-dialog modal-md" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                            <h4 class="modal-title" id="myModalLabel">Salesmen</h4>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <table id="table_sales" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>Salesman Code</th>
+                                                                        <th>Honda ID</th>
+                                                                        <th>Sales Name</th>
+                                                                        <th>Supervisor Name</th>
+                                                                        <th style="display: none;">Salesman ID</th>
+                                                                        <th style="display: none;">Supervisor ID</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody data-position="0" data-jump="5">
+                                                                    <tr id="trSalesman">
+                                                                        <td colspan="4">
+                                                                            Loading Data .....
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- <div class="item form-group" id="divSupervisorName">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="supervisor_name">Supervisor Name <span class="required">*</span>
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <% if(user.supervisor_nama == null) { %>
+                                                <input class="form-control col-md-7 col-xs-12" for="supervisor_name" value="-" type="text" readonly></input>
+                                                <% } else { %>
+                                                    <input class="form-control col-md-7 col-xs-12" for="supervisor_name" type="text" readonly value="<%= user.supervisor_nama %>"></input>
+                                                    <% } %>
+                                        </div>
+                                    </div> -->
+
+                                    <div class="item form-group" id="SupervisorId">
+                                        <label id="label_id_sp" class="control-label col-md-3 col-sm-3 col-xs-12" for="supervisor_id" style="display:none">Id Supervisor <span class="required">*</span>
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-11">
+                                            <input id="supervisor_id" name="supervisor_id" placeholder="Id Supervisor" class="form-control col-md-7 col-xs-12" readonly="readonly" type="hidden" value="<%= user.supervisor_id %>">
+                                        </div>
+                                    </div>
+
+                                    <div class="item form-group" id="SupervisorModal">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="supervisor_nama">Supervisor Name <span class="required">*</span>
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-11">
+                                            <input id="supervisor_nama" name="supervisor_nama" placeholder="Supervisor Name" class="form-control col-md-7 col-xs-12" readonly="readonly" value="<%= user.supervisor_nama %>">
+                                        </div>
+
+                                        <div class="col-md-1 col-md-1 col-xs-1">
+                                            <button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#myModal2" id="buttonSpvModal">...</button>
+                                            <!-- Modal -->
+                                            <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                <div class="modal-dialog modal-md" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                            <h4 class="modal-title" id="myModalLabel">Supervisor</h4>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <div class="item form-group">
+                                                                <label class="col-md-3 col-sm-3 col-xs-12">Supervisor Code
+                                                                </label>
+                                                                <div class="col-md-8 col-sm-6 col-xs-11">
+                                                                    <input id="input_spv_code" onkeyup="searchDataBySupervisorCode()" placeholder="Search Supervisor Code" class="form-controls col-md-6 col-xs-9">
+                                                                </div>
+                                                            </div>
+                                                            <div class="item form-group">
+                                                                <label class="col-md-3 col-sm-3 col-xs-12">Supervisor Name
+                                                                    </label>
+                                                                <div class="col-md-8 col-sm-6 col-xs-11">
+                                                                    <input id="input_spv_name" onkeyup="searchDataBySupervisorName()" placeholder="Search Supervisor Name" class="form-controls col-md-6 col-xs-9">
+                                                                </div>
+                                                            </div>
+                                                            <table id="table_spv" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th id="th_id_supervisor_spv">Id Supervisor</th>
+                                                                        <th>Supervisor Name</th>
+                                                                        <th id="th_branch_id_spv">Branch Id</th>
+                                                                        <th>Branch Name</th>
+                                                                        <th id="th_branch_code_spv">Branch Code</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody data-position="0" data-jump="5">
+                                                                    <tr id="tr0Supervisor">
+                                                                        <td colspan="2">
+                                                                            Loading Data .....
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                            <div id="pagination_supervisor"></div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="item form-group" id="HondaId">
+                                        <label id="label_honda_id" class="control-label col-md-3 col-sm-3 col-xs-12" for="honda_id">Honda ID<span class="required">*</span>
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-11">
+                                            <input id="honda_id" name="honda_id" value="<%= user.honda_id %>" placeholder="Honda ID" required="required" class="form-control col-md-7 col-xs-12"  type="text">
+                                        </div>
+                                    </div>
+
+                                    <div class="item form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="status_user">Status User</label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <select class="select2_single form-control" tabindex="-1" name="status_user">
+                                                <option value="A" <%= user.status_user=='A' ? 'selected' : '' %>>Active</option>
+                                                <option value="T" <%= user.status_user=='T' ? 'selected' : '' %>>Non Active</option>
+                                              </select>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="ln_solid"></div>
+                                    <div class="form-group">
+                                        <div class="col-md-6 col-md-offset-3">
+                                            <a type="submit" class="btn btn-primary" href="/MasterUser/Index">Cancel</a>
+                                            <button id="send" type="submit" class="btn btn-success">Submit</button>
+                                        </div>
+                                    </div>
+                                </form>
+                                <% }) %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- footer content -->
+        <%- partial('../partials/footer') %>
+            <!-- /footer content -->
+
+    </div>
+    <script src="../js/pagination.js"></script>
+    <!-- reset password -->
+    <script>
+        function resetPassword() {
+            // confirm("Apakah anda yakin mereset password ini?");
+            var txt;
+            var lbl = document.getElementById('label_pass');
+            // txt = document.getElementById("label_pass");
+            var r = confirm("Apakah anda yakin mereset password ini?");
+            if (r == true) {
+                document.getElementById("password").value = "1234567890";
+                lbl.innerText = "password direset"; 
+            } else {
+                txt = "You pressed Cancel!";
+            }
+        }
+    </script>
+    <script type="text/javascript">
+        $(function() {
+            window.onload = function() {
+                document.getElementById('id_group_').style.display = 'none'
+                $("#SupervisorModal").show();
+                $("#buttonSpvModal").hide();
+                $("#AhassCode").hide();
+                $("#AhassName").hide();
+                $("#buttonAhassModal").hide();
+                $("#employee_kode").hide();
+                $("#EmployeeModal").hide();
+                $("#HondaId").hide();
+                
+                if(document.getElementById("id_group_input").value == "640e1112-3746-11ea-91c1-005056be36b2"){
+                    $("#buttonBranchModal").hide();
+                    $("#BranchCode").hide();
+                    $("#BranchName").hide();
+                    $("#sales_kode").hide();
+                    $("#SalesmenModal").hide();
+                    $("#SupervisorModal").hide();
+                    $("#supervisor_nama").hide();
+
+                    $("#AhassCode").show();
+                    $("#AhassName").show();
+                    $("#buttonAhassModal").show();
+                    $("#employee_kode").show();
+                    $("#EmployeeModal").show();
+                    $("#HondaId").show();
+                } else if(document.getElementById("id_group_input").value == "d54c7a36-0590-11e8-9702-ac220be6ac47"){
+                    $("#buttonBranchModal").hide();
+                    $("#BranchCode").hide();
+                    $("#BranchName").hide();
+                    $("#sales_kode").hide();
+                    $("#SalesmenModal").hide();
+                    $("#SupervisorModal").hide();
+                    $("#supervisor_nama").hide();
+
+                    $("#AhassCode").hide();
+                    $("#AhassName").hide();
+                    $("#buttonAhassModal").hide();
+                    $("#employee_kode").hide();
+                    $("#EmployeeModal").hide();
+                    $("#HondaId").hide();
+                }
+            };
+        });
+    </script>
+    <!-- untuk branch -->
+    <script>
+        $("#buttonBranchModal").click(function() {
+            var html = '<thead><tr><th style="display: none">Branch ID</th><th>Branch Code</th><th>Branch Name</th></tr></thead>';
+            var totalData = null;
+            var currPage = 1;
+
+            $.get("/MasterUser/SelectBranchAll", function(data, status) {
+                var lastDataLength = data.data.length - 1;
+                var lastData = null;
+                for (var i = 0; i < data.data.length; i++) {
+
+                    var idBranch = data.data[i].id;
+                    var codeBranch = data.data[i].branch_code;
+                    var nameBranch = data.data[i].branch_name.toUpperCase();
+
+                    if (currPage == data.data[i].page) {
+                        html += '<tr onclick="branch_modal(this)"><td style="display: none">' + idBranch + '</td><td>' + codeBranch + '</td><td class="honda_id">' + nameBranch + '</td></tr>';
+                    }
+
+                    if (i == lastDataLength) {
+                        lastData = data.data[i].page;
+                    }
+                }
+                totalData = data.data.length;
+
+                $("#pagination_branch").whjPaging("setPage", {
+                    currPage: 1,
+                    totalPage: lastData,
+                    totalSize: totalData
+                });
+                $("#tr0BranchAll").hide();
+                $("#table_branch").html('').append(html);
+            });
+
+            $("#pagination_branch").whjPaging({
+                // isResetPage: true,
+                isShowTotalSize: false,
+                isShowTotalPage: false,
+                isShowRefresh: false,
+                isShowSkip: false,
+                isShowPageSizeOpt: false,
+                isShowFL: false,
+                callBack: function(currPage, pageSize) {
+                    loadDataBranchAll(currPage, pageSize);
+                }
+            });
+        });
+
+        function loadDataBranchAll(currPage, pageSize) {
+            var html = '<thead><tr><th style="display: none">Branch ID</th><th>Branch Code</th><th>Branch Name</th></tr></thead>';
+
+            $.get("/MasterUser/SelectBranchAll", function(data, status) {
+                totalData = data.data.length;
+                var lastDataLength = data.data.length - 1;
+                var lastData = null;
+                for (var i = 0; i < data.data.length; i++) {
+                    var idBranch = data.data[i].id;
+                    var codeBranch = data.data[i].branch_code;
+                    var nameBranch = data.data[i].branch_name.toUpperCase();
+
+                    if (currPage == data.data[i].page) {
+                        html += '<tr onclick="branch_modal(this)"><td style="display: none">' + idBranch + '</td><td>' + codeBranch + '</td><td class="honda_id">' + nameBranch + '</td></tr>';
+                    }
+
+                    if (i == lastDataLength) {
+                        lastData = data.data[i].page;
+                    }
+                }
+                // alert(totalData);
+                $("#pagination_branch").whjPaging("setPage", {
+                    currPage: currPage,
+                    totalPage: lastData,
+                    totalSize: totalData
+                });
+
+                $("#table_branch").html('').append(html);
+            });
+        }
+
+        // ahass name
+
+        //Search By Branch Name
+        function searchDataByAhassName() {
+            var html = '<thead><tr><th style="display: none">Ahass ID</th><th>Ahass Code</th><th>Ahass Name</th></tr></thead>';
+
+            input = document.getElementById("input_ahass_name");
+            filter = input.value.toLowerCase();
+
+            if (filter.replace(/\s/g, "") == "") {
+                $.get("/MasterUser/SelectAhassAll", function(data, status) {
+                    var lastDataLength = data.data.length - 1;
+                    var lastData = null;
+                    var currPage = 1;
+                    for (var i = 0; i < data.data.length; i++) {
+
+                        var idAhass = data.data[i].id;
+                        var codeAhass = data.data[i].branch_code;
+                        var nameAhass = data.data[i].branch_name.toUpperCase();
+
+                        if (currPage == data.data[i].page) {
+                            html += '<tr onclick="ahass_modal(this)"><td style="display: none">' + idAhass + '</td><td>' + codeAhass + '</td><td>' + nameAhass + '</td></tr>';
+                        }
+
+                        if (i == lastDataLength) {
+                            lastData = data.data[i].page;
+                        }
+                    }
+                    totalData = data.data.length;
+
+                    $("#pagination_ahass").whjPaging("setPage", {
+                        currPage: currPage,
+                        totalPage: lastData,
+                        totalSize: totalData
+                    });
+                    $("#tr0AhassAll").hide();
+                    $("#table_ahass").html('').append(html);
+                });
+            } else {
+                $.get("/MasterUser/SelectAhassAll", function(data, status) {
+                    totalData = data.data.length;
+                    var currPage = 1;
+                    var dataIn = 0;
+                    var fakePage = 1;
+                    var lastDataLength = data.data.length - 1;
+                    var lastData = null;
+
+                    for (var i = 0; i < data.data.length; i++) {
+                        var idAhass = data.data[i].id;
+                        var codeAhass = data.data[i].branch_code;
+                        var nameAhass = data.data[i].branch_name.toUpperCase();
+                        var nameAhassLower = data.data[i].branch_name.toLowerCase();
+
+                        if (nameAhassLower.includes(filter)) {
+                            dataIn = dataIn + 1;
+
+                            if (dataIn % 11 == 0) {
+                                fakePage = fakePage + 1;
+                            } else {
+                                fakePage = fakePage;
+                            }
+
+                            if (currPage == fakePage) {
+                                html += '<tr onclick="ahass_modal(this)"><td style="display: none">' + idAhass + '</td><td>' + codeAhass + '</td><td>' + nameAhass + '</td></tr>';
+                            }
+                        }
+                    }
+                    $("#pagination_ahass").whjPaging("setPage", {
+                        currPage: currPage,
+                        totalPage: fakePage,
+                        totalSize: dataIn
+                    });
+                    $("#tr0AhassAll").hide();
+                    $("#table_ahass").html('').append(html);
+                });
+
+                $("#pagination_ahass").whjPaging({
+                    // isResetPage: true,
+                    isShowTotalSize: false,
+                    isShowTotalPage: false,
+                    isShowRefresh: false,
+                    isShowSkip: false,
+                    isShowPageSizeOpt: false,
+                    isShowFL: false,
+                    callBack: function(currPage, pageSize) {
+                        loadDataAhassSearchName(currPage, pageSize);
+                    }
+                });
+            }
+        }
+
+        function loadDataAhassSearchName(currPage, pageSize) {
+            var html = '<thead><tr><th style="display: none">Ahass ID</th><th>Ahass Code</th><th>Ahass Name</th></tr></thead>';
+
+            input = document.getElementById("input_ahass_name");
+            filter = input.value.toLowerCase();
+
+            $.get("/MasterUser/SelectAhassAll", function(data, status) {
+                totalData = data.data.length;
+                var lastDataLength = data.data.length - 1;
+                var lastData = null;
+                var dataIn = -1;
+                var fakePage = 0;
+
+                for (var i = 0; i < data.data.length; i++) {
+                    var idAhass = data.data[i].id;
+                    var codeAhass = data.data[i].branch_code;
+                    var nameAhass = data.data[i].branch_name.toUpperCase();
+                    var nameAhassLower = data.data[i].branch_name.toLowerCase();
+
+                    if (nameAhassLower.includes(filter)) {
+                        dataIn = dataIn + 1;
+
+                        if (dataIn % 10 == 0) {
+                            fakePage = fakePage + 1;
+                        } else {
+                            fakePage = fakePage;
+                        }
+
+                        if (currPage == fakePage) {
+                            html += '<tr onclick="ahass_modal(this)"><td style="display: none">' + idAhass + '</td><td>' + codeAhass + '</td><td>' + nameAhass + '</td></tr>';
+                        }
+                    }
+                }
+                $("#pagination_ahass").whjPaging("setPage", {
+                    currPage: currPage,
+                    totalPage: fakePage,
+                    totalSize: dataIn
+                });
+
+                $("#tr0AhassAll").hide();
+                $("#table_ahass").html('').append(html);
+            });
+        }
+
+        //Search By Branch Name
+        function searchDataByBranchName() {
+            var html = '<thead><tr><th style="display: none">Branch ID</th><th>Branch Code</th><th>Branch Name</th></tr></thead>';
+
+            input = document.getElementById("input_branch_name");
+            filter = input.value.toLowerCase();
+
+            if (filter.replace(/\s/g, "") == "") {
+                $.get("/MasterUser/SelectBranchAll", function(data, status) {
+                    var lastDataLength = data.data.length - 1;
+                    var lastData = null;
+                    var currPage = 1;
+                    for (var i = 0; i < data.data.length; i++) {
+
+                        var idBranch = data.data[i].id;
+                        var codeBranch = data.data[i].branch_code;
+                        var nameBranch = data.data[i].branch_name.toUpperCase();
+
+                        if (currPage == data.data[i].page) {
+                            html += '<tr onclick="branch_modal(this)"><td style="display: none">' + idBranch + '</td><td>' + codeBranch + '</td><td class="honda_id">' + nameBranch + '</td></tr>';
+                        }
+
+                        if (i == lastDataLength) {
+                            lastData = data.data[i].page;
+                        }
+                    }
+                    totalData = data.data.length;
+
+                    $("#pagination_branch").whjPaging("setPage", {
+                        currPage: currPage,
+                        totalPage: lastData,
+                        totalSize: totalData
+                    });
+                    $("#tr0BranchAll").hide();
+                    $("#table_branch").html('').append(html);
+                });
+            } else {
+                $.get("/MasterUser/SelectBranchAll", function(data, status) {
+                    totalData = data.data.length;
+                    var currPage = 1;
+                    var dataIn = 0;
+                    var fakePage = 1;
+                    var lastDataLength = data.data.length - 1;
+                    var lastData = null;
+
+                    for (var i = 0; i < data.data.length; i++) {
+                        var idBranch = data.data[i].id;
+                        var codeBranch = data.data[i].branch_code;
+                        var nameBranch = data.data[i].branch_name.toUpperCase();
+                        var nameBranchLower = data.data[i].branch_name.toLowerCase();
+
+                        if (nameBranchLower.includes(filter)) {
+                            dataIn = dataIn + 1;
+
+                            if (dataIn % 11 == 0) {
+                                fakePage = fakePage + 1;
+                            } else {
+                                fakePage = fakePage;
+                            }
+
+                            if (currPage == fakePage) {
+                                html += '<tr onclick="branch_modal(this)"><td style="display: none">' + idBranch + '</td><td>' + codeBranch + '</td><td class="honda_id">' + nameBranch + '</td></tr>';
+                            }
+                        }
+                    }
+
+                    // alert(dataIn);
+                    // alert(fakePage);
+                    $("#pagination_branch").whjPaging("setPage", {
+                        currPage: currPage,
+                        totalPage: fakePage,
+                        totalSize: dataIn
+                    });
+                    $("#tr0BranchAll").hide();
+                    $("#table_branch").html('').append(html);
+                });
+
+                $("#pagination_branch").whjPaging({
+                    // isResetPage: true,
+                    isShowTotalSize: false,
+                    isShowTotalPage: false,
+                    isShowRefresh: false,
+                    isShowSkip: false,
+                    isShowPageSizeOpt: false,
+                    isShowFL: false,
+                    callBack: function(currPage, pageSize) {
+                        loadDataBranchSearchName(currPage, pageSize);
+                    }
+                });
+            }
+        }
+
+        function loadDataBranchSearchName(currPage, pageSize) {
+            // alert(currPage);
+            // alert(pageSize);
+            var html = '<thead><tr><th style="display: none">Branch ID</th><th>Branch Code</th><th>Branch Name</th></tr></thead>';
+
+            input = document.getElementById("input_branch_name");
+            filter = input.value.toLowerCase();
+
+            $.get("/MasterUser/SelectBranchAll", function(data, status) {
+                totalData = data.data.length;
+                var lastDataLength = data.data.length - 1;
+                var lastData = null;
+                var dataIn = -1;
+                var fakePage = 0;
+
+                for (var i = 0; i < data.data.length; i++) {
+                    var idBranch = data.data[i].id;
+                    var codeBranch = data.data[i].branch_code;
+                    var nameBranch = data.data[i].branch_name.toUpperCase();
+                    var nameBranchLower = data.data[i].branch_name.toLowerCase();
+
+                    if (nameBranchLower.includes(filter)) {
+                        dataIn = dataIn + 1;
+
+                        if (dataIn % 10 == 0) {
+                            fakePage = fakePage + 1;
+                        } else {
+                            fakePage = fakePage;
+                        }
+
+                        if (currPage == fakePage) {
+                            html += '<tr onclick="branch_modal(this)"><td style="display: none">' + idBranch + '</td><td>' + codeBranch + '</td><td class="honda_id">' + nameBranch + '</td></tr>';
+                        }
+                    }
+                }
+                $("#pagination_branch").whjPaging("setPage", {
+                    currPage: currPage,
+                    totalPage: fakePage,
+                    totalSize: dataIn
+                });
+
+                $("#tr0BranchAll").hide();
+                $("#table_branch").html('').append(html);
+            });
+        }
+
+        //Search By Branch Code
+        function searchDataByBranchCode() {
+            var html = '<thead><tr><th style="display: none">Branch ID</th><th>Branch Code</th><th>Branch Name</th></tr></thead>';
+
+            input = document.getElementById("input_branch_code");
+            filter = input.value;
+
+            if (filter.replace(/\s/g, "") == "") {
+                $.get("/MasterUser/SelectBranchAll", function(data, status) {
+                    var lastDataLength = data.data.length - 1;
+                    var lastData = null;
+                    var currPage = 1;
+                    for (var i = 0; i < data.data.length; i++) {
+
+                        var idBranch = data.data[i].id;
+                        var codeBranch = data.data[i].branch_code;
+                        var nameBranch = data.data[i].branch_name.toUpperCase();
+
+                        if (currPage == data.data[i].page) {
+                            html += '<tr onclick="branch_modal(this)"><td style="display: none">' + idBranch + '</td><td>' + codeBranch + '</td><td class="honda_id">' + nameBranch + '</td></tr>';
+                        }
+
+                        if (i == lastDataLength) {
+                            lastData = data.data[i].page;
+                        }
+                    }
+                    totalData = data.data.length;
+
+                    $("#pagination_branch").whjPaging("setPage", {
+                        currPage: currPage,
+                        totalPage: lastData,
+                        totalSize: totalData
+                    });
+                    $("#tr0BranchAll").hide();
+                    $("#table_branch").html('').append(html);
+                });
+            } else {
+                $.get("/MasterUser/SelectBranchAll", function(data, status) {
+                    totalData = data.data.length;
+                    var currPage = 1;
+                    var dataIn = 0;
+                    var fakePage = 1;
+                    var lastDataLength = data.data.length - 1;
+                    var lastData = null;
+
+                    for (var i = 0; i < data.data.length; i++) {
+                        var idBranch = data.data[i].id;
+                        var codeBranch = data.data[i].branch_code;
+                        var nameBranch = data.data[i].branch_name.toUpperCase();
+                        var nameBranchLower = data.data[i].branch_name.toLowerCase();
+
+                        if (codeBranch.includes(filter)) {
+                            dataIn = dataIn + 1;
+
+                            if (dataIn % 11 == 0) {
+                                fakePage = fakePage + 1;
+                            } else {
+                                fakePage = fakePage;
+                            }
+
+                            if (currPage == fakePage) {
+                                html += '<tr onclick="branch_modal(this)"><td style="display: none">' + idBranch + '</td><td>' + codeBranch + '</td><td class="honda_id">' + nameBranch + '</td></tr>';
+                            }
+                        }
+                    }
+
+                    // alert(dataIn);
+                    // alert(fakePage);
+                    $("#pagination_branch").whjPaging("setPage", {
+                        currPage: currPage,
+                        totalPage: fakePage,
+                        totalSize: dataIn
+                    });
+                    $("#tr0BranchAll").hide();
+                    $("#table_branch").html('').append(html);
+                });
+
+                $("#pagination_branch").whjPaging({
+                    // isResetPage: true,
+                    isShowTotalSize: false,
+                    isShowTotalPage: false,
+                    isShowRefresh: false,
+                    isShowSkip: false,
+                    isShowPageSizeOpt: false,
+                    isShowFL: false,
+                    callBack: function(currPage, pageSize) {
+                        loadDataBranchSearchCode(currPage, pageSize);
+                    }
+                });
+            }
+        }
+
+        function loadDataBranchSearchCode(currPage, pageSize) {
+            // alert(currPage);
+            // alert(pageSize);
+            var html = '<thead><tr><th style="display: none">Branch ID</th><th>Branch Code</th><th>Branch Name</th></tr></thead>';
+
+            input = document.getElementById("input_branch_code");
+            filter = input.value;
+
+            $.get("/MasterUser/SelectBranchAll", function(data, status) {
+                totalData = data.data.length;
+                var lastDataLength = data.data.length - 1;
+                var lastData = null;
+                var dataIn = -1;
+                var fakePage = 0;
+
+                for (var i = 0; i < data.data.length; i++) {
+                    var idBranch = data.data[i].id;
+                    var codeBranch = data.data[i].branch_code;
+                    var nameBranch = data.data[i].branch_name.toUpperCase();
+                    var nameBranchLower = data.data[i].branch_name.toLowerCase();
+
+                    if (codeBranch.includes(filter)) {
+                        dataIn = dataIn + 1;
+
+                        if (dataIn % 10 == 0) {
+                            fakePage = fakePage + 1;
+                        } else {
+                            fakePage = fakePage;
+                        }
+
+                        if (currPage == fakePage) {
+                            html += '<tr onclick="branch_modal(this)"><td style="display: none">' + idBranch + '</td><td>' + codeBranch + '</td><td class="honda_id">' + nameBranch + '</td></tr>';
+                        }
+                    }
+                }
+                $("#pagination_branch").whjPaging("setPage", {
+                    currPage: currPage,
+                    totalPage: fakePage,
+                    totalSize: dataIn
+                });
+
+                $("#tr0BranchAll").hide();
+                $("#table_branch").html('').append(html);
+            });
+        }
+
+        function branch_modal(e) {
+            var tds = e.getElementsByTagName('td');
+            document.getElementById("branch_id").value = tds[0].innerHTML.trim();
+            document.getElementById("branch_code").value = tds[1].innerHTML.trim();
+            document.getElementById("branch_name").value = tds[2].innerHTML.trim();
+            $('#myModal3').modal('hide');
+        }
+
+        //added by inne
+        function employee_modal(e) {
+            var tds = e.getElementsByTagName('td');
+
+            document.getElementById("emp_kode").value = tds[0].innerHTML.trim();
+            document.getElementById("employee_nama").value = tds[1].innerHTML.trim();
+            document.getElementById("employee_id").value = tds[4].innerHTML.trim();
+            document.getElementById("stall_code").value = tds[5].innerHTML.trim();
+        
+            var employee_id = document.getElementById("employee_id").value;
+            var stall_code = document.getElementById("stall_code").value;
+             
+            $('#myModalEmp').modal('hide');
+        }
+
+        //Search By Branch Code
+        function searchDataByAhassCode() {
+            var html = '<thead><tr><th style="display: none">Ahass ID</th><th>Ahass Code</th><th>Ahass Name</th></tr></thead>';
+
+            input = document.getElementById("input_ahass_code");
+            filter = input.value;
+
+            if (filter.replace(/\s/g, "") == "") {
+                $.get("/MasterUser/SelectAhassAll", function(data, status) {
+                    var lastDataLength = data.data.length - 1;
+                    var lastData = null;
+                    var currPage = 1;
+                    for (var i = 0; i < data.data.length; i++) {
+
+                        var idAhass = data.data[i].id;
+                        var codeAhass = data.data[i].branch_code;
+                        var nameAhass = data.data[i].branch_name.toUpperCase();
+
+                        if (currPage == data.data[i].page) {
+                            html += '<tr onclick="ahass_modal(this)"><td style="display: none">' + idAhass + '</td><td>' + codeAhass + '</td><td>' + nameAhass + '</td></tr>';
+                        }
+
+                        if (i == lastDataLength) {
+                            lastData = data.data[i].page;
+                        }
+                    }
+                    totalData = data.data.length;
+
+                    $("#pagination_ahass").whjPaging("setPage", {
+                        currPage: currPage,
+                        totalPage: lastData,
+                        totalSize: totalData
+                    });
+                    $("#tr0AhassAll").hide();
+                    $("#table_ahass").html('').append(html);
+                });
+            } else {
+                $.get("/MasterUser/SelectAhassAll", function(data, status) {
+                    totalData = data.data.length;
+                    var currPage = 1;
+                    var dataIn = 0;
+                    var fakePage = 1;
+                    var lastDataLength = data.data.length - 1;
+                    var lastData = null;
+
+                    for (var i = 0; i < data.data.length; i++) {
+                        var idAhass = data.data[i].id;
+                        var codeAhass = data.data[i].branch_code;
+                        var nameAhass = data.data[i].branch_name.toUpperCase();
+                        var nameAhassLower = data.data[i].branch_name.toLowerCase();
+
+                        if (codeAhass.includes(filter)) {
+                            dataIn = dataIn + 1;
+
+                            if (dataIn % 11 == 0) {
+                                fakePage = fakePage + 1;
+                            } else {
+                                fakePage = fakePage;
+                            }
+
+                            if (currPage == fakePage) {
+                                html += '<tr onclick="ahass_modal(this)"><td style="display: none">' + idAhass + '</td><td>' + codeAhass + '</td><td>' + nameAhass + '</td></tr>';
+                            }
+                        }
+                    }
+
+
+                    $("#pagination_ahass").whjPaging("setPage", {
+                        currPage: currPage,
+                        totalPage: fakePage,
+                        totalSize: dataIn
+                    });
+                    $("#tr0AhassAll").hide();
+                    $("#table_ahass").html('').append(html);
+                });
+
+                $("#pagination_ahass").whjPaging({
+                    // isResetPage: true,
+                    isShowTotalSize: false,
+                    isShowTotalPage: false,
+                    isShowRefresh: false,
+                    isShowSkip: false,
+                    isShowPageSizeOpt: false,
+                    isShowFL: false,
+                    callBack: function(currPage, pageSize) {
+                        loadDataAhassSearchCode(currPage, pageSize);
+                    }
+                });
+            }
+        }
+
+        function loadDataAhassSearchCode(currPage, pageSize) {
+
+            var html = '<thead><tr><th style="display: none">Ahass ID</th><th>Ahass Code</th><th>Ahass Name</th></tr></thead>';
+
+            input = document.getElementById("input_ahass_code");
+            filter = input.value;
+
+            $.get("/MasterUser/SelectAhassAll", function(data, status) {
+                totalData = data.data.length;
+                var lastDataLength = data.data.length - 1;
+                var lastData = null;
+                var dataIn = -1;
+                var fakePage = 0;
+
+                for (var i = 0; i < data.data.length; i++) {
+                    var idAhass = data.data[i].id;
+                    var codeAhass = data.data[i].branch_code;
+                    var nameAhass = data.data[i].branch_name.toUpperCase();
+                    var nameAhassLower = data.data[i].branch_name.toLowerCase();
+
+                    if (codeAhass.includes(filter)) {
+                        dataIn = dataIn + 1;
+
+                        if (dataIn % 10 == 0) {
+                            fakePage = fakePage + 1;
+                        } else {
+                            fakePage = fakePage;
+                        }
+
+                        if (currPage == fakePage) {
+                            html += '<tr onclick="ahass_modal(this)"><td style="display: none">' + idAhass + '</td><td>' + codeAhass + '</td><td>' + nameAhass + '</td></tr>';
+                        }
+                    }
+                }
+                $("#pagination_ahass").whjPaging("setPage", {
+                    currPage: currPage,
+                    totalPage: fakePage,
+                    totalSize: dataIn
+                });
+
+                $("#tr0AhassAll").hide();
+                $("#table_ahass").html('').append(html);
+            });
+        }
+        // akhir ahass
+
+       // on klik lov ahass added by inne
+        function ahass_modal(e) {
+            var tds = e.getElementsByTagName('td');
+            document.getElementById("ahass_id").value = tds[0].innerHTML.trim();
+            document.getElementById("ahass_code").value = tds[1].innerHTML.trim();
+            document.getElementById("ahass_name").value = tds[2].innerHTML.trim();
+            $('#myModalAhass').modal('hide');
+        }
+
+
+    </script>
+
+    <script>
+        //Kondisi Penampilan Salesman name & Supervisor Name (New Condition By Lely)
+        $(document).ready(function() {
+            document.getElementById("SupervisorModal").style.display = "none";
+            document.getElementById("divSalesmanName").style.display = "none";
+
+
+            if (document.getElementById("id_group_input").value == "ea22e39e-0590-11e8-9702-ac220be6ac47") {
+                document.getElementById("divSalesmanName").style.display = "block";
+                document.getElementById("buttonSpvModal").style.display = "block";
+            } else if (document.getElementById("id_group_input").value == "ea16bbd9-0590-11e8-9702-ac220be6ac47") {
+                document.getElementById("SupervisorModal").style.display = "block";
+                document.getElementById("SalesmenModal").style.display = "block";
+                document.getElementById("sls_kode").style.display = "block";
+
+            } 
+        });
+    </script>
+
+    <script>
+        function supervisor(e) {
+            var tds = e.getElementsByTagName('td');
+            document.getElementById("supervisor_id").value = tds[0].innerHTML.trim();
+            document.getElementById("supervisor_nama").value = tds[2].innerHTML.trim();
+            // document.getElementById("branch_id").value = tds[2].innerHTML.trim();
+            // document.getElementById("branch_name").value = tds[3].innerHTML.trim();
+            // document.getElementById("branch_code").value = tds[4].innerHTML.trim();
+            $('#myModal2').modal('hide');
+        }
+
+        $(document).ready(function() {
+            var ids = document.getElementsByClassName("supervisor_id");
+            for (var i = 0; i < ids.length; i++) {
+                ids[i].style.display = "none";
+            }
+            document.getElementById("th_id_supervisor_spv").style.display = "none";
+        });
+    </script>
+
+
+    <script>
+        $(document).ready(function() {
+            $("#buttonSpvModal").click(function() {
+                var noDlr = document.getElementById("branch_id").value;
+                var html = '<thead><tr><th style="display: none">Supervisor ID</th><th>Supervisor Code</th><th>Supervisor Name</th><</tr></thead>';
+                var totalData = null;
+                var currPage = 1;
+
+                if (noDlr.replace(/\s/g, "") == "") {
+                    alert("Cabang Belum Dipilih");
+                    var htmlNoDlr = '<thead><tr><th style="display: none">Supervisor ID</th><th>Supervisor Code</th><th>Supervisor Name</<th></tr></thead><tbody data-position="0" data-jump="5"><tr id="tr0Supervisor"><td colspan="2">Cabang Belum Dipilih</td></tr></tbody>';
+                    $("#table_spv").html('').append(htmlNoDlr);
+                } else {
+                    // alert(noDlr);
+                    $.get("/MasterUser/SelectSupervisorByBranch?nodlr=" + noDlr, function(data, status) {
+                        var lastDataLength = data.data.length - 1;
+                        var lastData = null;
+                        for (var i = 0; i < data.data.length; i++) {
+                            var supervisorID = data.data[i].id;
+                            var supervisorCode = data.data[i].supervisor_kode;
+                            var supervisorName = data.data[i].supervisor_nama.toUpperCase();
+
+                            if (currPage == data.data[i].page) {
+                                html += '<tr onclick="supervisor(this)"><td style="display: none">' + supervisorID + '</td><td>' + supervisorCode + '</td><td>' + supervisorName + '</td></tr>';
+                            }
+
+                            if (i == lastDataLength) {
+                                lastData = data.data[i].page;
+                            }
+                        }
+                        totalData = data.data.length;
+
+                        $("#pagination_supervisor").whjPaging("setPage", {
+                            currPage: 1,
+                            totalPage: lastData,
+                            totalSize: totalData
+                        });
+                        $("#tr0Supervisor").hide();
+                        $("#table_spv").html('').append(html);
+                    });
+                }
+
+                $("#pagination_supervisor").whjPaging({
+                    // isResetPage: true,
+                    isShowTotalSize: false,
+                    isShowTotalPage: false,
+                    isShowRefresh: false,
+                    isShowSkip: false,
+                    isShowPageSizeOpt: false,
+                    isShowFL: false,
+                    callBack: function(currPage, pageSize) {
+                        loadDataSupervisor(currPage, pageSize);
+                    }
+                });
+            });
+
+            function loadDataSupervisor(currPage, pageSize) {
+                var noDlr = document.getElementById("branch_id").value;
+                var html = '<thead><tr><th style="display: none">Supervisor ID</th><th>Supervisor Code</th><th>Supervisor Name</th><</tr></thead>';
+                $.get("/MasterUser/SelectSupervisorByBranch?nodlr=" + noDlr, function(data, status) {
+                    totalData = data.data.length;
+                    var lastDataLength = data.data.length - 1;
+                    var lastData = null;
+                    for (var i = 0; i < data.data.length; i++) {
+                        var supervisorID = data.data[i].id;
+                        var supervisorCode = data.data[i].supervisor_kode;
+                        var supervisorName = data.data[i].supervisor_nama.toUpperCase();
+
+                        if (currPage == data.data[i].page) {
+                            html += '<tr onclick="supervisor(this)"><td style="display: none">' + supervisorID + '</td><td>' + supervisorCode + '</td><td>' + supervisorName + '</td></tr>';
+                        }
+
+                        if (i == lastDataLength) {
+                            lastData = data.data[i].page;
+                        }
+                    }
+                    $("#pagination_supervisor").whjPaging("setPage", {
+                        currPage: currPage,
+                        totalPage: lastData,
+                        totalSize: totalData
+                    });
+
+                    $("#table_spv").html('').append(html);
+                });
+            }
+
+        });
+
+
+
+        //Search By Supervisor Code
+        function searchDataBySupervisorCode() {
+            var noDlr = document.getElementById("branch_id").value;
+            var html = '<thead><tr><th style="display: none">Supervisor ID</th><th>Supervisor Code</th><th>Supervisor Name</th><</tr></thead>';
+            input = document.getElementById("input_spv_code");
+            filter = input.value.toLowerCase();
+
+            if (filter.replace(/\s/g, "") == "") {
+                $.get("/MasterUser/SelectSupervisorByBranch?nodlr=" + noDlr, function(data, status) {
+                    var lastDataLength = data.data.length - 1;
+                    var lastData = null;
+                    var currPage = 1;
+                    for (var i = 0; i < data.data.length; i++) {
+                        var supervisorID = data.data[i].id;
+                        var supervisorCode = data.data[i].supervisor_kode;
+                        var supervisorName = data.data[i].supervisor_nama.toUpperCase();
+
+                        if (currPage == data.data[i].page) {
+                            html += '<tr onclick="supervisor(this)"><td style="display: none">' + supervisorID + '</td><td>' + supervisorCode + '</td><td>' + supervisorName + '</td></tr>';
+                        }
+
+                        if (i == lastDataLength) {
+                            lastData = data.data[i].page;
+                        }
+                    }
+                    totalData = data.data.length;
+
+                    $("#pagination_supervisor").whjPaging("setPage", {
+                        currPage: currPage,
+                        totalPage: lastData,
+                        totalSize: totalData
+                    });
+                    $("#tr0Supervisor").hide();
+                    $("#table_spv").html('').append(html);
+                });
+            } else {
+                $.get("/MasterUser/SelectSupervisorByBranch?nodlr=" + noDlr, function(data, status) {
+                    totalData = data.data.length;
+                    for (var i = 0; i < data.data.length; i++) {
+                        var supervisorCodeLower = data.data[i].supervisor_kode.toLowerCase();
+                        var supervisorCode = data.data[i].supervisor_kode;
+                        var supervisorName = data.data[i].supervisor_nama.toUpperCase();
+                        var supervisorID = data.data[i].id;
+                        if (supervisorCodeLower.includes(filter) == true) {
+                            html += '<tr onclick="supervisor(this)"><td style="display: none">' + supervisorID + '</td><td>' + supervisorCode + '</td><td>' + supervisorName + '</td></tr>';
+                        } else {
+                            // alert(salesName + filter);
+                        }
+                    }
+                    $("#table_spv").html('').append(html);
+                });
+            }
+        }
+
+        //Search By Supervisor Name
+        function searchDataBySupervisorName() {
+            var noDlr = document.getElementById("branch_id").value;
+            var html = '<thead><tr><th style="display: none">Supervisor ID</th><th>Supervisor Code</th><th>Supervisor Name</th><</tr></thead>';
+            input = document.getElementById("input_spv_name");
+            filter = input.value.toLowerCase();
+
+            if (filter.replace(/\s/g, "") == "") {
+                $.get("/MasterUser/SelectSupervisorByBranch?nodlr=" + noDlr, function(data, status) {
+                    var lastDataLength = data.data.length - 1;
+                    var lastData = null;
+                    var currPage = 1;
+                    for (var i = 0; i < data.data.length; i++) {
+                        var supervisorID = data.data[i].id;
+                        var supervisorCode = data.data[i].supervisor_kode;
+                        var supervisorName = data.data[i].supervisor_nama.toUpperCase();
+
+                        if (currPage == data.data[i].page) {
+                            html += '<tr onclick="supervisor(this)"><td style="display: none">' + supervisorID + '</td><td>' + supervisorCode + '</td><td>' + supervisorName + '</td></tr>';
+                        }
+
+                        if (i == lastDataLength) {
+                            lastData = data.data[i].page;
+                        }
+                    }
+                    totalData = data.data.length;
+
+                    $("#pagination_supervisor").whjPaging("setPage", {
+                        currPage: currPage,
+                        totalPage: lastData,
+                        totalSize: totalData
+                    });
+                    $("#tr0Supervisor").hide();
+                    $("#table_spv").html('').append(html);
+                });
+            } else {
+                $.get("/MasterUser/SelectSupervisorByBranch?nodlr=" + noDlr, function(data, status) {
+                    totalData = data.data.length;
+                    for (var i = 0; i < data.data.length; i++) {
+                        var supervisorNameLower = data.data[i].supervisor_nama.toLowerCase();
+                        var supervisorCode = data.data[i].supervisor_kode;
+                        var supervisorName = data.data[i].supervisor_nama.toUpperCase();
+                        var supervisorID = data.data[i].id;
+
+                        if (supervisorNameLower.includes(filter) == true) {
+                            html += '<tr onclick="supervisor(this)"><td style="display: none">' + supervisorID + '</td><td>' + supervisorCode + '</td><td>' + supervisorName + '</td></tr>';
+                        } else {
+                            // alert(salesName + filter);
+                        }
+                    }
+                    $("#table_spv").html('').append(html);
+                });
+            }
+        }
+    </script>
+
+    <script>
+        /* Variable Defaults */
+        var total = $('tbody > tr').length;
+        var position = $('tbody').data('position');
+        var jump = $('tbody').data('jump');
+        var paginate = function(position, jump) {
+            /* Show Default Items */
+            $('tbody > tr').each(function() {
+                /* Variable Defaults */
+                var index = $(this).index();
+
+                /* Condition */
+                var condition = (index >= position) && (index < position + jump);
+
+                /* Hide/Show Item */
+                $(this).toggle(condition);
+
+                /* Set Disabled Status */
+                $('.less').prop('disabled', (position - jump) < 0);
+                $('.more').prop('disabled', (position + jump) >= total);
+            });
+        };
+
+        //    /* Set Default Text */
+        //        $('.count').text(jump);
+
+        /* Init Paginate */
+        paginate(position, jump);
+
+        /* Bind Click Events to "Less" and "More" Button */
+        $('.less, .more').on('click', function() {
+            /* Decrease/Increase Position */
+            position = $(this).hasClass('less') ? $('tbody').data('position') - jump : $('tbody').data('position') + jump;
+
+            /* Paginate */
+            paginate(position, jump);
+
+            /* Update Position */
+            $('tbody').data('position', position);
+        });
+
+        function changePage(page) {
+            var page_span = document.getElementById("page");
+
+            if (page < 1) page = 1;
+            if (page > numPages()) page = numPages();
+
+            for (var i = 0; i < pageRecord; i++) {
+                page_span.innerHTML = page;
+            }
+        }
+
+        window.onload = function() {
+            changePage(1);
+        };
+    </script>
+
+    <script>
+        function salesman_modal(e) {
+            var tds = e.getElementsByTagName('td');
+            document.getElementById("sls_kode").value = tds[0].innerHTML.trim();
+            document.getElementById("sls_nama").value = tds[2].innerHTML.trim();
+            document.getElementById("supervisor_nama").value = tds[3].innerHTML.trim();
+            document.getElementById("salesman_id").value = tds[4].innerHTML.trim();
+            document.getElementById("supervisor_id").value = tds[5].innerHTML.trim();
+            $('#myModal').modal('hide');
+        }
+    </script>
+
+    <script>
+            //added by inne
+            $("#buttonAhassModal").click(function() {
+                var html = '<thead><tr><th style="display: none">Ahass ID</th><th>Ahass Code</th><th>Ahass Name</th></tr></thead>';
+                var totalData = null;
+                var currPage = 1;
+
+                $.get("/MasterUser/SelectAhassAll", function(data, status) {
+                    var lastDataLength = data.data.length - 1;
+                    var lastData = null;
+                    for (var i = 0; i < data.data.length; i++) {
+
+                        var idAhass = data.data[i].id;
+                        var codeAhass = data.data[i].branch_code;
+                        var nameAhass = data.data[i].branch_name.toUpperCase();
+
+                        if (currPage == data.data[i].page) {
+                            html += '<tr onclick="ahass_modal(this)"><td style="display: none">' + idAhass + '</td><td>' + codeAhass + '</td><td>' + nameAhass + '</td></tr>';
+                        }
+
+                        if (i == lastDataLength) {
+                            lastData = data.data[i].page;
+                        }
+                    }
+                    totalData = data.data.length;
+
+                    $("#pagination_ahass").whjPaging("setPage", {
+                        currPage: 1,
+                        totalPage: lastData,
+                        totalSize: totalData
+                    });
+                    $("#tr0AhassAll").hide();
+                    $("#table_ahass").html('').append(html);
+                });
+
+
+                $("#pagination_ahass").whjPaging({
+                    // isResetPage: true,
+                    isShowTotalSize: false,
+                    isShowTotalPage: false,
+                    isShowRefresh: false,
+                    isShowSkip: false,
+                    isShowPageSizeOpt: false,
+                    isShowFL: false,
+                    callBack: function(currPage, pageSize) {
+                        loadDataAhassAll(currPage, pageSize);
+                    }
+                });
+            });
+
+        $("#btnSalesman").click(function() {
+                var hondaID = document.getElementById("username").value;
+                var html = '<thead><tr><th>Salesman Code</th><th>Honda ID</th><th>Sales Name</th><th>Supervisor Name</th><th style="display: none;">Salesman ID</th><th style="display: none;">Supervisor ID</th></tr></thead>';
+
+                var totalData = null;
+                var currPage = 1;
+
+                // if (hondaID.replace(/\s/g, "") == "") {
+                //     alert("Honda ID Belum Dipilih");
+                //     var htmlNoDlr = '<thead><tr><th>Salesman Code</th><th>Honda ID</th><th>Sales Name</th><th>Supervisor Name</th><th style="display: none;">Salesman ID</th><th style="display: none;">Supervisor ID</th></tr></thead><tbody data-position="0" data-jump="5"><tr id="tr0Salesman"><td colspan="6">Honda ID Belum Dipilih</td></tr></tbody>';
+                //     $("#table_sales").html('').append(htmlNoDlr);
+                // } else {
+                    
+                // }
+
+                // alert(noDlr);
+                $.get("/MasterUser/SelectSalesmanByHondaID?honda_id=" + hondaID, function(data, status) {
+                        var lastDataLength = data.data.length - 1;
+                        var lastData = null;
+
+                        if (data.data.length > 1) {
+                            alert("Data Salesman Lebih Dari 1, Silakan Hubungi Admin DMS");
+                        }
+
+                        if (data.data.length < 1) {
+                            alert("Data Salesman Tidak Ada, Silakan Hubungi Admin DMS");
+                        }
+
+                        for (var i = 0; i < data.data.length; i++) {
+                            var id = data.data[i].id;
+                            var slsKode = data.data[i].sls_kode.toUpperCase();
+                            var slsNama = data.data[i].sls_nama.toUpperCase();
+                            var spvID = data.data[i].supervisor_id;
+                            var spvNama = data.data[i].supervisor_nama.toUpperCase();
+                            var honda_id = data.data[i].sls_pr_kode;
+
+                            if (currPage == data.data[i].page) {
+                                html += '<tr onclick="salesman_modal(this)"><td>' + slsKode + '</td><td>' + honda_id + '</td><td>' + slsNama + '</td><td>' + spvNama + '</td><td style="display: none;">' + id + '</td><td style="display: none;">' + spvID + '</td></tr>';
+                            }
+                            if (i == lastDataLength) {
+                                lastData = data.data[i].page;
+                            }
+                        }
+                        $("#tr0Salesman").hide();
+                        $("#table_sales").html('').append(html);
+                    });
+        });
+
+        
+        function loadDataEmployeeAll(currPage, pageSize) {
+                var html = '<thead><tr><th style="display: none">Employee Kode</th><th>Ahass Code</th><th>Employee Name</th></tr></thead>';
+                var ahassCode = document.getElementById("ahass_code").value;
+
+                $.get("/MasterUser/SelectEmployee?ahassCode=" + ahassCode, function(data, status) {
+                    totalData = data.data.length;
+                    var lastDataLength = data.data.length - 1;
+                    var lastData = null;
+                    for (var i = 0; i < data.data.length; i++) {
+                        var id = data.data[i].id;
+                        var empKode = data.data[i].employee_kode.toUpperCase();
+                        var empNama = data.data[i].employee_nama.toUpperCase();
+                        var empTipe = data.data[i].emp_tipe;
+                        var jabatanKode = data.data[i].jabatan_kode;
+                        var stallCode = data.data[i].stall_code;
+
+                        if (currPage == data.data[i].page) {
+                            html += '<tr onclick="employee_modal(this)"><td>' + empKode + '</td><td>' + empNama + '</td><td>' + empTipe + '</td><td>' + jabatanKode + '</td><td style="display: none;">' + id +  '</td><td style="display: none;">' + stallCode + '</td></tr>';
+                        }
+                        if (i == lastDataLength) {
+                            lastData = data.data[i].page;
+                        }
+                    }
+                    $("#pagination_employee").whjPaging("setPage", {
+                        currPage: currPage,
+                        totalPage: lastData,
+                        totalSize: totalData
+                    });
+
+                    $("#tr0Employee").hide();
+                    $("#table_employee").html('').append(html);
+                });
+            }
+
+
+            $("#btnEmployee").click(function() {
+                var ahassCode = document.getElementById("ahass_code").value;
+                var html = '<thead><tr><th>Employee Code</th><th>Employee Name</th><th>Employee Tipe</th><th>Jabatan</th><th style="display: none;">ID</th></tr></thead>';
+
+                var totalData = null;
+                var currPage = 1;
+
+                if (ahassCode.replace(/\s/g, "") == "") {
+                    alert("Ahass Code Belum Dipilih");
+                    var htmlNoAhass = '<thead><tr><th>Employee Code</th><th>Employee Name</th><th>Employee Tipe</th><th>Jabatan</th><th style="display: none;">ID</th></tr></thead><tbody data-position="0" data-jump="5"><tr id="tr0Employee"><td colspan="6">Ahass ID Belum Dipilih</td></tr></tbody>';
+                    $("#table_employee").html('').append(htmlNoAhass);
+                } else {
+                    alert(ahassCode);
+                    $.get("/MasterUser/SelectEmployee?ahassCode=" + ahassCode, function(data, status) {
+                        var lastDataLength = data.data.length - 1;
+                        var lastData = null;
+
+                        if (data.data.length < 1) {
+                            alert("Data Employee Tidak Ada, Silakan Hubungi Admin DMS");
+                        }
+
+                        for (var i = 0; i < data.data.length; i++) {
+                            var id = data.data[i].id;
+                            var empKode = data.data[i].employee_kode.toUpperCase();
+                            var empNama = data.data[i].employee_nama.toUpperCase();
+                            var empTipe = data.data[i].emp_tipe;
+                            var jabatanKode = data.data[i].jabatan_kode;
+                            var stallCode = data.data[i].stall_code;
+
+                            if (currPage == data.data[i].page) {
+                                html += '<tr onclick="employee_modal(this)"><td>' + empKode + '</td><td>' + empNama + '</td><td>' + empTipe + '</td><td>' + jabatanKode + '</td><td style="display: none;">' + id +'</td><td style="display: none;">' + stallCode + '</td></tr>';
+                            }
+                            if (i == lastDataLength) {
+                                lastData = data.data[i].page;
+                            }
+                        }
+
+                        totalData = data.data.length;
+
+                        $("#pagination_employee").whjPaging("setPage", {
+                            currPage: 1,
+                            totalPage: lastData,
+                            totalSize: totalData
+                        });
+
+                        $("#tr0Employee").hide();
+                        $("#table_employee").html('').append(html);
+                    });
+
+                    $("#pagination_employee").whjPaging({
+                    // isResetPage: true,
+                    isShowTotalSize: false,
+                    isShowTotalPage: false,
+                    isShowRefresh: false,
+                    isShowSkip: false,
+                    isShowPageSizeOpt: false,
+                    isShowFL: false,
+                    callBack: function(currPage, pageSize) {
+                        loadDataEmployeeAll(currPage, pageSize);
+                    }
+                });
+                }
+            });      
+    </script>

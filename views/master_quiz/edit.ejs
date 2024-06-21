@@ -1,0 +1,213 @@
+<% layout('../partials/layout') -%>
+    <!-- <script type="text/javascript">
+        $().ready(function() {
+            if (document.referrer != '<%= link %> + MasterTraining/Edit') {
+                history.pushState(null, null, '/MasterTraining/Edit');
+                window.addEventListener('popstate', function() {
+                    history.pushState(null, null, '/MasterTraining/Edit');
+                });
+            }
+        });
+    </script> -->
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css">
+    <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
+    <div class="right_col" role="main">
+        <div class="">
+            <div class="clearfix"></div>
+
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <h2>Master Quiz<small>Edit</small></h2>
+
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
+                            <% obj.forEach(function (quiz) { %>
+                                <form action="/MasterQuiz/EditSubmit?id=<%= quiz.id %>" id="demo-form2" data-parsley-validate method="post" enctype="multipart/form-data" class="form-horizontal form-label-left" novalidate>
+                                    <!-- <input type="hidden" name="_METHOD" value="PUT" /> -->
+
+
+                                    <div class="item form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="description">Question <span class="required">*</span>
+                  </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <input id="description" value="<%= quiz.question %>" name="question" placeholder="Question" required="required" class="form-control col-md-7 col-xs-12">
+                                        </div>
+                                    </div>
+                                    <div class="item form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="description">Option A <span class="required">*</span>
+                  </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <input id="description" value="<%= quiz.option_a %>" name="option_a" placeholder="Option A" required="required" class="form-control col-md-7 col-xs-12">
+                                        </div>
+                                    </div>
+                                    <div class="item form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="description">Option B <span class="required">*</span>
+                  </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <input id="description" value="<%= quiz.option_b %>" name="option_b" placeholder="Option B" required="required" class="form-control col-md-7 col-xs-12">
+                                        </div>
+                                    </div>
+                                    <div class="item form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="description">Option C <span class="required">*</span>
+                  </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <input id="description" value="<%= quiz.option_c %>" name="option_c" placeholder="Option C" required="required" class="form-control col-md-7 col-xs-12">
+                                        </div>
+                                    </div>
+                                    <div class="item form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="description">Option D <span class="required">*</span>
+                  </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <input id="description" value="<%= quiz.option_d %>" name="option_d" placeholder="Option D" required="required" class="form-control col-md-7 col-xs-12">
+                                        </div>
+                                    </div>
+                                    <div class="item form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="description">Option E <span class="required">*</span>
+                  </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <input id="option_e" value="<%= quiz.option_e %>" name="option_e" placeholder="Option E" required="required" class="form-control col-md-7 col-xs-12">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Answer<span class="required">*</span></label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <select class="select2_single form-control" tabindex="-1" name="answer">
+                                            <option value="A" <%= quiz.answer=='A' ? 'selected' : '' %>>A</option>
+                                            <option value="B" <%= quiz.answer=='B' ? 'selected' : '' %>>B</option>
+                                            <option value="C" <%= quiz.answer=='C' ? 'selected' : '' %>>C</option>
+                                            <option value="D" <%= quiz.answer=='D' ? 'selected' : '' %>>D</option>
+                                            <option value="E" <%= quiz.answer=='E' ? 'selected' : '' %>>E</option>
+                                          </select>
+                                        </div>
+                                    </div>
+                                    <div class="item form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="description">Point <span class="required">*</span>
+                  </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <input type="number" id="description" value="<%= quiz.poin %>" name="point" placeholder="Point" required="required" class="form-control col-md-7 col-xs-12">
+                                        </div>
+                                    </div>
+                                    <div class="item form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="title">Periode <span class="required">*</span>
+                  </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <input id="date1" value="<%= quiz.periode %>" name="start" placeholder="Periode" required="required" class="form-control col-md-7 col-xs-12" readonly="readonly">
+                                        </div>
+                                    </div>
+                                    <div class="ln_solid"></div>
+                                    <div class="form-group">
+                                        <div class="col-md-6 col-md-offset-3">
+                                            <a type="submit" class="btn btn-primary" href="/MasterQuiz/Index">Cancel</a>
+                                            <button id="send" type="submit" class="btn btn-success">Submit</button>
+                                        </div>
+                                    </div>
+                                </form>
+                                <% }) %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- footer content -->
+        <%- partial('../partials/footer') %>
+            <!-- /footer content -->
+    </div>
+    <!-- <script>
+        $(document).ready(function() {
+
+            $("#date1").datepicker({
+                dateFormat: "yy-mm-dd",
+                minDate: 0,
+                onSelect: function(date) {
+                    var dt2 = $('#date2');
+                    var startDate = $(this).datepicker('getDate');
+                    var minDate = $(this).datepicker('getDate');
+                    // dt2.datepicker('setDate', minDate);
+                    startDate.setDate(startDate.getDate() + 30);
+                    //sets dt2 maxDate to the last day of 30 days window
+                    dt2.datepicker('option', 'maxDate', startDate);
+                    dt2.datepicker('option', 'minDate', minDate);
+                    $(this).datepicker('option', 'minDate', minDate);
+                }
+            });
+            $('#date2').datepicker({
+                dateFormat: "yy-mm-dd"
+            });
+        });
+    </script> -->
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#datatable-keytable').DataTable({
+                keys: true
+            });
+            $('#datatable-responsive').DataTable({
+                "aaSorting": [],
+                "paging": false,
+                "ordering": false,
+                "info": false,
+                "searching": false
+            });
+            $('#datatable-scroller').DataTable({
+                ajax: "js/datatables/json/scroller-demo.json",
+                deferRender: true,
+                scrollY: 380,
+                scrollCollapse: true,
+                scroller: true
+            });
+            var table = $('#datatable-fixed-header').DataTable({
+                fixedHeader: true
+            });
+        });
+        TableManageButtons.init();
+    </script>
+    <script>
+        var handleDataTableButtons = function() {
+                "use strict";
+                0 !== $("#datatable-buttons").length && $("#datatable-buttons").DataTable({
+                    dom: "Bfrtip",
+                    buttons: [{
+                        extend: "copy",
+                        className: "btn-sm"
+                    }, {
+                        extend: "csv",
+                        className: "btn-sm"
+                    }, {
+                        extend: "excel",
+                        className: "btn-sm"
+                    }, {
+                        extend: "pdf",
+                        className: "btn-sm"
+                    }, {
+                        extend: "print",
+                        className: "btn-sm"
+                    }],
+                    responsive: !0
+                })
+            },
+            TableManageButtons = function() {
+                "use strict";
+                return {
+                    init: function() {
+                        handleDataTableButtons()
+                    }
+                }
+            }();
+    </script>
+    <script src="../js/datatables/jquery.dataTables.min.js"></script>
+    <script src="../js/datatables/dataTables.bootstrap.js"></script>
+    <script src="../js/datatables/dataTables.buttons.min.js"></script>
+    <script src="../js/datatables/buttons.bootstrap.min.js"></script>
+    <script src="../js/datatables/jszip.min.js"></script>
+    <script src="../js/datatables/pdfmake.min.js"></script>
+    <script src="../js/datatables/vfs_fonts.js"></script>
+    <script src="../js/datatables/buttons.html5.min.js"></script>
+    <script src="../js/datatables/buttons.print.min.js"></script>
+    <script src="../js/datatables/dataTables.fixedHeader.min.js"></script>
+    <script src="../js/datatables/dataTables.keyTable.min.js"></script>
+    <script src="../js/datatables/dataTables.responsive.min.js"></script>
+    <script src="../js/datatables/responsive.bootstrap.min.js"></script>
+    <script src="../js/datatables/dataTables.scroller.min.js"></script>

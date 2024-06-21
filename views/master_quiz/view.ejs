@@ -1,0 +1,107 @@
+<% layout('../partials/layout') -%>
+    <div class="right_col" role="main">
+        <div class="">
+            <div class="clearfix"></div>
+
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <h2>Master Quiz<small>detail</small></h2>
+
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
+                            <% obj.forEach(function (quiz) { %>
+                                <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Question : 
+                                          </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <!-- <input type="text" id="first-name" required="required" class="form-control col-md-7 col-xs-12"> -->
+                                            <label class="view-label col-md-7" for="first-name"><%= quiz.question %></label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Option A : 
+                                          </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <!-- <input type="text" id="first-name" required="required" class="form-control col-md-7 col-xs-12"> -->
+                                            <label class="view-label col-md-7" for="first-name"><%= quiz.option_a %></label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Option B : 
+                                          </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <!-- <input type="text" id="first-name" required="required" class="form-control col-md-7 col-xs-12"> -->
+                                            <label class="view-label col-md-7" for="first-name"><%= quiz.option_b %></label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Option C : 
+                                          </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <!-- <input type="text" id="first-name" required="required" class="form-control col-md-7 col-xs-12"> -->
+                                            <label class="view-label col-md-7" for="first-name"><%= quiz.option_c %></label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Option D : 
+                                          </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <!-- <input type="text" id="first-name" required="required" class="form-control col-md-7 col-xs-12"> -->
+                                            <label class="view-label col-md-7" for="first-name"><%= quiz.option_d %></label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Option E : 
+                                          </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <!-- <input type="text" id="first-name" required="required" class="form-control col-md-7 col-xs-12"> -->
+                                            <label class="view-label col-md-7" for="first-name"><%= quiz.option_e %></label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Answer : 
+                                          </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <!-- <input type="text" id="first-name" required="required" class="form-control col-md-7 col-xs-12"> -->
+                                            <label class="view-label col-md-7" for="first-name"><%= quiz.answer %></label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Point : 
+                                          </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <!-- <input type="text" id="first-name" required="required" class="form-control col-md-7 col-xs-12"> -->
+                                            <label class="view-label col-md-7" for="first-name"><%= quiz.poin %></label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Periode : 
+                                          </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <!-- <input type="text" id="first-name" required="required" class="form-control col-md-7 col-xs-12"> -->
+                                            <label class="view-label col-md-7" for="first-name"><%= quiz.periode %></label>
+                                        </div>
+                                    </div>
+                                    <div class="ln_solid"></div>
+                                    <div class="form-group">
+                                        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                                            <a type="submit" class="btn btn-primary" href="/MasterQuiz/Index">Back</a>
+                                        </div>
+                                    </div>
+                                </form>
+                                <% }) %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- footer content -->
+        <%- partial('../partials/footer') %>
+            <!-- /footer content -->
+
+    </div>

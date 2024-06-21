@@ -1,0 +1,306 @@
+<% layout('../../partials/layout') -%>
+
+<link
+  rel="stylesheet"
+  href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css"
+/>
+<script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
+
+<div class="right_col" role="main">
+  <div
+    id="alertSuccess"
+    class="alert alert-success alert-dismissible fade in"
+    role="alert"
+    style="display: none"
+  >
+    <a
+      href="/ReportLoginHarian/Download"
+      type="button"
+      class="close"
+      data-dismiss="alert"
+      aria-label="Close"
+      ><span aria-hidden="true">×</span>
+    </a>
+    {/* <%- JSON.stringify(message) %> */}
+  </div>
+  <div class="">
+    <div class="clearfix"></div>
+    <div class="row">
+      <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+          <div class="x_title">
+            <h2>Report Login Harian</h2>
+            <div class="clearfix"></div>
+          </div>
+          <div class="x_content">
+            <form
+             
+              enctype="multipart/form-data"
+              id="demo-form2"
+              data-parsley-validate
+              class="form-horizontal form-label-left"
+              novalidate
+            >
+              <div class="item form-group">
+                <label
+                  class="control-label col-md-3 col-sm-3 col-xs-12"
+                  for="category"
+                  >Cabang <span class="required">*</span></label
+                >
+                <div
+                  id="placeholder33"
+                  style="height: 260px; display: none"
+                  class="demo-placeholder"
+                ></div>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                  <select
+                    class="select2_single form-control"
+                    tabindex="-1"
+                    name="branch"
+                    id="branch"
+                  >
+                    <option value="all|all|all">ALL BRANCH</option>
+                    <% objBranch.forEach(function (branch) { %>
+                    <option
+                      value="<%= branch.id %>|<%= branch.branch_code %>|<%= branch.branch_name %>"
+                    >
+                      <%= branch.branch_name %>
+                    </option>
+                    <% }) %>
+                  </select>
+                </div>
+              </div>
+               <div class="item form-group">
+                <label
+                  class="control-label col-md-3 col-sm-3 col-xs-12"
+                  for="description"
+                  >Month <span class="required">*</span>
+                </label>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                  <select
+                    name="bulan"
+                    id="bulan"
+                    class="form-control col-md-7 col-xs-12"
+                  >
+                    <script>
+                      var bulan = [
+                        "Januari",
+                        "Februari",
+                        "Maret",
+                        "April",
+                        "Mei",
+                        "Juni",
+                        "Juli",
+                        "Agustus",
+                        "September",
+                        "Oktober",
+                        "November",
+                        "Desember",
+                      ];
+                      for (i = 0; i <= 11; i++) {
+                        var sm = i + 1;
+                        document.write(
+                          "<option value=" + sm + ">" + bulan[i] + "</option>"
+                        );
+                      }
+                    </script>
+                  </select>
+                </div>
+              </div>
+              <div class="item form-group">
+                <label
+                  class="control-label col-md-3 col-sm-3 col-xs-12"
+                  for="title"
+                  >Year <span class="required">*</span>
+                </label>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                  <select
+                    name="tahun"
+                    id="tahun"
+                    class="form-control col-md-7 col-xs-12"
+                  >
+                    <script>
+                      for (i = 0; i <= 2; i++) {
+                        let date = new Date().getFullYear() - i;
+                        document.write(
+                          "<option value=" + date + ">" + date + "</option>"
+                        );
+                      }
+                    </script>
+                  </select>
+                </div>
+              </div>
+             
+
+              <div class="ln_solid"></div>
+              <div class="form-group">
+                <div class="col-md-6 col-md-offset-3">
+                  <button id="send" type="button" onclick="getData()" class="btn btn-primary">Show Report</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+
+         <!-- loading -->
+        <div class="x_panel" id="overlay" style="display: none;">
+          <div class="x_content">
+            <center>
+              <p>Mohon menunggu</p>
+              <img
+                src="https://go.isostech.com/hubfs/Imported_Blog_Media/loader.gif"
+                alt="Loading"
+              /><br />
+              Loading...
+            </center>
+          </div>
+        </div>
+
+        <!-- show data -->
+        <div class="x_panel" id="dataAbsensi" style="display: none;">
+          <div class="x_title">
+            <div class="row">
+              <div class="col-8">
+                <h2>Report Utilisasi Delivery Man</h2>
+              </div>
+              <div class="col-4">
+                <!-- <form
+                  action="/ReportAbsensi/DownloadExcel"
+                  method="post"
+                  enctype="multipart/form-data"
+                  data-parsley-validate
+                  style="float: right"
+                  novalidate
+                >
+                  <input
+                    type="hidden"
+                    value=""
+                    id="thn_download"
+                    name="tahun_req_download"
+                  />
+                  <input
+                    type="hidden"
+                    value=""
+                    id="bln_download"
+                    name="bulan_req_download"
+                  />
+                  <input type="hidden" value="" id="brch" name="kode_dealer" />
+                  <button class="btn btn-success" type="submit" id="export">
+                    Download
+                  </button>
+                </form> -->
+              </div>
+            </div>
+
+            <div class="clearfix"></div>
+          </div>
+          <div class="x_content" style="overflow-x:auto;">
+            <table
+              id="datatable-responsive"
+              class="table table-striped table-bordered dt-responsive nowrap"
+              cellspacing="0"
+              width="100%"
+              
+            >
+              <thead>
+                <tr>
+                  <th style="position: sticky;left: 0; z-index: 2;background-color: #f2f2f2"> No </th>
+                  <th style="position: sticky;left: 33px; z-index: 2;background-color: #f2f2f2">KODE CABANG</th>
+                  <th style="position: sticky;left: 107px; z-index: 2;background-color: #f2f2f2">CABANG</th>
+                  <th style="position: sticky;left: 195px; z-index: 2;background-color: #f2f2f2">NAMA DRIVER</th>
+                  <th style="position: sticky;left: 267px; z-index: 2;background-color: #f2f2f2">HONDA ID</th>
+                  <%for(let i = 1; i <= 31; i++){%>
+                    <th><center> <%- i%> </center></th>
+                  <%}%>
+                  <th style="position: sticky;left: 170px; z-index: 2;background-color: #f2f2f2">Total</th>
+                </tr>
+              </thead>
+              <tbody id="rowsTbl"></tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <!-- footer content -->
+  <%- partial('../../partials/footer') %>
+  <!-- /footer content -->
+</div>
+
+<script>
+  $(document).ready(function () {
+    $("#date1").datepicker({
+      dateFormat: "yy-mm-dd",
+    });
+    $("#date2").datepicker({
+      dateFormat: "yy-mm-dd",
+    });
+  });
+</script>
+<script type="text/javascript">
+  $(document).ready(function() {
+      let myVar = <%- JSON.stringify(message) %>;
+      if (myVar != null) {
+          document.getElementById('alertSuccess').style.display = 'block';
+      }
+  });
+</script>
+
+<script>
+  function getData() {
+    let branch_code = $('#branch').val();
+    let bulan = $('#bulan').val();
+    let tahun = $('#tahun').val();
+    $("#overlay").fadeOut("slow");  
+    $.post(
+      "/ReportLoginHarian/ReportSubmit",
+      {
+        branch : branch_code,
+        bulan : bulan,
+        tahun : tahun
+      },
+      function (response) {
+        $("#overlay").fadeOut("hide");
+        $("#dataAbsensi").show();
+        // console.log(response,'hsh')
+        let obj = response.data
+       
+        let text = "";
+        obj.forEach(honda_id);
+        function honda_id(v, index) {
+
+          let arrSj = []
+          v.last_login.forEach((item) => {
+            var strArray = item.split("|");
+            arrSj[strArray[0]] = strArray[1];
+          })
+
+          let i = index + 1;
+          text += "<tr>";
+            text += "<td style='position: sticky;left: 0; z-index: 2;background-color: #f2f2f2'>" + i + "</td>";
+            text += "<td style='position: sticky;left: 33px;  z-index: 2; background-color: #f2f2f2'>" + v.branch_code + "</td>";
+            text += "<td style='position: sticky;left: 107px; z-index: 2; background-color: #f2f2f2'>" + v.branch_name + "</td>";
+            text += "<td style='position: sticky;left: 195px; z-index: 2; background-color: #f2f2f2'>" + v.nama + "</td>";
+            text += "<td style='position: sticky;left: 267px; z-index: 2; background-color: #f2f2f2'>" + v.honda_id + "</td>";
+            for (let i = 1; i < 32; i++) {
+              var iString = i.toString();
+              var digitTwo = iString.length == 2 ? i : "0" + i;
+              let timeAbsen = arrSj[i]
+
+              if (timeAbsen != undefined) {
+                text += "<td style='background-color: #f2f2f2'>" + arrSj[i] + "</td>";
+              }else{
+                text += "<td style='background-color: #f2f2f2'>" + '-' + "</td>";
+              }
+            }
+            text += "<td style='background-color: #f2f2f2'>" + v.last_login.length + "</td>";
+          text += "</tr>";
+
+        }
+        document.getElementById("rowsTbl").innerHTML = text;
+      }
+    )
+  }
+</script>
+

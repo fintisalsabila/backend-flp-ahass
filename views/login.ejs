@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Wanda FLP - Ahass</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--===============================================================================================-->
+    <link rel="icon" type="css/login/image/png" href="assets/css/login/images/icons/favicon.ico" />
+    <!-- <link rel="icon" type="css/login/image/png" href="/css/login/images/icons/favicon.ico" /> -->
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="assets/css/login/vendor/bootstrap/css/bootstrap.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="assets/css/login/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="assets/css/login/css/util.css">
+    <!--===============================================================================================-->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="assets/css/login/css/main.css">
+
+    <!-- Start Untuk capctha added hakim 19 nov 2021-->
+    <link href="captcha/slidercaptcha.min.css" rel="stylesheet" />
+    <link href="captcha/custom.css" rel="stylesheet" />
+    <!-- End Untuk capctha added hakim 19 nov 2021-->
+
+    <!-- Custom styling plus plugins -->
+    <!-- <link href="css/custom.css" rel="stylesheet"> -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script type="text/javascript">
+        $().ready(function() {
+            if (document.referrer != '<%= link %> + login ') {
+                history.pushState(null, null, 'login');
+                window.addEventListener('popstate', function() {
+                    history.pushState(null, null, 'login');
+                });
+            }
+        });
+    </script>
+</head>
+
+<body>
+    <div class="limiter">
+        <div class="container-login100">
+            <div class="wrap-login100">
+                <!-- <div class="login100-form-title"> -->
+                <div class="login100-form-title" style="background-image: url(/css/login/images/marketing.png);">
+                    <span class="login100-form-title-1">
+              Wanda FLP - Ahass
+            </span>
+                </div>
+                <div id="alertSuccess" class="alert alert-warning alert-dismissible fade in" role="alert" style="display:none">
+                    <a href="/login" type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+                                    </a>
+                    <%- JSON.stringify(message) %>
+                </div>
+                <form action="/login" method="post" class="login100-form validate-form" id="demo" data-parsley-validate>
+                    <div class="wrap-input100 validate-input m-b-26" data-validate="Username is required">
+                        <span class="label-input100">Username</span>
+                        <input class="input100" type="text" name="username" id="name" placeholder="Enter username" required="required">
+                        <span class="focus-input100"></span>
+                    </div>
+
+                    <div class="wrap-input100 validate-input m-b-18" data-validate="Password is required">
+                        <span class="label-input100">Password</span>
+                        <input class="input100" type="password" name="password" placeholder="Enter password" required="required">
+                        <span class="focus-input100"></span>
+                    </div>
+
+                    <!-- Start Untuk capctha added hakim 19 nov 2021-->
+                    <!-- <div class="wrap-input100 validate-input m-b-18" id="showCaptcha" style="display: none">
+                        <div class="form-row" style="margin-top: -35px; ">
+                            <div class="col-12">
+                                <div class="slidercaptcha card" style="height: 200px">
+                                    <div class="card-header">
+                                        <span>Complete the security check</span>
+                                    </div>
+                                    <div class="card-body">
+                                        <div id="captcha"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+                    <!-- <div class="container-login100-form-btn">
+                        <button type="button" class="login100-form-btn" onclick="myFunction()" id="buttonShowCaptcha">Login</button>
+                    </div> -->
+                    
+                    <div class="container-login100-form-btn">
+                        <button type="submit" class="login100-form-btn">Login</button>
+                    </div>
+                    <!-- End Untuk capctha added hakim 19 nov 2021-->
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+<!-- Start Untuk capctha added hakim 19 nov 2021-->
+<script>
+    function myFunction() {
+        $("#showCaptcha").show();
+        $("#buttonloginSubmit").show();
+        $("#buttonShowCaptcha").hide();
+    }
+</script>
+
+<script src="captcha/longbow.slidercaptcha.min.js"></script>
+<script>
+    sliderCaptcha({
+        id: 'captcha',
+        height: 100,
+        sliderL: 42,
+        sliderR: 9,
+        offset: 5,
+        loadingText: 'Loading...',
+        failedText: 'Try again',
+        barText: 'Slide right to fill',
+        repeatIcon: 'fa fa-redo',
+        setSrc: function () {
+            
+        },
+        onSuccess: function () {
+            $("#loginSubmit").attr('disabled', false);
+            $("#loginSubmit" ).click()
+        },
+        onFail: function () {
+            // alert('slider gagal')
+        },
+        onRefresh: function () {
+        
+        }
+    });
+</script>
+
+<!-- END - Untuk capctha added hakim 19 nov 2021-->
+
+<script src="assets/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="assets/js/parsley/parsley.min.js"></script>
+<!-- /input tags -->
+<!-- form validation -->
+<script type="text/javascript">
+    $(document).ready(function() {
+        let myVar = <%- JSON.stringify(message) %>;
+        if (myVar != null) {
+            document.getElementById('alertSuccess').style.display = 'block';
+        }
+        $.listen('parsley:field:validate', function() {
+            validateFront();
+        });
+        $('#demo-form .btn').on('click', function() {
+            $('#demo-form').parsley().validate();
+            validateFront();
+        });
+        var validateFront = function() {
+            if (true === $('#demo-form').parsley().isValid()) {
+                $('.bs-callout-info').removeClass('hidden');
+                $('.bs-callout-warning').addClass('hidden');
+            } else {
+                $('.bs-callout-info').addClass('hidden');
+                $('.bs-callout-warning').removeClass('hidden');
+            }
+        };
+    });
+
+    $(document).ready(function() {
+        $.listen('parsley:field:validate', function() {
+            validateFront();
+        });
+        $('#demo-form2 .btn').on('click', function() {
+            $('#demo-form2').parsley().validate();
+            validateFront();
+        });
+        var validateFront = function() {
+            if (true === $('#demo-form2').parsley().isValid()) {
+                $('.bs-callout-info').removeClass('hidden');
+                $('.bs-callout-warning').addClass('hidden');
+            } else {
+                $('.bs-callout-info').addClass('hidden');
+                $('.bs-callout-warning').removeClass('hidden');
+            }
+        };
+    });
+    try {
+        hljs.initHighlightingOnLoad();
+    } catch (err) {}
+</script>
+<!-- /form validation -->
+<!-- editor -->
+<script>
+    $(document).ready(function() {
+        $('.xcxc').click(function() {
+            $('#descr').val($('#editor').html());
+        });
+    });
+
+    $(function() {
+        function initToolbarBootstrapBindings() {
+            var fonts = ['Serif', 'Sans', 'Arial', 'Arial Black', 'Courier',
+                    'Courier New', 'Comic Sans MS', 'Helvetica', 'Impact', 'Lucida Grande', 'Lucida Sans', 'Tahoma', 'Times',
+                    'Times New Roman', 'Verdana'
+                ],
+                fontTarget = $('[title=Font]').siblings('.dropdown-menu');
+            $.each(fonts, function(idx, fontName) {
+                fontTarget.append($('<li><a data-edit="fontName ' + fontName + '" style="font-family:\'' + fontName + '\'">' + fontName + '</a></li>'));
+            });
+            $('a[title]').tooltip({
+                container: 'body'
+            });
+            $('.dropdown-menu input').click(function() {
+                    return false;
+                })
+                .change(function() {
+                    $(this).parent('.dropdown-menu').siblings('.dropdown-toggle').dropdown('toggle');
+                })
+                .keydown('esc', function() {
+                    this.value = '';
+                    $(this).change();
+                });
+
+            $('[data-role=magic-overlay]').each(function() {
+                var overlay = $(this),
+                    target = $(overlay.data('target'));
+                overlay.css('opacity', 0).css('position', 'absolute').offset(target.offset()).width(target.outerWidth()).height(target.outerHeight());
+            });
+            if ("onwebkitspeechchange" in document.createElement("input")) {
+                var editorOffset = $('#editor').offset();
+                $('#voiceBtn').css('position', 'absolute').offset({
+                    top: editorOffset.top,
+                    left: editorOffset.left + $('#editor').innerWidth() - 35
+                });
+            } else {
+                $('#voiceBtn').hide();
+            }
+        };
+
+        function showErrorAlert(reason, detail) {
+            var msg = '';
+            if (reason === 'unsupported-file-type') {
+                msg = "Unsupported format " + detail;
+            } else {
+                console.log("error uploading file", reason, detail);
+            }
+            $('<div class="alert"> <button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                '<strong>File upload error</strong> ' + msg + ' </div>').prependTo('#alerts');
+        };
+        initToolbarBootstrapBindings();
+        $('#editor').wysiwyg({
+            fileUploadError: showErrorAlert
+        });
+        window.prettyPrint && prettyPrint();
+    });
+</script>
+
+</html>

@@ -1,0 +1,175 @@
+<% layout('../partials/layout') -%>
+    <script type="text/javascript">
+        $().ready(function() {
+            if (document.referrer != '<%= link %> + MasterQuiz/Upload') {
+                history.pushState(null, null, '/MasterQuiz/Upload');
+                window.addEventListener('popstate', function() {
+                    history.pushState(null, null, '/MasterQuiz/Upload');
+                });
+            }
+        });
+    </script>
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css">
+    <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
+    <div class="right_col" role="main">
+        <div id="alertSuccess" class="alert alert-success alert-dismissible fade in" role="alert" style="display: none;">
+            <a href="/MasterQuiz/Upload" type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+                </a>
+            <%- JSON.stringify(message) %>
+        </div>
+        <div class="">
+            <div class="clearfix"></div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <h2>Master Quiz<small>Upload</small></h2>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
+                            <form action="/MasterQuiz/UploadSubmit" method="post" enctype="multipart/form-data" id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" novalidate>
+                                <div class="item form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="code">File Excel Quiz (xls/xlsx)<span class="required">*</span>
+                  </label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <div class="input-group input-file">
+                                            <span class="input-group-btn">
+                                                                        <button class="btn btn-default btn-choose" type="button">Choose</button>
+                                                                    </span>
+                                            <input type="text" class="form-control" placeholder='Choose a file...' id='file' />
+                                            <span class="input-group-btn">
+                                                                            <button class="btn btn-dark btn-reset" type="button">Reset</button>
+                                                                    </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="item form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="title">Start Date <span class="required">*</span>
+                  </label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <input name="start" id="date1" placeholder="Start Date" required="required" class="form-control col-md-7 col-xs-12">
+                                    </div>
+                                </div>
+                                <div class="item form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="description">End date <span class="required">*</span>
+                  </label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <input id="date2" name="end" placeholder="End date" required="required" class="form-control col-md-7 col-xs-12">
+                                    </div>
+                                </div>
+                                <div class="item form-group" id="SupervisorId">
+                                    <label id="label_id_sp" class="control-label col-md-3 col-sm-3 col-xs-12">Bonus Point<span class="required">*</span>
+                          </label>
+                                    <div class="col-md-6 col-sm-6 col-xs-11">
+                                        <input name="bonuspoin" placeholder="Bonus Poin" class="form-control col-md-7 col-xs-12" required="required">
+                                    </div>
+                                </div>
+                                <div class="ln_solid"></div>
+                                <div class="form-group">
+                                    <div class="col-md-6 col-md-offset-3">
+                                        <a type="submit" class="btn btn-primary" href="/MasterQuiz/Index">Cancel</a>
+                                        <button id="send" type="submit" class="btn btn-success">Submit</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- footer content -->
+        <%- partial('../partials/footer') %>
+            <!-- /footer content -->
+    </div>
+    <script>
+        var filenames = [];
+
+        function bs_input_file() {
+            $(".input-file").before(
+                function() {
+                    if (!$(this).prevAll('input').first().hasClass('input-ghost')) {
+                        var element = $("<input type='file' name='file' class='input-ghost' style='visibility:hidden; height:0'>");
+                        element.attr("name", $(this).attr("name"));
+                        element.change(function() {
+                            // if (filenames.indexOf(element.val()) >= 0) {
+                            //     alert("This file has been chosen");
+                            //     element.val(null);
+                            // } else {
+                            console.log(element.val());
+                            filenames.push(element.val());
+
+                            element.nextAll(element).find('input').val((element.val()).split('\\').pop());
+                            // }
+                        });
+                        $(this).find("button.btn-choose").click(function() {
+                            element.click();
+                        });
+                        $(this).find("button.btn-reset").click(function() {
+                            element.val(null);
+                            $(this).parents(".input-file").find('input').val('');
+                        });
+                        $(this).find('input').css("cursor", "pointer");
+                        $(this).find('input').mousedown(function() {
+                            $(this).parents('.input-file').prevAll('input').first().click();
+                            return false;
+                        });
+                        return element;
+                    }
+                }
+            );
+        }
+        $(function() {
+            bs_input_file();
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+
+            $("#date1").datepicker({
+                dateFormat: "yy-mm-dd",
+                minDate: 1,
+                onSelect: function(date) {
+                    var dt2 = $('#date2');
+                    var startDate = $(this).datepicker('getDate');
+                    var minDate = $(this).datepicker('getDate');
+                    // dt2.datepicker('setDate', minDate);
+                    startDate.setDate(startDate.getDate() + 30);
+                    //sets dt2 maxDate to the last day of 30 days window
+                    dt2.datepicker('option', 'maxDate', startDate);
+                    dt2.datepicker('option', 'minDate', minDate);
+                    $(this).datepicker('option', 'minDate', minDate);
+                }
+            });
+            $('#date2').datepicker({
+                dateFormat: "yy-mm-dd"
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            let myVar = <%- JSON.stringify(message) %>;
+            if (myVar != null) {
+                document.getElementById('alertSuccess').style.display = 'block';
+            }
+            $('#datatable').dataTable();
+            $('#datatable-keytable').DataTable({
+                keys: true
+            });
+            $('#datatable-responsive').DataTable({
+                "aaSorting": []
+            });
+            $('#datatable-scroller').DataTable({
+                ajax: "js/datatables/json/scroller-demo.json",
+                deferRender: true,
+                scrollY: 380,
+                scrollCollapse: true,
+                scroller: true
+            });
+            var table = $('#datatable-fixed-header').DataTable({
+                fixedHeader: true
+            });
+        });
+        TableManageButtons.init();
+    </script>
+
+    </html>
