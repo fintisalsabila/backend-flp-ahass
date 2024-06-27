@@ -1,117 +1,142 @@
-<!-- <% layout('../partials/layout') -%>
-<div class="right_col" role="main">
-    <% if (message) { %>
-        <div id="alertSuccess" class="alert alert-success alert-dismissible fade in" role="alert" style="display:block;">
-            <a href="/MasterTraining/Index" type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></a>
-            <%= message %>
+<% layout('../partials/layout') -%>
+    <div class="right_col" role="main">
+        <div id="alertSuccess" class="alert alert-success alert-dismissible fade in" role="alert" style="display: none;">
+            <a href="/MasterTraining/Index" type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+        </a>
+            <%- JSON.stringify(message) %>
         </div>
-    <% } %>
-
-    <div class="">
-        <div class="clearfix"></div>
-        <div class="row">
-            <div class="col-md-12 col-sm-12 col-xs-12">
-                <div class="x_panel">
-                    <div class="x_title">
-                        <h2>Master Training <small>Index</small></h2>
-                        <div class="clearfix"></div>
-                    </div>
-                    <a type="button" class="btn btn-dark" href="/MasterTraining/Add">Add Data</a>
-                    <div class="x_content">
-                        <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
-                            <thead>
-                                <tr>
-                                    <th>Nama Training</th>
-                                    <th>Jumlah Peserta</th>
-                                    <th>Periode Awal</th>
-                                    <th>Periode Akhir</th>
-                                    <th>Modul</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <% data.forEach(function(training) { %>
+        <div class="">
+            <div class="clearfix"></div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <h2>Master User
+                                <small>index</small>
+                            </h2>
+                            <div class="clearfix"></div>
+                        </div>
+                        <a type="button" class="btn btn-dark" href="/MasterTraining/Add">Add Data</a>
+                        <a type="button" class="btn btn-dark" href="/MasterTraining/Modul">Add Modul</a>
+                        <div class="x_content">
+                            <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+                                <thead>
                                     <tr>
-                                        <td><%= training.trainingName %></td>
-                                        <td><%= training.participant %></td>
-                                        <td><%= training.trainingStartDate %></td>
-                                        <td><%= training.trainingEndDate %></td>
-                                        <td><%= training.modul %></td>
-                                        <td>
-                                            <a href="/MasterTraining/Edit?id=<%= training.IdTraining %>">Edit</a>
-                                            <a href="/MasterTraining/Delete?id=<%= training.IdTraining %>" onclick="return confirm('Are you sure you want to delete this item?');">Delete</a>
-                                        </td>
+                                        <th>Name</th>
+                                        <th>Username</th>
+                                        <th>Group</th>
+                                        <th>Email</th>
+                                        <th>Branch Code</th>
+                                        <th>Action</th>
                                     </tr>
-                                <% }) %>
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    <% data.forEach(function (datas) { %>
+                                        <tr>
+                                            <td>
+                                                <%= datas.name %>
+                                            </td>
+                                            <td>
+                                                <%= datas.username %>
+                                            </td>
+                                            <td>
+                                                <%= datas.title %>
+                                            </td>
+                                            <% if(datas.email != null){ %>
+                                                <td>
+                                                    <%= datas.email %>
+                                                </td>
+                                                <% }else{ %>
+                                                    <td>
+                                                        -
+                                                    </td>
+                                                    <% } %>
+                                                    <% if(datas.title == 'Mekanik'){ %>
+                                                        <td>
+                                                            <%= datas.ahass_name %>
+                                                        </td>
+                                                     <% }else{ %>
+                                                        <td>
+                                                            <%= datas.branch_name %>
+                                                        </td>
+                                                     <% } %>
+                                                        <td>
+                                                            <a class="btn btn-primary btn-xs" href="/MasterTraining/Index?id=<%= datas.id %>">
+                                                                <i class="fa fa-folder"></i>View</a>
+                                                            <a class="btn btn-info btn-xs" href="/MasterTraining/Edit?id=<%= datas.id %>">
+                                                                <i class="fa fa-pencil"></i> Edit</a>
+                                                            <a class="btn btn-danger btn-xs" href="/MasterTraining/Delete?id=<%= datas.id %>" onclick="return confirm('Are you sure you want to delete this item?');">
+                                                                <i class="fa fa-trash-o"></i> Delete</a>
+                                                        </td>
+                                        </tr>
+                                        <% }) %>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+        <!-- footer content -->
+        <%- partial('../partials/footer') %>
+            <!-- /footer content -->
     </div>
-    <!-- footer content -->
-    <% include('../partials/footer') %>
-    <!-- /footer content -->
-</div>
-
-<script>
-    var handleDataTableButtons = function() {
-        "use strict";
-        0 !== $("#datatable-buttons").length && $("#datatable-buttons").DataTable({
-            dom: "Bfrtip",
-            buttons: [{
-                extend: "copy",
-                className: "btn-sm"
-            }, {
-                extend: "csv",
-                className: "btn-sm"
-            }, {
-                extend: "excel",
-                className: "btn-sm"
-            }, {
-                extend: "pdf",
-                className: "btn-sm"
-            }, {
-                extend: "print",
-                className: "btn-sm"
-            }],
-            responsive: !0
-        })
-    },
-    TableManageButtons = function() {
-        "use strict";
-        return {
-            init: function() {
-                handleDataTableButtons()
+    <script>
+        var handleDataTableButtons = function() {
+                "use strict";
+                0 !== $("#datatable-buttons").length && $("#datatable-buttons").DataTable({
+                    dom: "Bfrtip",
+                    buttons: [{
+                        extend: "copy",
+                        className: "btn-sm"
+                    }, {
+                        extend: "csv",
+                        className: "btn-sm"
+                    }, {
+                        extend: "excel",
+                        className: "btn-sm"
+                    }, {
+                        extend: "pdf",
+                        className: "btn-sm"
+                    }, {
+                        extend: "print",
+                        className: "btn-sm"
+                    }],
+                    responsive: !0
+                })
+            },
+            TableManageButtons = function() {
+                "use strict";
+                return {
+                    init: function() {
+                        handleDataTableButtons()
+                    }
+                }
+            }();
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            let myVar = <%- JSON.stringify(message) %>;
+            if (myVar != null) {
+                document.getElementById('alertSuccess').style.display = 'block';
             }
-        }
-    }();
-</script>
-
-<script type="text/javascript">
-    $(document).ready(function() {
-        let myVar = <%= JSON.stringify(message) %>;
-        if (myVar != null) {
-            document.getElementById('alertSuccess').style.display = 'block';
-        }
-        $('#datatable').dataTable();
-        $('#datatable-keytable').DataTable({
-            keys: true
+            $('#datatable').dataTable();
+            $('#datatable-keytable').DataTable({
+                keys: true
+            });
+            $('#datatable-responsive').DataTable({
+                "aaSorting": []
+            });
+            $('#datatable-scroller').DataTable({
+                ajax: "js/datatables/json/scroller-demo.json",
+                deferRender: true,
+                scrollY: 380,
+                scrollCollapse: true,
+                scroller: true
+            });
+            var table = $('#datatable-fixed-header').DataTable({
+                fixedHeader: true
+            });
         });
-        $('#datatable-responsive').DataTable({
-            "aaSorting": []
-        });
-        $('#datatable-scroller').DataTable({
-            ajax: "js/datatables/json/scroller-demo.json",
-            deferRender: true,
-            scrollY: 380,
-            scrollCollapse: true,
-            scroller: true
-        });
-        var table = $('#datatable-fixed-header').DataTable({
-            fixedHeader: true
-        });
-    });
-    TableManageButtons.init();
-</script> -->
+        TableManageButtons.init();
+    </script>

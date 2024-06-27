@@ -1,125 +1,105 @@
-// const connection = require('../../../config/db_prod');
+var connection = require("../../../config/db_prod");
+var request = require('request');
+var uuidv1 = require('uuid/v1');
 
-// function MasterTraining() {
-//     // Function to retrieve all master training data
-//     this.selectMasterTraining = function(req, res) {
-//         connection.acquire(function(err, con) {
-//             if (err) {
-//                 console.error('Error acquiring database connection:', err);
-//                 return res.status(500).send('Internal Server Error');
-//             }
 
-//             const query = 'SELECT * FROM master_training';
-//             con.query(query, function(err, results) {
-//                 con.release();
-//                 if (err) {
-//                     console.error('Error executing query:', err);
-//                     return res.status(500).send('Failed to retrieve data');
-//                 }
-//                 res.render('master_training/index', { data: results });
-//             });
-//         });
-//     };
+function MasterTraining() {
+    this.addForm = function(req, res) {
+        res.render('master_training/add');
+    };
 
-//     // Function to render the add master training form
-//     this.insertMasterTraining = function(req, res) {
-//         res.render('master_training/add');
-//     };
+    this.submitInsertMasterTrain = function(req, res) {
+        var id = uuidv1();
+        var trainingName = req.body.trainingName;
+        var participant = req.body.participant;
+        var trainingStartDate = req.body.trainingStartDate;
+        var trainingEndDate = req.body.trainingEndDate;
+        var modul = req.body.modul;
 
-//     // Function to handle submission of new master training data
-//     this.submitInsertMasterTraining = function(req, res) {
-//         const data = {
-//             trainingName: req.body.trainingName,
-//             participant: req.body.participant,
-//             trainingStartDate: req.body.trainingStartDate,
-//             trainingEndDate: req.body.trainingEndDate,
-//             modul: req.body.modul
-//         };
+        connection.acquire(function(err, con) {
+            if (err) throw err;
+            con.query('INSERT INTO master_training SET?', { IdTraining: id, trainingName, participant, trainingStartDate, trainingEndDate, modul }, function(err, results) {
+                con.release();
+                if (err) {
+                    console.log(err);
+                } else {
+                    res.redirect('/master_training');
+                }
+            });
+        });
+    };
 
-//         connection.acquire(function(err, con) {
-//             if (err) {
-//                 console.error('Error acquiring database connection:', err);
-//                 return res.status(500).send('Internal Server Error');
-//             }
+    this.selectMasterTrain = function(req, res) {
+        connection.acquire(function(err, con) {
+            if (err) throw err;
+            con.query('SELECT * FROM master_training', function(err, results) {
+                con.release();
+                if (err) {
+                    console.log(err);
+                } else {
+                    res.render('master_training/index', {
+                        title: 'Data Master Training',
+                        data: results,
+                        message:null
+                    });
+                }
+            });
+        });
+    };
 
-//             con.query('INSERT INTO master_training SET ?', data, function(err, results) {
-//                 con.release();
-//                 if (err) {
-//                     console.error('Error executing query:', err);
-//                     return res.status(500).send('Failed to insert data');
-//                 }
-//                 res.redirect('/MasterTraining/Index');
-//             });
-//         });
-//     };
+    this.editForm = function(req, res) {
+        var id = req.params.id;
+        connection.acquire(function(err, con) {
+            if (err) throw err;
+            con.query('SELECT * FROM master_training WHERE IdTraining =?', [id], function(err, results) {
+                con.release();
+                if (err) {
+                    console.log(err);
+                } else {
+                    res.render('master_training/edit', {
+                        title: 'Edit Data Master Training',
+                        data: results[0]
+                    });
+                }
+            });
+        });
+    };
 
-//     // Function to render the edit master training form
-//     this.editMasterTraining = function(req, res) {
-//         const id = req.query.id;
-//         connection.acquire(function(err, con) {
-//             if (err) {
-//                 console.error('Error acquiring database connection:', err);
-//                 return res.status(500).send('Internal Server Error');
-//             }
+    this.submitUpdateMasterTrain = function(req, res) {
+        var id = req.params.id;
+        var trainingName = req.body.trainingName;
+        var participant = req.body.participant;
+        var trainingStartDate = req.body.trainingStartDate;
+        var trainingEndDate = req.body.trainingEndDate;
+        var modul = req.body.modul;
 
-//             con.query('SELECT * FROM master_training WHERE IdTraining = ?', [id], function(err, result) {
-//                 con.release();
-//                 if (err) {
-//                     console.error('Error executing query:', err);
-//                     return res.status(500).send('Failed to retrieve data');
-//                 }
-//                 res.render('master_training/edit', { data: result[0] });
-//             });
-//         });
-//     };
+        connection.acquire(function(err, con) {
+            if (err) throw err;
+            con.query('UPDATE master_training SET? WHERE IdTraining =?', [{ trainingName, participant, trainingStartDate, trainingEndDate, modul }, id], function(err, results) {
+                con.release();
+                if (err) {
+                    console.log(err);
+                } else {
+                    res.redirect('/master_training');
+                }
+            });
+        });
+    };
 
-//     // Function to handle submission of edited master training data
-//     this.submitEditMasterTraining = function(req, res) {
-//         const id = req.body.IdTraining;
-//         const data = {
-//             trainingName: req.body.trainingName,
-//             participant: req.body.participant,
-//             trainingStartDate: req.body.trainingStartDate,
-//             trainingEndDate: req.body.trainingEndDate,
-//             modul: req.body.modul
-//         };
+    this.deleteMasterTrain = function(req, res) {
+        var id = req.params.id;
+        connection.acquire(function(err, con) {
+            if (err) throw err;
+            con.query('DELETE FROM master_training WHERE IdTraining =?', [id], function(err, results) {
+                con.release();
+                if (err) {
+                    console.log(err);
+                } else {
+                    res.redirect('/master_training');
+                }
+            });
+        });
+    };
+}
 
-//         connection.acquire(function(err, con) {
-//             if (err) {
-//                 console.error('Error acquiring database connection:', err);
-//                 return res.status(500).send('Internal Server Error');
-//             }
-
-//             con.query('UPDATE master_training SET ? WHERE IdTraining = ?', [data, id], function(err, results) {
-//                 con.release();
-//                 if (err) {
-//                     console.error('Error executing query:', err);
-//                     return res.status(500).send('Failed to update data');
-//                 }
-//                 res.redirect('/MasterTraining/Index');
-//             });
-//         });
-//     };
-
-//     // Function to handle deletion of master training data
-//     this.deleteMasterTraining = function(req, res) {
-//         const id = req.query.id;
-//         connection.acquire(function(err, con) {
-//             if (err) {
-//                 console.error('Error acquiring database connection:', err);
-//                 return res.status(500).send('Internal Server Error');
-//             }
-
-//             con.query('DELETE FROM master_training WHERE IdTraining = ?', [id], function(err, results) {
-//                 con.release();
-//                 if (err) {
-//                     console.error('Error executing query:', err);
-//                     return res.status(500).send('Failed to delete data');
-//                 }
-//                 res.redirect('/MasterTraining/Index');
-//             });
-//         });
-//     };
-// }
-
-// module.exports = new MasterTraining();
+module.exports = MasterTraining;
