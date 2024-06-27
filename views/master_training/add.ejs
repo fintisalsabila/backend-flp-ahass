@@ -1,0 +1,35 @@
+<!-- <% layout('../partials/layout') -%>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Master Training</title>
+    <link rel="stylesheet" type="text/css" href="../css/pagination.css" />
+</head>
+<body>
+    <h1>Add Master Training</h1>
+    <form action="/MasterTraining/AddSubmit" method="post">
+        <label for="trainingName">Nama Training</label>
+        <input type="text" id="trainingName" name="trainingName" required><br>
+
+        <label for="participant">Jumlah Peserta</label>
+        <input type="number" id="participant" name="participant" required><br>
+
+        <label for="trainingStartDate">Periode Awal</label>
+        <input type="date" id="trainingStartDate" name="trainingStartDate" required><br>
+
+        <label for="trainingEndDate">Periode Akhir</label>
+        <input type="date" id="trainingEndDate" name="trainingEndDate" required><br>
+
+        <label for="modul">Modul</label>
+        <select id="modul" name="modul">
+            <option value="">-- Select Modul --</option>
+            <option value="modul1">Modul 1</option>
+            <option value="modul2">Modul 2</option>
+            <option value="modul3">Modul 3</option>
+        </select><br>
+
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html> -->

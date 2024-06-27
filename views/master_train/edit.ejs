@@ -1,0 +1,14 @@
+<h1>Edit Master Training</h1>
+<form action="/MasterTraining/EditSubmit/<%= data.IdTraining %>" method="post">
+    <label>Nama Training:</label>
+    <input type="text" name="trainingName" value="<%= data.trainingName %>"><br><br>
+    <label>Jumlah Peserta:</label>
+    <input type="number" name="participant" value="<%= data.participant %>"><br><br>
+    <label>Periode Awal:</label>
+    <input type="date" name="trainingStartDate" value="<%= data.trainingStartDate %>"><br><br>
+    <label>Periode Akhir:</label>
+    <input type="date" name="trainingEndDate" value="<%= data.trainingEndDate %>"><br><br>
+    <label>Modul:</label>
+    <input type="text" name="modul" value="<%= data.modul %>"><br><br>
+    <input type="submit" value="Edit">
+</form>

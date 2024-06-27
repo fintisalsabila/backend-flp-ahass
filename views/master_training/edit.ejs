@@ -1,0 +1,37 @@
+<!-- <% layout('../partials/layout') -%>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Master Training</title>
+    <link rel="stylesheet" type="text/css" href="../css/pagination.css" />
+</head>
+<body>
+    <h1>Edit Master Training</h1>
+    <form action="/MasterTraining/EditSubmit" method="post">
+        <input type="hidden" id="IdTraining" name="IdTraining" value="<%= data.IdTraining %>">
+
+        <label for="trainingName">Nama Training</label>
+        <input type="text" id="trainingName" name="trainingName" value="<%= data.trainingName %>" required><br>
+
+        <label for="participant">Jumlah Peserta</label>
+        <input type="number" id="participant" name="participant" value="<%= data.participant %>" required><br>
+
+        <label for="trainingStartDate">Periode Awal</label>
+        <input type="date" id="trainingStartDate" name="trainingStartDate" value="<%= data.trainingStartDate %>" required><br>
+
+        <label for="trainingEndDate">Periode Akhir</label>
+        <input type="date" id="trainingEndDate" name="trainingEndDate" value="<%= data.trainingEndDate %>" required><br>
+
+        <label for="modul">Modul</label>
+        <select id="modul" name="modul">
+            <option value="">-- Select Modul --</option>
+            <option value="modul1" <%= data.modul === 'modul1' ? 'selected' : '' %>>Modul 1</option>
+            <option value="modul2" <%= data.modul === 'modul2' ? 'selected' : '' %>>Modul 2</option>
+            <option value="modul3" <%= data.modul === 'modul3' ? 'selected' : '' %>>Modul 3</option>
+        </select><br>
+
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html> -->

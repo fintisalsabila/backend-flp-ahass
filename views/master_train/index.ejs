@@ -1,0 +1,25 @@
+<h1>Data Master Training</h1>
+<table border="1">
+    <tr>
+        <th>Nama Training</th>
+        <th>Jumlah Peserta</th>
+        <th>Periode Awal</th>
+        <th>Periode Akhir</th>
+        <th>Modul</th>
+        <th>Action</th>
+    </tr>
+    <% data.forEach(function(item) { %>
+    <tr>
+        <td><%= item.trainingName %></td>
+        <td><%= item.participant %></td>
+        <td><%= item.trainingStartDate %></td>
+        <td><%= item.trainingEndDate %></td>
+        <td><%= item.modul %></td>
+        <td>
+            <a href="/MasterTraining/Edit/<%= item.IdTraining %>">Edit</a>
+            <a href="/MasterTraining/Delete/<%= item.IdTraining %>">Delete</a>
+        </td>
+    </tr>
+    <% }); %>
+</table>
+<a href="/MasterTraining/Add">Add New Training</a>

@@ -538,39 +538,6 @@ function Todo() {
                             if (err) {
                                 console.log(err);
                             } else {
-                                // connection.acquire(function(err, con) {
-                                //     if (err) throw err;
-                                //     con.query('SELECT sv.id, sv.supervisor_nama, bc.name as branch_name FROM supervisors sv, branches bc WHERE bc.id = sv.branch_id order by supervisor_nama desc', function(err, dataSupervisor) {
-                                //         con.release();
-                                //         if (err) {
-                                //             console.log(err);
-                                //         } else {
-                                //             connection.acquire(function(err, con) {
-                                //                 if (err) throw err;
-                                //                 con.query('SELECT s.id, s.sls_nama, sp.supervisor_nama, b.name as branch_name FROM salesmen s LEFT OUTER JOIN supervisors sp ON s.supervisor_id = sp.id LEFT OUTER JOIN branches b ON s.branch_id = b.id order by sls_nama desc', function(err, dataLOV) {
-                                //                     con.release();
-                                //                     if (err) {
-                                //                         console.log(err);
-                                //                     } else {
-                                //                         connection.acquire(function(err, con) {
-                                //                             if (err) throw err;
-                                //                             con.query('SELECT id, name FROM branches', function(err, dataBranch) {
-                                //                                 con.release();
-                                //                                 if (err) {
-                                //                                     console.log(err);
-                                //                                 } else {
-
-                                //                                 }
-                                //                             });
-                                //                         });
-                                //                     }
-                                //                 });
-                                //             });
-                                //         }
-                                //     });
-                                // });
-
-
                                                                     request({
                                                                         uri: baseHostAhass + baseUrlAhass + 'api_ahass_all.php',
                                                                         auth: {

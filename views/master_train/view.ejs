@@ -1,0 +1,190 @@
+<% layout('../partials/layout') -%>
+    <div class="right_col" role="main">
+
+        <div class="">
+            <div class="clearfix"></div>
+
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <h2>Master User<small>detail</small></h2>
+
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
+                            <% obj.forEach(function (user) { 
+                            
+                                %>
+                                <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Name : 
+                                          </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <!-- <input type="text" id="first-name" required="required" class="form-control col-md-7 col-xs-12"> -->
+                                            <label class="view-label col-md-7" for="name"><%= user.name %></label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="username">Username : 
+                                          </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <!-- <input type="text" id="first-name" required="required" class="form-control col-md-7 col-xs-12"> -->
+                                            <label class="view-label col-md-7" for="username"><%= user.username %></label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="group_name">Group Name : 
+                                          </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <!-- <input type="text" id="first-name" required="required" class="form-control col-md-7 col-xs-12"> -->
+                                            <label class="view-label col-md-7" for="group_name"><%= user.group_name %></label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" style="display: none;">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="group_name">Group ID : 
+                                              </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <!-- <input type="text" id="first-name" required="required" class="form-control col-md-7 col-xs-12"> -->
+                                            <input id="id_group" name="id_group" placeholder="Id Group Name" required="required" class="form-control col-md-7 col-xs-12" readonly="readonly" value="<%= user.group_id %>">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">Email : 
+                                          </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <!-- <input type="text" id="first-name" required="required" class="form-control col-md-7 col-xs-12"> -->
+                                            <label class="view-label col-md-7" for="email"><%= user.email %></label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="phone_number">Phone Number : 
+                                          </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <!-- <input type="text" id="first-name" required="required" class="form-control col-md-7 col-xs-12"> -->
+                                            <label class="view-label col-md-7" for="phone_number"><%= user.phone_number %></label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="gender">Gender : 
+                                          </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <!-- <input type="text" id="first-name" required="required" class="form-control col-md-7 col-xs-12"> -->
+                                            <label class="view-label col-md-7" for="gender"><%= user.gender %></label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="birth_date">Birthdate : 
+                                          </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <!-- <input type="text" id="first-name" required="required" class="form-control col-md-7 col-xs-12"> -->
+                                            <label class="view-label col-md-7" for="birth_date"><%= user.birth_date %></label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="branch_name">Branch Name : 
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <!-- <input type="text" id="first-name" required="required" class="form-control col-md-7 col-xs-12"> -->
+                                            <% if(user.group_name == 'Mekanik') { %>
+                                             <label class="view-label col-md-7" for="ahass_name"><%=user.ahass_name %></label>
+                                            <% } else { %>
+                                            <label class="view-label col-md-7" for="branch_name"><%=user.branch_name %></label>
+                                            <% } %>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" id="divSupervisorName">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="supervisor_name">Supervisor Name : 
+                                          </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <!-- <input type="text" id="first-name" required="required" class="form-control col-md-7 col-xs-12"> -->
+                                            <% if(user.supervisor_nama == null) { %>
+                                                <label class="view-label col-md-7" for="supervisor_name" value="-">-</label>
+                                                <% } else { %>
+                                                    <label class="view-label col-md-7" for="supervisor_name"><%= user.supervisor_nama %></label>
+                                                    <% } %>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" id="divSalesmanName">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="salesmen_name">Salesman Name : 
+                                          </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <!-- <input type="text" id="first-name" required="required" class="form-control col-md-7 col-xs-12"> -->
+                                            <% if(user.sls_nama == null) { %>
+                                                <label class="view-label col-md-7" for="supervisor_name">-</label>
+                                                <% } else { %>
+                                                    <label class="view-label col-md-7" for="salesmen_name"><%= user.sls_nama %></label>
+                                                    <% } %>
+                                        </div>
+                                    </div>
+
+                                    <% if(user.group_name == 'Mekanik') { %>
+                                        <div class="item form-group" id="HondaId">
+                                            <label id="label_honda_id" class="control-label col-md-3 col-sm-3 col-xs-12" for="honda_id">Honda ID<span class="required">*</span>
+                                            </label>
+                                            <div class="col-md-6 col-sm-6 col-xs-11">
+                                                <label class="view-label col-md-7" for="honda_id"><%= user.honda_id %></label>
+                                            </div>
+                                        </div>
+                                    <% } %>
+
+                                    <!-- <div class="item form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="status_user" >Status User</label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <select class="select2_single form-control" tabindex="-1" name="status_user" >
+                                                <option value="T" <%= user.status_user=='T' ? 'selected' : '' %>>Active</option>
+                                                <option value="F" <%= user.status_user=='F' ? 'selected' : '' %>>Non Active</option>
+                                              </select>
+                                        </div>
+                                    </div>  -->
+
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="status_user">Status User : 
+                                          </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <label class="view-label col-md-7" for="first-name">
+                                                        <!-- <%= user.status_user %> -->
+                                                        <% if(user.status_user == "A"){ %>
+                                                            <b>active</b>
+                                                       <% } else { %>
+                                                        <b>non active</b>
+                                                       <% } %>
+                                                </label>
+                                        </div>
+                                    </div>
+                                    <div class="ln_solid"></div>
+                                    <div class="form-group">
+                                        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                                            <a type="submit" class="btn btn-primary" href="/MasterTrain/Index">Back</a>
+                                        </div>
+                                    </div>
+
+                                </form>
+                                <% }) %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- footer content -->
+        <%- partial('../partials/footer') %>
+            <!-- /footer content -->
+
+    </div>
+
+    <script>
+        //Kondisi Penampilan Salesman name & Supervisor Name (New Condition By Lely)
+        $(document).ready(function() {
+            document.getElementById("divSupervisorName").style.display = "none";
+            document.getElementById("divSalesmanName").style.display = "none";
+            
+            if (document.getElementById("id_group").value == "ea22e39e-0590-11e8-9702-ac220be6ac47") {
+                document.getElementById("divSupervisorName").style.display = "block";
+                document.getElementById("divSalesmanName").style.display = "block";
+            } else if (document.getElementById("id_group").value == "ea16bbd9-0590-11e8-9702-ac220be6ac47") {
+                document.getElementById("divSupervisorName").style.display = "block";
+            }
+        });
+    </script>
