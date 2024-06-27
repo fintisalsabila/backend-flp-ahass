@@ -5,11 +5,11 @@ var masterTrain = new MasterTrain();
 
 module.exports = {
     configure: function(app) {
-        app.route('/MasterTraining/Index').get(masterTrain.selectMasterTrain);
-        app.route('/MasterTraining/Add').get(masterTrain.addForm);
-        app.route('/MasterTraining/AddSubmit').post(masterTrain.submitInsertMasterTrain);
-        app.route('/MasterTraining/Edit').get(masterTrain.editForm);
-        app.route('/MasterTraining/EditSubmit').post(masterTrain.submitUpdateMasterTrain);
-        app.route('/MasterTraining/Delete').get(masterTrain.deleteMasterTrain);
+        app.route('/MasterTrain/Index').get(masterTrain.selectMasterTrain);
+        app.route('/MasterTrain/Add').get(masterTrain.addForm);
+        app.route('/MasterTrain/AddSubmit').post(masterTrain.submitInsertMasterTrain);
+        app.route('/MasterTrain/Edit').get(masterTrain.editForm);
+        app.route('/MasterTrain/EditSubmit').post(masterTrain.submitUpdateMasterTrain);
+        app.route('/MasterTrain/Delete').get(masterTrain.deleteMasterTrain);
     }
 }

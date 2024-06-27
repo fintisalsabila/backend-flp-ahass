@@ -2,11 +2,10 @@ var connection = require("../../../config/db_prod");
 var request = require('request');
 var uuidv1 = require('uuid/v1');
 
-//
 
 function MasterTrain() {
     this.addForm = function(req, res) {
-        res.render('master_training/add');
+        res.render('master_train/add');
     };
 
     this.submitInsertMasterTrain = function(req, res) {
@@ -24,7 +23,7 @@ function MasterTrain() {
                 if (err) {
                     console.log(err);
                 } else {
-                    res.redirect('/master_training');
+                    res.redirect('/master_train');
                 }
             });
         });
@@ -38,9 +37,10 @@ function MasterTrain() {
                 if (err) {
                     console.log(err);
                 } else {
-                    res.render('master_training/index', {
+                    res.render('master_train/index', {
                         title: 'Data Master Training',
-                        data: results
+                        data: results,
+                        message:null
                     });
                 }
             });
@@ -56,7 +56,7 @@ function MasterTrain() {
                 if (err) {
                     console.log(err);
                 } else {
-                    res.render('master_training/edit', {
+                    res.render('master_train/edit', {
                         title: 'Edit Data Master Training',
                         data: results[0]
                     });
@@ -80,7 +80,7 @@ function MasterTrain() {
                 if (err) {
                     console.log(err);
                 } else {
-                    res.redirect('/master_training');
+                    res.redirect('/master_train');
                 }
             });
         });
@@ -95,7 +95,7 @@ function MasterTrain() {
                 if (err) {
                     console.log(err);
                 } else {
-                    res.redirect('/master_training');
+                    res.redirect('/master_train');
                 }
             });
         });
