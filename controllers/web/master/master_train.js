@@ -2,6 +2,8 @@ var connection = require("../../../config/db_prod");
 var request = require('request');
 var uuidv1 = require('uuid/v1');
 
+//
+
 function MasterTrain() {
     this.addForm = function(req, res) {
         res.render('master_training/add');
