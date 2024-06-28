@@ -2,7 +2,6 @@ var connection = require("../../../config/db_prod");
 var request = require('request');
 var uuidv1 = require('uuid/v1');
 
-
 function MasterTraining() {
     this.addForm = function(req, res) {
         res.render('master_training/add');
@@ -23,7 +22,7 @@ function MasterTraining() {
                 if (err) {
                     console.log(err);
                 } else {
-                    res.redirect('/master_training');
+                    res.redirect('/MasterTraining/Index');
                 }
             });
         });
@@ -40,7 +39,7 @@ function MasterTraining() {
                     res.render('master_training/index', {
                         title: 'Data Master Training',
                         data: results,
-                        message:null
+                        message: null
                     });
                 }
             });
@@ -80,7 +79,7 @@ function MasterTraining() {
                 if (err) {
                     console.log(err);
                 } else {
-                    res.redirect('/master_training');
+                    res.redirect('/MasterTraining/Index');
                 }
             });
         });
@@ -95,7 +94,7 @@ function MasterTraining() {
                 if (err) {
                     console.log(err);
                 } else {
-                    res.redirect('/master_training');
+                    res.redirect('/MasterTraining/Index');
                 }
             });
         });

@@ -1,15 +1,13 @@
-// Auth: Nina, Lely
 var MasterTraining = require('../../../controllers/web/master/master_training');
-
-var MasterTraining = new MasterTraining();
+var masterTraining = new MasterTraining();
 
 module.exports = {
     configure: function(app) {
-        app.route('/MasterTraining/Index').get(MasterTraining.selectMasterTrain);
-        app.route('/MasterTraining/Add').get(MasterTraining.addForm);
-        app.route('/MasterTraining/AddSubmit').post(MasterTraining.submitInsertMasterTrain);
-        app.route('/MasterTraining/Edit').get(MasterTraining.editForm);
-        app.route('/MasterTraining/EditSubmit').post(MasterTraining.submitUpdateMasterTrain);
-        app.route('/MasterTraining/Delete').get(MasterTraining.deleteMasterTrain);
+        app.route('/MasterTraining/Index').get(masterTraining.selectMasterTrain);
+        app.route('/MasterTraining/Add').get(masterTraining.addForm);
+        app.route('/MasterTraining/AddSubmit').post(masterTraining.submitInsertMasterTrain);
+        app.route('/MasterTraining/Edit').get(masterTraining.editForm);
+        app.route('/MasterTraining/EditSubmit').post(masterTraining.submitUpdateMasterTrain);
+        app.route('/MasterTraining/Delete').get(masterTraining.deleteMasterTrain);
     }
 }

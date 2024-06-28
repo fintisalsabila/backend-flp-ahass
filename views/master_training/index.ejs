@@ -11,7 +11,7 @@
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="x_panel">
                         <div class="x_title">
-                            <h2>Master User
+                            <h2>Master Training
                                 <small>index</small>
                             </h2>
                             <div class="clearfix"></div>
@@ -22,54 +22,32 @@
                             <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
                                 <thead>
                                     <tr>
-                                        <th>Name</th>
-                                        <th>Username</th>
-                                        <th>Group</th>
-                                        <th>Email</th>
-                                        <th>Branch Code</th>
+                                        <th>Nama Training</th>
+                                        <th>Jumlah Peserta</th>
+                                        <th>Periode Awal</th>
+                                        <th>Periode Akhir</th>
+                                        <th>Modul</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <% data.forEach(function (datas) { %>
                                         <tr>
+                                            <td><%= datas.trainingName %></td>
+                                            <td><%= datas.participant %></td>
+                                            <td><%= datas.trainingStartDate %></td>
+                                            <td><%= datas.trainingEndDate %></td>
+                                            <td><%= datas.modul %></td>
                                             <td>
-                                                <%= datas.name %>
+                                                <a class="btn btn-primary btn-xs" href="/MasterTraining/Index?id=<%= datas.IdTraining %>">
+                                                    <i class="fa fa-folder"></i> View</a>
+                                                <a class="btn btn-info btn-xs" href="/MasterTraining/Edit?id=<%= datas.IdTraining %>">
+                                                    <i class="fa fa-pencil"></i> Edit</a>
+                                                <a class="btn btn-danger btn-xs" href="/MasterTraining/Delete?id=<%= datas.IdTraining %>" onclick="return confirm('Are you sure you want to delete this item?');">
+                                                    <i class="fa fa-trash-o"></i> Delete</a>
                                             </td>
-                                            <td>
-                                                <%= datas.username %>
-                                            </td>
-                                            <td>
-                                                <%= datas.title %>
-                                            </td>
-                                            <% if(datas.email != null){ %>
-                                                <td>
-                                                    <%= datas.email %>
-                                                </td>
-                                                <% }else{ %>
-                                                    <td>
-                                                        -
-                                                    </td>
-                                                    <% } %>
-                                                    <% if(datas.title == 'Mekanik'){ %>
-                                                        <td>
-                                                            <%= datas.ahass_name %>
-                                                        </td>
-                                                     <% }else{ %>
-                                                        <td>
-                                                            <%= datas.branch_name %>
-                                                        </td>
-                                                     <% } %>
-                                                        <td>
-                                                            <a class="btn btn-primary btn-xs" href="/MasterTraining/Index?id=<%= datas.id %>">
-                                                                <i class="fa fa-folder"></i>View</a>
-                                                            <a class="btn btn-info btn-xs" href="/MasterTraining/Edit?id=<%= datas.id %>">
-                                                                <i class="fa fa-pencil"></i> Edit</a>
-                                                            <a class="btn btn-danger btn-xs" href="/MasterTraining/Delete?id=<%= datas.id %>" onclick="return confirm('Are you sure you want to delete this item?');">
-                                                                <i class="fa fa-trash-o"></i> Delete</a>
-                                                        </td>
                                         </tr>
-                                        <% }) %>
+                                    <% }) %>
                                 </tbody>
                             </table>
                         </div>

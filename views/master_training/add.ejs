@@ -16,35 +16,35 @@
                         <form action="/MasterTraining/AddSubmit" method="post" id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" novalidate>
 
                             <div class="form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="trainingName">Training Name</label>
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="trainingName">Nama Training</label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                     <input type="text" id="trainingName" name="trainingName" required="required" class="form-control col-md-7 col-xs-12">
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="participant">Participant</label>
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="participant">Jumlah Peserta</label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                     <input type="number" id="participant" name="participant" required="required" class="form-control col-md-7 col-xs-12">
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="trainingStartDate">Training Start Date</label>
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="trainingStartDate">Periode Awal</label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                     <input type="date" id="trainingStartDate" name="trainingStartDate" required="required" class="form-control col-md-7 col-xs-12">
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="trainingEndDate">Training End Date</label>
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="trainingEndDate">Periode Akhir</label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                     <input type="date" id="trainingEndDate" name="trainingEndDate" required="required" class="form-control col-md-7 col-xs-12">
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="modul">Module</label>
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="modul">Modul</label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                     <input type="text" id="modul" name="modul" class="form-control col-md-7 col-xs-12">
                                 </div>
@@ -68,3 +68,17 @@
 </div>
 
 <script src="../js/pagination.js"></script>
+
+<script>
+$(document).ready(function() {
+    $('#demo-form2').on('submit', function(e) {
+        var startDate = new Date($('#trainingStartDate').val());
+        var endDate = new Date($('#trainingEndDate').val());
+
+        if (endDate < startDate) {
+            alert('Periode akhir tidak boleh kurang dari periode awal.');
+            e.preventDefault();
+        }
+    });
+});
+</script>
