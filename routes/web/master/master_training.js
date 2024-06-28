@@ -10,4 +10,4 @@ module.exports = {
         app.route('/MasterTraining/EditSubmit/:id').post(masterTraining.submitUpdateMasterTrain);
         app.route('/MasterTraining/Delete').get(masterTraining.deleteMasterTrain);
     }
-}
+};
