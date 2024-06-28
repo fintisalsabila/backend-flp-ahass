@@ -17,7 +17,7 @@ function MasterTraining() {
 
         connection.acquire(function(err, con) {
             if (err) throw err;
-            con.query('INSERT INTO master_training SET?', { IdTraining: id, trainingName, participant, trainingStartDate, trainingEndDate, modul }, function(err, results) {
+            con.query('INSERT INTO master_training SET ?', { IdTraining: id, trainingName, participant, trainingStartDate, trainingEndDate, modul }, function(err, results) {
                 con.release();
                 if (err) {
                     console.log(err);
@@ -47,10 +47,10 @@ function MasterTraining() {
     };
 
     this.editForm = function(req, res) {
-        var id = req.params.id;
+        var id = req.query.id;
         connection.acquire(function(err, con) {
             if (err) throw err;
-            con.query('SELECT * FROM master_training WHERE IdTraining =?', [id], function(err, results) {
+            con.query('SELECT * FROM master_training WHERE IdTraining = ?', [id], function(err, results) {
                 con.release();
                 if (err) {
                     console.log(err);
@@ -74,7 +74,7 @@ function MasterTraining() {
 
         connection.acquire(function(err, con) {
             if (err) throw err;
-            con.query('UPDATE master_training SET? WHERE IdTraining =?', [{ trainingName, participant, trainingStartDate, trainingEndDate, modul }, id], function(err, results) {
+            con.query('UPDATE master_training SET ? WHERE IdTraining = ?', [{ trainingName, participant, trainingStartDate, trainingEndDate, modul }, id], function(err, results) {
                 con.release();
                 if (err) {
                     console.log(err);
@@ -86,10 +86,10 @@ function MasterTraining() {
     };
 
     this.deleteMasterTrain = function(req, res) {
-        var id = req.params.id;
+        var id = req.query.id;
         connection.acquire(function(err, con) {
             if (err) throw err;
-            con.query('DELETE FROM master_training WHERE IdTraining =?', [id], function(err, results) {
+            con.query('DELETE FROM master_training WHERE IdTraining = ?', [id], function(err, results) {
                 con.release();
                 if (err) {
                     console.log(err);

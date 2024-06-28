@@ -7,7 +7,7 @@ module.exports = {
         app.route('/MasterTraining/Add').get(masterTraining.addForm);
         app.route('/MasterTraining/AddSubmit').post(masterTraining.submitInsertMasterTrain);
         app.route('/MasterTraining/Edit').get(masterTraining.editForm);
-        app.route('/MasterTraining/EditSubmit').post(masterTraining.submitUpdateMasterTrain);
+        app.route('/MasterTraining/EditSubmit/:id').post(masterTraining.submitUpdateMasterTrain);
         app.route('/MasterTraining/Delete').get(masterTraining.deleteMasterTrain);
     }
 }
