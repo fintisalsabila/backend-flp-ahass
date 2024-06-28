@@ -99,6 +99,24 @@ function MasterTraining() {
             });
         });
     };
+
+    this.viewForm = function(req, res) {
+        var id = req.query.id;
+        connection.acquire(function(err, con) {
+            if (err) throw err;
+            con.query('SELECT * FROM master_training WHERE IdTraining = ?', [id], function(err, results) {
+                con.release();
+                if (err) {
+                    console.log(err);
+                } else {
+                    res.render('master_training/view', {
+                        title: 'View Data Master Training',
+                        data: results[0]
+                    });
+                }
+            });
+        });
+    };    
 }
 
 module.exports = MasterTraining;
