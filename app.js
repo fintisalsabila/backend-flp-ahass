@@ -15,6 +15,7 @@ var web_login = require("./routes/web/index");
 var web_master_user = require("./routes/web/master/master_user");
 var web_master_quiz = require("./routes/web/master/master_quiz");
 var web_master_training = require("./routes/web/master/master_training");
+var web_master_modul = require("./routes/web/master/master_modul");
 
 //report
 var web_report_login = require("./routes/web/report/report_login_harian");//hakim
@@ -200,6 +201,7 @@ web_login.configure(app);
 web_master_user.configure(app);
 web_master_quiz.configure(app);
 web_master_training.configure(app);
+web_master_modul.configure(app);
 
 web_report_login.configure(app);
 
