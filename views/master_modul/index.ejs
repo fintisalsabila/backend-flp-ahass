@@ -1,7 +1,7 @@
 <% layout('../partials/layout') -%>
 <div class="right_col" role="main">
     <div id="alertSuccess" class="alert alert-success alert-dismissible fade in" role="alert" style="display: none;">
-        <a href="/MasterModul/Modul" type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+        <a href="/MasterModul/Index" type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
         </a>
         <%- JSON.stringify(message) %>
     </div>
@@ -11,12 +11,10 @@
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                     <div class="x_title">
-                        <h2>Master Modul
-                            <small>index</small>
-                        </h2>
+                        <h2>Master Modul <small>index</small></h2>
                         <div class="clearfix"></div>
                     </div>
-                    <a type="button" class="btn btn-dark" href="/MasterModul/AddModul">Add Data</a>
+                    <a type="button" class="btn btn-dark" href="/MasterModul/Add">Add Data</a>
                     <div class="x_content">
                         <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
                             <thead>
@@ -30,11 +28,11 @@
                                 <% data.forEach(function(modul) { %>
                                     <tr>
                                         <td><%= modul.modulName %></td>
-                                        <td><a href="/uploads/<%= modul.modulFile %>"><%= modul.modulFile %></a></td>
+                                        <td><a href="/uploads/<%= modul.file %>"><%= modul.file %></a></td>
                                         <td>
-                                            <a class="btn btn-info btn-xs" href="/MasterModul/EditModul?id=<%= modul.IdModul %>">
+                                            <a class="btn btn-info btn-xs" href="/MasterModul/Edit?id=<%= modul.IdModul %>">
                                                 <i class="fa fa-pencil"></i> Edit</a>
-                                            <a class="btn btn-danger btn-xs" href="/MasterModul/DeleteModul?id=<%= modul.IdModul %>" onclick="return confirm('Are you sure you want to delete this item?');">
+                                            <a class="btn btn-danger btn-xs" href="/MasterModul/Delete?id=<%= modul.IdModul %>" onclick="return confirm('Are you sure you want to delete this item?');">
                                                 <i class="fa fa-trash-o"></i> Delete</a>
                                         </td>
                                     </tr>

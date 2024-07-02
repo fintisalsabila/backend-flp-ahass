@@ -2,7 +2,6 @@ var connection = require("../../../config/db_prod");
 var uuidv1 = require('uuid/v1');
 
 function MasterModul() {
-    // Modul CRUD
     this.addModulForm = function(req, res) {
         res.render('master_modul/add');
     };
@@ -10,20 +9,26 @@ function MasterModul() {
     this.submitInsertModul = function(req, res) {
         var idModul = uuidv1();
         var modulName = req.body.modulName;
-        var fileUpload = req.file.filename;
+        var fileUpload = req.file ? req.file.filename : null; // Assuming 'fileUpload' is the name attribute of file input in the form
+
+        if (!fileUpload) {
+            return res.status(400).send('File upload failed.');
+        }
 
         connection.acquire(function(err, con) {
             if (err) throw err;
-            con.query('INSERT INTO master_modul (IdModul, modulName, modulFile) VALUES (?, ?, ?)', [id, modulName, fileUpload], function(err, results) {
+            con.query('INSERT INTO master_modul (IdModul, modulName, file) VALUES (?, ?, ?)', [idModul, modulName, fileUpload], function(err, results) {
                 con.release();
                 if (err) {
                     console.log(err);
+                    res.status(500).send('Database error.');
                 } else {
                     res.redirect('/MasterModul/Index');
                 }
             });
         });
     };
+
 
     this.selectModul = function(req, res) {
         connection.acquire(function(err, con) {
@@ -32,6 +37,11 @@ function MasterModul() {
                 con.release();
                 if (err) {
                     console.log(err);
+                    res.render('master_modul/index', {
+                        title: 'Data Master Modul',
+                        data: [],
+                        message: 'Error fetching data'
+                    });
                 } else {
                     res.render('master_modul/index', {
                         title: 'Data Master Modul',
@@ -43,14 +53,17 @@ function MasterModul() {
         });
     };
 
+    // Render edit module form
     this.editModulForm = function(req, res) {
-        var id = req.query.id;
+        var idModul = req.query.id;
+
         connection.acquire(function(err, con) {
             if (err) throw err;
-            con.query('SELECT * FROM master_modul WHERE IdModul = ?', [id], function(err, results) {
+            con.query('SELECT * FROM master_modul WHERE IdModul = ?', [idModul], function(err, results) {
                 con.release();
                 if (err) {
                     console.log(err);
+                    res.redirect('/MasterModul/Index'); // Redirect to index with error message
                 } else {
                     res.render('master_modul/edit', {
                         title: 'Edit Data Master Modul',
@@ -61,17 +74,18 @@ function MasterModul() {
         });
     };
 
+    // Handle submission of updated module with file upload
     this.submitUpdateModul = function(req, res) {
         var idModul = req.params.id;
         var modulName = req.body.modulName;
-        var fileUpload = req.file ? req.file.filename : req.body.oldFile;
-
+        var fileUpload = req.file ? req.file.filename : req.body.oldFile; 
         connection.acquire(function(err, con) {
             if (err) throw err;
-            con.query('UPDATE master_modul SET modulName = ?, modulFile = ? WHERE IdModul = ?', [modulName, fileUpload, id], function(err, results) {
+            con.query('UPDATE master_modul SET modulName = ?, file = ? WHERE IdModul = ?', [modulName, fileUpload, idModul], function(err, results) {
                 con.release();
                 if (err) {
                     console.log(err);
+                    res.redirect('/MasterModul/Edit?id=' + idModul); 
                 } else {
                     res.redirect('/MasterModul/Index');
                 }
@@ -79,14 +93,17 @@ function MasterModul() {
         });
     };
 
+    // Delete module
     this.deleteModul = function(req, res) {
-        var id = req.query.id;
+        var idModul = req.query.id;
+
         connection.acquire(function(err, con) {
             if (err) throw err;
-            con.query('DELETE FROM master_modul WHERE IdModul = ?', [id], function(err, results) {
+            con.query('DELETE FROM master_modul WHERE IdModul = ?', [idModul], function(err, results) {
                 con.release();
                 if (err) {
                     console.log(err);
+                    res.redirect('/MasterModul/Index');
                 } else {
                     res.redirect('/MasterModul/Index');
                 }

@@ -13,28 +13,25 @@
                         <div class="clearfix"></div>
                     </div>
                     <div class="x_content">
-                        <form action="/MasterModul/AddModulSubmit" method="post" id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" enctype="multipart/form-data">
-
+                        <form action="/MasterModul/AddSubmit" method="post" id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" enctype="multipart/form-data">
                             <div class="form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="modulName">Nama Modul</label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                     <input type="text" id="modulName" name="modulName" required="required" class="form-control col-md-7 col-xs-12">
                                 </div>
                             </div>
-
                             <div class="form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="fileUpload">Upload File</label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                     <input type="file" id="fileUpload" name="fileUpload" required="required" class="form-control col-md-7 col-xs-12">
                                 </div>
                             </div>
-
                             <div class="ln_solid"></div>
                             <div class="form-group">
                                 <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
                                     <button type="submit" class="btn btn-success">Submit</button>
                                     <button type="reset" class="btn btn-primary">Reset</button>
-                                    <a href="/MasterModul/Modul" class="btn btn-default">Cancel</a>
+                                    <a href="/MasterModul/Index" class="btn btn-default">Cancel</a>
                                 </div>
                             </div>
                         </form>
@@ -43,7 +40,26 @@
             </div>
         </div>
     </div>
-    <%- include('../partials/footer') %>
+    <%- partial('../partials/footer') %>
 </div>
 
 <script src="../js/pagination.js"></script>
+
+<script>
+$(document).ready(function() {
+    $('#trainingStartDate').on('change', function() {
+        var startDate = $(this).val();
+        $('#trainingEndDate').attr('min', startDate);
+    });
+
+    $('#demo-form2').on('submit', function(e) {
+        var startDate = new Date($('#trainingStartDate').val());
+        var endDate = new Date($('#trainingEndDate').val());
+
+        if (endDate < startDate) {
+            alert('Periode akhir tidak boleh kurang dari periode awal.');
+            e.preventDefault();
+        }
+    });
+});
+</script>

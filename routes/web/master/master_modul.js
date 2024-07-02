@@ -17,11 +17,11 @@ var upload = multer({ storage: storage });
 
 module.exports = {
     configure: function(app) {
-        app.route('/MasterModul/Index').get(masterModul.selectModul);
-        app.route('/MasterModul/Add').get(masterModul.addModulForm);
-        app.route('/MasterModul/AddSubmit').post(upload.single('fileUpload'), masterModul.submitInsertModul);
-        app.route('/MasterModul/Edit').get(masterModul.editModulForm);
-        app.route('/MasterModul/EditModulSubmit/:id').post(upload.single('fileUpload'), masterModul.submitUpdateModul);
-        app.route('/MasterModul/Delete').get(masterModul.deleteModul);
+        app.get('/MasterModul/Index', masterModul.selectModul);
+        app.get('/MasterModul/Add', masterModul.addModulForm);
+        app.post('/MasterModul/AddSubmit', upload.single('fileUpload'), masterModul.submitInsertModul);
+        app.get('/MasterModul/Edit', masterModul.editModulForm);
+        app.post('/MasterModul/EditSubmit/:id', upload.single('fileUpload'), masterModul.submitUpdateModul);
+        app.get('/MasterModul/Delete', masterModul.deleteModul);
     }
 };
