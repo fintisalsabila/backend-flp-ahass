@@ -136,12 +136,12 @@ app.engine("ejs", require("ejs-locals"));
 app.set("view engine", "ejs");
 app.use(logger("dev"));
 // app.use(bodyParser.json());
-// app.use(bodyParser.urlencoded({ extended: false }));
+// app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json({ limit: "50mb", parameterLimit: 100000 }));
 app.use(
   bodyParser.urlencoded({
     limit: "50mb",
-    extended: true,
+    extended: false,
     parameterLimit: 100000,
   })
 );

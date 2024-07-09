@@ -9,10 +9,7 @@ function MasterModul() {
     this.submitInsertModul = function(req, res) {
         var IdModul = uuidv1();
         var modulName = req.body.modulName;
-        var fileUpload = req.files[0].filename
-
-        console.log("ratri" + JSON.stringify(req.files))
-        console.log("ratrii" + fileUpload)
+        var fileUpload = req.files[0].filename;
 
         if (!fileUpload) {
             return res.status(400).send('File upload failed.');
@@ -24,6 +21,7 @@ function MasterModul() {
                 con.release();
                 if (err) {
                     console.log(err);
+                    return res.status(500).send('Failed to insert data.');
                 } else {
                     res.redirect('/MasterModul/Index');
                 }
@@ -121,6 +119,26 @@ function MasterModul() {
                     return res.redirect('/MasterModul/Index');
                 } else {
                     res.redirect('/MasterModul/Index');
+                }
+            });
+        });
+    };
+
+    this.viewForm = function(req, res) {
+        var IdModul = req.query.id;
+
+        connection.acquire(function(err, con) {
+            if (err) throw err;
+            con.query('SELECT * FROM master_modul WHERE IdModul = ?', [IdModul], function(err, results) {
+                con.release();
+                if (err) {
+                    console.log(err);
+                    return res.redirect('/MasterModul/Index');
+                } else {
+                    res.render('master_modul/view', {
+                        title: 'View Data Master Modul',
+                        data: results[0]
+                    });
                 }
             });
         });

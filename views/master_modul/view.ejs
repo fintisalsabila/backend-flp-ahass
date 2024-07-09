@@ -1,4 +1,7 @@
 <% layout('../partials/layout') -%>
+<link rel="stylesheet" type="text/css" href="../css/pagination.css" />
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script>
+
 <div class="right_col" role="main">
     <div class="">
         <div class="clearfix"></div>
@@ -6,54 +9,38 @@
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                     <div class="x_title">
-                        <h2>Master Modul<small>detail</small></h2>
+                        <h2>Master Modul<small>view</small></h2>
                         <div class="clearfix"></div>
                     </div>
                     <div class="x_content">
-                        <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+                        <div class="form-horizontal form-label-left">
                             <div class="form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="trainingName">Nama Training:</label>
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Nama Modul:</label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <label class="view-label col-md-7" for="trainingName"><%= data.trainingName %></label>
+                                    <p class="form-control-static"><%= data.modulName %></p>
                                 </div>
                             </div>
+
                             <div class="form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="participant">Jumlah Peserta:</label>
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">File Upload:</label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <label class="view-label col-md-7" for="participant"><%= data.participant %></label>
+                                    <p class="form-control-static"><a href="<%= data.fileUpload %>" target="_blank"><%= data.fileUpload %></a></p>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="trainingStartDate">Periode Awal:</label>
-                                <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <label class="view-label col-md-7" for="trainingStartDate"><%= data.trainingStartDate %></label>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="trainingEndDate">Periode Akhir:</label>
-                                <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <label class="view-label col-md-7" for="trainingEndDate"><%= data.trainingEndDate %></label>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="modul">Modul:</label>
-                                <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <label class="view-label col-md-7" for="modul"><%= data.modul %></label>
-                                </div>
-                            </div>
+
                             <div class="ln_solid"></div>
                             <div class="form-group">
                                 <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                                    <a type="submit" class="btn btn-primary" href="/MasterTraining/Index">Back</a>
+                                    <a href="/MasterModul/Index" class="btn btn-danger">Back</a>
                                 </div>
                             </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- footer content -->
     <%- partial('../partials/footer') %>
-    <!-- /footer content -->
 </div>
+
+<script src="../js/pagination.js"></script>

@@ -13,22 +13,19 @@
                         <div class="clearfix"></div>
                     </div>
                     <div class="x_content">
-                        <form action="/MasterModul/AddSubmit" method="post" id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" enctype="multipart/form-data" novalidate>
-
+                        <form id="modulForm" action="/MasterModul/AddSubmit" method="post" data-parsley-validate class="form-horizontal form-label-left" enctype="multipart/form-data" novalidate>
                             <div class="form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="modulName">Nama Modul</label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                     <input type="text" id="modulName" name="modulName" required="required" class="form-control col-md-7 col-xs-12">
                                 </div>
                             </div>
-
                             <div class="form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="fileUpload">File Upload</label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                     <input type="file" id="fileUpload" name="fileUpload" required="required" class="form-control col-md-7 col-xs-12">
                                 </div>
                             </div>
-
                             <div class="ln_solid"></div>
                             <div class="form-group">
                                 <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
@@ -47,3 +44,26 @@
 </div>
 
 <script src="../js/pagination.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#modulForm').on('submit', function(e) {
+            var isValid = true;
+            var modulName = $('#modulName').val().trim();
+            var fileUpload = $('#fileUpload').val().trim();
+
+            if (modulName === '') {
+                isValid = false;
+                alert('Nama Modul is required.');
+            }
+
+            if (fileUpload === '') {
+                isValid = false;
+                alert('File Upload is required.');
+            }
+
+            if (!isValid) {
+                e.preventDefault();
+            }
+        });
+    });
+</script>
