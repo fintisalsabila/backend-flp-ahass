@@ -44,24 +44,28 @@
 </div>
 
 <script src="../js/pagination.js"></script>
+<script src="../js/pagination.js"></script>
 <script>
     $(document).ready(function() {
         $('#modulForm').on('submit', function(e) {
             var isValid = true;
+            var errorMessage = '';
+
             var modulName = $('#modulName').val().trim();
             var fileUpload = $('#fileUpload').val().trim();
 
             if (modulName === '') {
+                errorMessage += 'Nama Modul harus diisi.\n';
                 isValid = false;
-                alert('Nama Modul is required.');
             }
 
             if (fileUpload === '') {
+                errorMessage += 'File Upload harus diisi.\n';
                 isValid = false;
-                alert('File Upload is required.');
             }
 
             if (!isValid) {
+                alert(errorMessage);
                 e.preventDefault();
             }
         });
