@@ -26,7 +26,7 @@
                                     <th>Jumlah Peserta</th>
                                     <th>Periode Awal</th>
                                     <th>Periode Akhir</th>
-                                    <th>Modul</th>
+                                    <th>Nama Modul</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -37,7 +37,7 @@
                                         <td><%= datas.participant %></td>
                                         <td><%= datas.trainingStartDate %></td>
                                         <td><%= datas.trainingEndDate %></td>
-                                        <td><%= datas.modul %></td>
+                                        <td><%= datas.modulName %></td>
                                         <td>
                                             <a class="btn btn-primary btn-xs" href="/MasterTraining/View?id=<%= datas.IdTraining %>">
                                                 <i class="fa fa-folder"></i> View</a>
@@ -55,9 +55,7 @@
             </div>
         </div>
     </div>
-    <!-- footer content -->
     <%- partial('../partials/footer') %>
-    <!-- /footer content -->
 </div>
 <script>
     var handleDataTableButtons = function() {
