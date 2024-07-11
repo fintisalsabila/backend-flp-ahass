@@ -65,6 +65,25 @@
 
 <script>
     $(document).ready(function() {
+        $('#trainingStartDate').on('change', function() {
+            var startDate = $(this).val();
+            $('#trainingEndDate').attr('min', startDate);
+        });
+    
+        $('#demo-form2').on('submit', function(e) {
+            var startDate = new Date($('#trainingStartDate').val());
+            var endDate = new Date($('#trainingEndDate').val());
+    
+            if (endDate < startDate) {
+                alert('Periode akhir tidak boleh kurang dari periode awal.');
+                e.preventDefault();
+            }
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function() {
         $('#trainingForm').on('submit', function(e) {
             var isValid = true;
             var errorMessage = '';
@@ -104,6 +123,11 @@
                 alert(errorMessage);
                 e.preventDefault();
             }
+        });
+
+        $('#trainingStartDate').on('change', function() {
+            var startDate = $(this).val();
+            $('#trainingEndDate').attr('min', startDate);
         });
     });
 </script>

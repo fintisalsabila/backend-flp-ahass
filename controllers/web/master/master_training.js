@@ -49,11 +49,10 @@ function MasterTraining() {
         var participant = req.body.participant;
         var trainingStartDate = req.body.trainingStartDate;
         var trainingEndDate = req.body.trainingEndDate;
-        var modulName = req.body.modulName;
 
         connection.acquire(function(err, con) {
             if (err) throw err;
-            con.query('INSERT INTO master_training SET ?', { IdTraining: id, trainingName, participant, trainingStartDate, trainingEndDate, modulName }, function(err, results) {
+            con.query('INSERT INTO master_training SET ?', { IdTraining: id, trainingName, participant, trainingStartDate, trainingEndDate }, function(err, results) {
                 con.release();
                 if (err) {
                     console.log(err);
@@ -70,11 +69,10 @@ function MasterTraining() {
         var participant = req.body.participant;
         var trainingStartDate = req.body.trainingStartDate;
         var trainingEndDate = req.body.trainingEndDate;
-        var modulName = req.body.modulName;
 
         connection.acquire(function(err, con) {
             if (err) throw err;
-            con.query('UPDATE master_training SET ? WHERE IdTraining = ?', [{ trainingName, participant, trainingStartDate, trainingEndDate, modulName }, id], function(err, results) {
+            con.query('UPDATE master_training SET ? WHERE IdTraining = ?', [{ trainingName, participant, trainingStartDate, trainingEndDate }, id], function(err, results) {
                 con.release();
                 if (err) {
                     console.log(err);
