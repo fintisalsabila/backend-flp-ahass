@@ -10,6 +10,10 @@ function MasterModul() {
         var IdModul = uuidv1();
         var modulName = req.body.modulName;
         var fileUpload = req.files[0].filename;
+        var createdAt = new Date();
+        var createdBy = req.session.user.id;
+        var modifiedAt = new Date();
+        var modifiedBy = req.session.user.id;
 
         if (!fileUpload) {
             return res.status(400).send('File upload failed.');
@@ -17,7 +21,7 @@ function MasterModul() {
 
         connection.acquire(function(err, con) {
             if (err) throw err;
-            con.query('INSERT INTO master_modul (IdModul, modulName, fileUpload) VALUES (?, ?, ?)', [IdModul, modulName, fileUpload], function(err, results) {
+            con.query('INSERT INTO master_modul (IdModul, modulName, fileUpload, createdAt, createdBy, modifiedAt, modifiedBy) VALUES (?, ?, ?, ?, ?, ?, ?)', [IdModul, modulName, fileUpload, createdAt, createdBy, modifiedAt, modifiedBy], function(err, results) {
                 con.release();
                 if (err) {
                     console.log(err);

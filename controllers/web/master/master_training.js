@@ -49,6 +49,11 @@ function MasterTraining() {
         var participant = req.body.participant;
         var trainingStartDate = req.body.trainingStartDate;
         var trainingEndDate = req.body.trainingEndDate;
+        var createdAt = new Date();
+        var createdBy = req.session.user.id;
+        var modifiedAt = new Date();
+        var modifiedBy = req.session.user.id;
+        var status = req.body.status_user;
 
         connection.acquire(function(err, con) {
             if (err) throw err;
