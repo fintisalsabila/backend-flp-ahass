@@ -129,15 +129,13 @@ function MasterModul() {
     };
 
     this.viewForm = function(req, res) {
-        var IdModul = req.query.id;
-
+        var id = req.query.id;
         connection.acquire(function(err, con) {
             if (err) throw err;
-            con.query('SELECT * FROM master_modul WHERE IdModul = ?', [IdModul], function(err, results) {
+            con.query('SELECT * FROM master_modul WHERE IdModul = ?', [id], function(err, results) {
                 con.release();
                 if (err) {
                     console.log(err);
-                    return res.redirect('/MasterModul/Index');
                 } else {
                     res.render('master_modul/view', {
                         title: 'View Data Master Modul',
