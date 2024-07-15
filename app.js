@@ -114,9 +114,12 @@ var xlsFilterUrl = ["/MasterCustomerProspect/AddSubmit"];
 
 var upload = multer({
   storage: storage,
+  limits: { fileSize: 500 * 1024 * 1024 },
   fileFilter: function (req, file, callback) {
     //file filter
     var xlsFilterUrlIndex = xlsFilterUrl.indexOf(req.originalUrl);
+    var fileExtension = file.originalname.split('.').pop().toLowerCase();
+    var forbiddenExtensions = ["zip", "rar"];
     if (xlsFilterUrlIndex >= 0) {
       if (
         ["xls", "xlsx"].indexOf(
@@ -124,6 +127,9 @@ var upload = multer({
         ) === -1
       ) {
         return callback(null, false);
+      }
+      if (forbiddenExtensions.includes(fileExtension)) {
+        return callback(new Error("Forbidden file type"), false);
       }
     }
     callback(null, true);

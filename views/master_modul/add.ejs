@@ -44,8 +44,42 @@
 </div>
 
 <script src="../js/pagination.js"></script>
-<script src="../js/pagination.js"></script>
 <script>
+    $(document).ready(function() {
+        $('#modulForm').on('submit', function(e) {
+            var isValid = true;
+            var errorMessage = '';
+
+            var modulName = $('#modulName').val().trim();
+            var fileUpload = $('#fileUpload').val().trim();
+            var fileExtension = fileUpload.split('.').pop().toLowerCase();
+            var forbiddenExtensions = ['zip', 'rar'];
+            var fileSize = document.getElementById('fileUpload').files[0].size;
+
+            if (modulName === '') {
+                errorMessage += 'Nama Modul harus diisi.\n';
+                isValid = false;
+            }
+
+            if (fileUpload === '') {
+                errorMessage += 'File Upload harus diisi.\n';
+                isValid = false;
+            } else if (forbiddenExtensions.includes(fileExtension)) {
+                errorMessage += 'File type not allowed. Please upload a valid file.\n';
+                isValid = false;
+            } else if (fileSize > 500 * 1024 * 1024) {
+                errorMessage += 'File size must not exceed 500MB.\n';
+                isValid = false;
+            }
+
+            if (!isValid) {
+                alert(errorMessage);
+                e.preventDefault();
+            }
+        });
+    });
+</script>
+<!-- <script>
     $(document).ready(function() {
         $('#modulForm').on('submit', function(e) {
             var isValid = true;
@@ -70,4 +104,4 @@
             }
         });
     });
-</script>
+</script> -->
