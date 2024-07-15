@@ -199,19 +199,34 @@ function MasterTraining() {
         var id = req.query.id;
         connection.acquire(function(err, con) {
             if (err) throw err;
-            con.query('SELECT * FROM master_training WHERE IdTraining = ?', [id], function(err, results) {
-                con.release();
+            con.query('SELECT * FROM master_training WHERE IdTraining = ?', [id], function(err, trainingResults) {
                 if (err) {
+                    con.release();
                     console.log(err);
+                    res.render('master_training/view', { title: 'View Data Master Training', data: {} });
                 } else {
-                    res.render('master_training/view', {
-                        title: 'View Data Master Training',
-                        data: results[0]
+                    con.query(`
+                        SELECT mm.modulName
+                        FROM modul_training mt
+                        INNER JOIN master_modul mm ON mt.IdModul = mm.IdModul
+                        WHERE mt.IdTraining = ?
+                    `, [id], function(err, moduleResults) {
+                        con.release();
+                        if (err) {
+                            console.log(err);
+                            res.render('master_training/view', { title: 'View Data Master Training', data: trainingResults[0], modulNames: [] });
+                        } else {
+                            // Aggregate module names into an array
+                            var modulNames = moduleResults.map(function(item) {
+                                return item.modulName;
+                            });
+                            res.render('master_training/view', { title: 'View Data Master Training', data: trainingResults[0], modulNames: modulNames });
+                        }
                     });
                 }
             });
         });
     };
-}
+}    
 
 module.exports = MasterTraining;
