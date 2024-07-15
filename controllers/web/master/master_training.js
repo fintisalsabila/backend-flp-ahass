@@ -53,20 +53,70 @@ function MasterTraining() {
         var createdBy = req.session.user.id;
         var modifiedAt = new Date();
         var modifiedBy = req.session.user.id;
-        var status = req.body.status_user;
+        // var status = req.body.status_user;
+        var modulNames = req.body.modulName; // array of selected modul names
 
         connection.acquire(function(err, con) {
             if (err) throw err;
-            con.query('INSERT INTO master_training SET ?', { IdTraining: id, trainingName, participant, trainingStartDate, trainingEndDate }, function(err, results) {
-                con.release();
+            con.query('INSERT INTO master_training SET ?', {
+                IdTraining: id,
+                trainingName: trainingName,
+                participant: participant,
+                trainingStartDate: trainingStartDate,
+                trainingEndDate: trainingEndDate,
+                createdAt: createdAt,
+                createdBy: createdBy,
+                modifiedAt: modifiedAt,
+                modifiedBy: modifiedBy,
+                // status: status
+            }, function(err, results) {
                 if (err) {
+                    con.release();
                     console.log(err);
                 } else {
+                    // Insert into modul_training table
+                    modulNames.forEach(function(modulName) {
+                        var modulId = getModulId(modulName);
+                        if (modulId) {
+                            con.query('INSERT INTO modul_training SET ?', {
+                                IdModulTraining: uuidv1(),
+                                IdTraining: id,
+                                IdModul: modulId
+                            }, function(err, results) {
+                                if (err) {
+                                    console.log(err);
+                                }
+                            });
+                        }
+                    });
+                    con.release();
                     res.redirect('/MasterTraining/Index');
                 }
             });
         });
     };
+
+    // helper function to get modulId from modulName
+    function getModulId(modulName) {
+        return new Promise(function(resolve, reject) {
+            connection.acquire(function(err, con) {
+                if (err) throw err;
+                con.query('SELECT IdModul FROM master_modul WHERE modulName = ?', [modulName], function(err, results) {
+                    con.release();
+                    if (err) {
+                        console.log(err);
+                        reject(err);
+                    } else {
+                        if (results.length > 0) {
+                            resolve(results[0].IdModul);
+                        } else {
+                            resolve(null);
+                        }
+                    }
+                });
+            });
+        });
+    }
 
     this.submitUpdateMasterTrain = function(req, res) {
         var id = req.params.id;

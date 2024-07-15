@@ -38,12 +38,14 @@
                             <div class="form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="modulName">Nama Modul</label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <select id="modulName" name="modulName" required="required" class="form-control col-md-7 col-xs-12">
-                                        <option value="">Pilih modul</option>
-                                        <% modules.forEach(function(module) { %>
-                                            <option value="<%= module.modulName %>"><%= module.modulName %></option>
-                                        <% }); %>
-                                    </select>
+                                    <% modules.forEach(function(module) { %>
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox" name="modulName" value="<%= module.modulName %>">
+                                                <%= module.modulName %>
+                                            </label>
+                                        </div>
+                                    <% }); %>
                                 </div>
                             </div>
                             <div class="ln_solid"></div>
@@ -92,7 +94,9 @@
             var participant = $('#participant').val().trim();
             var trainingStartDate = $('#trainingStartDate').val().trim();
             var trainingEndDate = $('#trainingEndDate').val().trim();
-            var modulName = $('#modulName').val().trim();
+            var modulNames = $('input[name="modulName"]:checked').map(function() {
+                return $(this).val();
+            }).get();
 
             if (trainingName === '') {
                 errorMessage += 'Nama Training harus diisi.\n';
