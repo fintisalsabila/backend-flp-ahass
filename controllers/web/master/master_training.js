@@ -18,7 +18,6 @@ function MasterTraining() {
         });
     };
 
-    // Ensure the `editForm` method also fetches the `modulName`
     this.editForm = function(req, res) {
         var id = req.query.id;
         connection.acquire(function(err, con) {
@@ -53,7 +52,6 @@ function MasterTraining() {
         var createdBy = req.session.user.id;
         var modifiedAt = new Date();
         var modifiedBy = req.session.user.id;
-        // var status = req.body.status_user;
         var modulNames = req.body.modulName; // array of selected modul names
 
         connection.acquire(function(err, con) {
@@ -67,53 +65,62 @@ function MasterTraining() {
                 createdAt: createdAt,
                 createdBy: createdBy,
                 modifiedAt: modifiedAt,
-                modifiedBy: modifiedBy,
-                // status: status
-            }, function(err, results) {
+                modifiedBy: modifiedBy
+            }, async function(err, results) {
                 if (err) {
                     con.release();
                     console.log(err);
                 } else {
-                    // Insert into modul_training table
-                    modulNames.forEach(function(modulName) {
-                        var modulId = getModulId(modulName);
-                        if (modulId) {
-                            con.query('INSERT INTO modul_training SET ?', {
-                                IdModulTraining: uuidv1(),
-                                IdTraining: id,
-                                IdModul: modulId
-                            }, function(err, results) {
-                                if (err) {
-                                    console.log(err);
-                                }
-                            });
+                    try {
+                        for (let modulName of modulNames) {
+                            let modulId = await getModulId(modulName, con);
+                            if (modulId) {
+                                await insertModulTraining(con, {
+                                    IdModulTraining: uuidv1(),
+                                    IdTraining: id,
+                                    IdModul: modulId,
+                                    createdAt: createdAt,
+                                    createdBy: createdBy,
+                                    modifiedAt: modifiedAt,
+                                    modifiedBy: modifiedBy
+                                });
+                            }
                         }
-                    });
-                    con.release();
-                    res.redirect('/MasterTraining/Index');
+                        con.release();
+                        res.redirect('/MasterTraining/Index');
+                    } catch (error) {
+                        console.log(error);
+                        con.release();
+                    }
                 }
             });
         });
     };
 
-    // helper function to get modulId from modulName
-    function getModulId(modulName) {
+    function getModulId(modulName, con) {
         return new Promise(function(resolve, reject) {
-            connection.acquire(function(err, con) {
-                if (err) throw err;
-                con.query('SELECT IdModul FROM master_modul WHERE modulName = ?', [modulName], function(err, results) {
-                    con.release();
-                    if (err) {
-                        console.log(err);
-                        reject(err);
+            con.query('SELECT IdModul FROM master_modul WHERE modulName = ?', [modulName], function(err, results) {
+                if (err) {
+                    reject(err);
+                } else {
+                    if (results.length > 0) {
+                        resolve(results[0].IdModul);
                     } else {
-                        if (results.length > 0) {
-                            resolve(results[0].IdModul);
-                        } else {
-                            resolve(null);
-                        }
+                        resolve(null);
                     }
-                });
+                }
+            });
+        });
+    }
+
+    function insertModulTraining(con, data) {
+        return new Promise(function(resolve, reject) {
+            con.query('INSERT INTO modul_training SET ?', data, function(err, results) {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(results);
+                }
             });
         });
     }
@@ -156,45 +163,6 @@ function MasterTraining() {
         });
     };
 
-    // this.editForm = function(req, res) {
-    //     var id = req.query.id;
-    //     connection.acquire(function(err, con) {
-    //         if (err) throw err;
-    //         con.query('SELECT * FROM master_training WHERE IdTraining = ?', [id], function(err, results) {
-    //             con.release();
-    //             if (err) {
-    //                 console.log(err);
-    //             } else {
-    //                 res.render('master_training/edit', {
-    //                     title: 'Edit Data Master Training',
-    //                     data: results[0]
-    //                 });
-    //             }
-    //         });
-    //     });
-    // };
-
-    // this.submitUpdateMasterTrain = function(req, res) {
-    //     var id = req.params.id;
-    //     var trainingName = req.body.trainingName;
-    //     var participant = req.body.participant;
-    //     var trainingStartDate = req.body.trainingStartDate;
-    //     var trainingEndDate = req.body.trainingEndDate;
-    //     var modulName = req.body.modulName;
-
-    //     connection.acquire(function(err, con) {
-    //         if (err) throw err;
-    //         con.query('UPDATE master_training SET ? WHERE IdTraining = ?', [{ trainingName, participant, trainingStartDate, trainingEndDate, modulName }, id], function(err, results) {
-    //             con.release();
-    //             if (err) {
-    //                 console.log(err);
-    //             } else {
-    //                 res.redirect('/MasterTraining/Index');
-    //             }
-    //         });
-    //     });
-    // };
-
     this.deleteMasterTrain = function(req, res) {
         var id = req.query.id;
         connection.acquire(function(err, con) {
@@ -226,7 +194,7 @@ function MasterTraining() {
                 }
             });
         });
-    };    
+    };
 }
 
 module.exports = MasterTraining;

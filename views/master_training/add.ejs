@@ -38,11 +38,10 @@
                             <div class="form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="modulName">Nama Modul</label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <% modules.forEach(function(module) { %>
+                                    <% modules.forEach(function(modul) { %>
                                         <div class="checkbox">
                                             <label>
-                                                <input type="checkbox" name="modulName" value="<%= module.modulName %>">
-                                                <%= module.modulName %>
+                                                <input type="checkbox" name="modulName" value="<%= modul.modulName %>"> <%= modul.modulName %>
                                             </label>
                                         </div>
                                     <% }); %>
@@ -52,8 +51,7 @@
                             <div class="form-group">
                                 <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
                                     <button type="submit" class="btn btn-success">Submit</button>
-                                    <button type="reset" class="btn btn-primary">Reset</button>
-                                    <a href="/MasterTraining/Index" class="btn btn-danger">Cancel</a>
+                                    <button type="button" class="btn btn-primary" onclick="window.location.href='/MasterTraining/Index'">Cancel</button>
                                 </div>
                             </div>
                         </form>
@@ -62,27 +60,9 @@
             </div>
         </div>
     </div>
+</div>
     <%- partial('../partials/footer') %>
 </div>
-
-<script>
-    $(document).ready(function() {
-        $('#trainingStartDate').on('change', function() {
-            var startDate = $(this).val();
-            $('#trainingEndDate').attr('min', startDate);
-        });
-    
-        $('#demo-form2').on('submit', function(e) {
-            var startDate = new Date($('#trainingStartDate').val());
-            var endDate = new Date($('#trainingEndDate').val());
-    
-            if (endDate < startDate) {
-                alert('Periode akhir tidak boleh kurang dari periode awal.');
-                e.preventDefault();
-            }
-        });
-    });
-</script>
 
 <script>
     $(document).ready(function() {
