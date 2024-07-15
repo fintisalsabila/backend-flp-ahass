@@ -148,7 +148,23 @@ function MasterTraining() {
     this.selectMasterTrain = function(req, res) {
         connection.acquire(function(err, con) {
             if (err) throw err;
-            con.query('SELECT * FROM master_training', function(err, results) {
+            con.query(`
+                SELECT 
+                    mt.IdTraining,
+                    mt.trainingName,
+                    mt.participant,
+                    mt.trainingStartDate,
+                    mt.trainingEndDate,
+                    GROUP_CONCAT(mm.modulName ORDER BY mm.modulName SEPARATOR ', ') AS modulNames
+                FROM 
+                    master_training mt
+                LEFT JOIN 
+                    modul_training mtg ON mt.IdTraining = mtg.IdTraining
+                LEFT JOIN 
+                    master_modul mm ON mtg.IdModul = mm.IdModul
+                GROUP BY 
+                    mt.IdTraining
+            `, function(err, results) {
                 con.release();
                 if (err) {
                     console.log(err);
@@ -162,6 +178,7 @@ function MasterTraining() {
             });
         });
     };
+    
 
     this.deleteMasterTrain = function(req, res) {
         var id = req.query.id;
