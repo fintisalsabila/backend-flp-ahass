@@ -21,14 +21,25 @@ function MasterModul() {
 
         connection.acquire(function(err, con) {
             if (err) throw err;
-            con.query('INSERT INTO master_modul (IdModul, modulName, fileUpload, createdAt, createdBy, modifiedAt, modifiedBy) VALUES (?, ?, ?, ?, ?, ?, ?)', [IdModul, modulName, fileUpload, createdAt, createdBy, modifiedAt, modifiedBy], function(err, results) {
-                con.release();
+            // Fetch the maximum IdModul to calculate the next IdModul
+            con.query('SELECT MAX(IdModul) AS maxId FROM master_modul', function(err, results) {
                 if (err) {
+                    con.release();
                     console.log(err);
-                    return res.status(500).send('Failed to insert data.');
-                } else {
-                    res.redirect('/MasterModul/Index');
+                    return res.status(500).send('Failed to get max IdModul.');
                 }
+                var maxId = results[0].maxId;
+                var IdModul = maxId ? (parseInt(maxId) + 1) : 50000;
+
+                con.query('INSERT INTO master_modul (IdModul, modulName, fileUpload, createdAt, createdBy, modifiedAt, modifiedBy) VALUES (?, ?, ?, ?, ?, ?, ?)', [IdModul, modulName, fileUpload, createdAt, createdBy, modifiedAt, modifiedBy], function(err, results) {
+                    con.release();
+                    if (err) {
+                        console.log(err);
+                        return res.status(500).send('Failed to insert data.');
+                    } else {
+                        res.redirect('/MasterModul/Index');
+                    }
+                });
             });
         });
     };

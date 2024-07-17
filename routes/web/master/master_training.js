@@ -10,5 +10,6 @@ module.exports = {
         app.route('/MasterTraining/EditSubmit/:id').post(masterTraining.submitUpdateMasterTrain);
         app.route('/MasterTraining/Delete').get(masterTraining.deleteMasterTrain);
         app.route('/MasterTraining/View').get(masterTraining.viewForm);
+        app.route('/MasterTraining/Download/:fileName').get(masterTraining.downloadFile);
     }
 };

@@ -1,6 +1,7 @@
 var connection = require("../../../config/db_prod");
 var request = require('request');
 var uuidv1 = require('uuid/v1');
+var path = require('path');
 
 function MasterTraining() {
     this.addForm = function(req, res) {
@@ -43,7 +44,6 @@ function MasterTraining() {
     };
 
     this.submitInsertMasterTrain = function(req, res) {
-        var id = uuidv1();
         var trainingName = req.body.trainingName;
         var participant = req.body.participant;
         var trainingStartDate = req.body.trainingStartDate;
@@ -56,46 +56,71 @@ function MasterTraining() {
 
         connection.acquire(function(err, con) {
             if (err) throw err;
-            con.query('INSERT INTO master_training SET ?', {
-                IdTraining: id,
-                trainingName: trainingName,
-                participant: participant,
-                trainingStartDate: trainingStartDate,
-                trainingEndDate: trainingEndDate,
-                createdAt: createdAt,
-                createdBy: createdBy,
-                modifiedAt: modifiedAt,
-                modifiedBy: modifiedBy
-            }, async function(err, results) {
+
+            // Get the next IdTraining
+            con.query('SELECT IFNULL(MAX(IdTraining), 29999) + 1 AS nextId FROM master_training', function(err, results) {
                 if (err) {
                     con.release();
                     console.log(err);
-                } else {
-                    try {
-                        for (let modulName of modulNames) {
-                            let modulId = await getModulId(modulName, con);
-                            if (modulId) {
-                                await insertModulTraining(con, {
-                                    IdModulTraining: uuidv1(),
-                                    IdTraining: id,
-                                    IdModul: modulId,
-                                    createdAt: createdAt,
-                                    createdBy: createdBy,
-                                    modifiedAt: modifiedAt,
-                                    modifiedBy: modifiedBy
-                                });
-                            }
-                        }
-                        con.release();
-                        res.redirect('/MasterTraining/Index');
-                    } catch (error) {
-                        console.log(error);
-                        con.release();
-                    }
+                    return;
                 }
+
+                var nextIdTraining = results[0].nextId;
+
+                con.query('INSERT INTO master_training SET ?', {
+                    IdTraining: nextIdTraining,
+                    trainingName: trainingName,
+                    participant: participant,
+                    trainingStartDate: trainingStartDate,
+                    trainingEndDate: trainingEndDate,
+                    createdAt: createdAt,
+                    createdBy: createdBy,
+                    modifiedAt: modifiedAt,
+                    modifiedBy: modifiedBy
+                }, async function(err, results) {
+                    if (err) {
+                        con.release();
+                        console.log(err);
+                    } else {
+                        try {
+                            for (let modulName of modulNames) {
+                                let modulId = await getModulId(modulName, con);
+                                if (modulId) {
+                                    let nextIdModulTraining = await getNextIdModulTraining(con);
+                                    await insertModulTraining(con, {
+                                        IdModulTraining: nextIdModulTraining,
+                                        IdTraining: nextIdTraining,
+                                        IdModul: modulId,
+                                        createdAt: createdAt,
+                                        createdBy: createdBy,
+                                        modifiedAt: modifiedAt,
+                                        modifiedBy: modifiedBy
+                                    });
+                                }
+                            }
+                            con.release();
+                            res.redirect('/MasterTraining/Index');
+                        } catch (error) {
+                            console.log(error);
+                            con.release();
+                        }
+                    }
+                });
             });
         });
     };
+
+    function getNextIdModulTraining(con) {
+        return new Promise(function(resolve, reject) {
+            con.query('SELECT IFNULL(MAX(IdModulTraining), 999999999) + 1 AS nextId FROM modul_training', function(err, results) {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(results[0].nextId);
+                }
+            });
+        });
+    }
 
     function getModulId(modulName, con) {
         return new Promise(function(resolve, reject) {
@@ -206,7 +231,7 @@ function MasterTraining() {
                     res.render('master_training/view', { title: 'View Data Master Training', data: {} });
                 } else {
                     con.query(`
-                        SELECT mm.modulName
+                        SELECT mm.modulName, mm.fileUpload
                         FROM modul_training mt
                         INNER JOIN master_modul mm ON mt.IdModul = mm.IdModul
                         WHERE mt.IdTraining = ?
@@ -214,17 +239,30 @@ function MasterTraining() {
                         con.release();
                         if (err) {
                             console.log(err);
-                            res.render('master_training/view', { title: 'View Data Master Training', data: trainingResults[0], modulNames: [] });
+                            res.render('master_training/view', { title: 'View Data Master Training', data: trainingResults[0], modulNames: [], files: [] });
                         } else {
-                            // Aggregate module names into an array
                             var modulNames = moduleResults.map(function(item) {
                                 return item.modulName;
                             });
-                            res.render('master_training/view', { title: 'View Data Master Training', data: trainingResults[0], modulNames: modulNames });
+                            var files = moduleResults.map(function(item) {
+                                return { modulName: item.modulName, fileUpload: item.fileUpload };
+                            });
+                            res.render('master_training/view', { title: 'View Data Master Training', data: trainingResults[0], modulNames: modulNames, files: files });
                         }
                     });
                 }
             });
+        });
+    };
+
+    this.downloadFile = function(req, res) {
+        var fileName = req.params.fileName;
+        var filePath = path.join(__dirname, '../../../uploads', fileName);
+        res.download(filePath, fileName, function(err) {
+            if (err) {
+                console.log(err);
+                res.status(500).send('File not found.');
+            }
         });
     };
 }    
