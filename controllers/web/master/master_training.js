@@ -52,7 +52,7 @@ function MasterTraining() {
         var createdBy = req.session.user.id;
         var modifiedAt = new Date();
         var modifiedBy = req.session.user.id;
-        var modulNames = req.body.modulName; // array of selected modul names
+        var modulNames = req.body.modulName;
 
         connection.acquire(function(err, con) {
             if (err) throw err;
