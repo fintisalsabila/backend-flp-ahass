@@ -83,6 +83,9 @@ function MasterTraining() {
                         console.log(err);
                     } else {
                         try {
+                            // Ensure modulNames is an array
+                            modulNames = Array.isArray(modulNames) ? modulNames : [modulNames];
+
                             for (let modulName of modulNames) {
                                 let modulId = await getModulId(modulName, con);
                                 if (modulId) {
