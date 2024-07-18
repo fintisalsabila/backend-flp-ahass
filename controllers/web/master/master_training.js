@@ -276,12 +276,19 @@ function MasterTraining() {
         var id = req.query.id;
         connection.acquire(function(err, con) {
             if (err) throw err;
-            con.query('DELETE FROM master_training WHERE IdTraining = ?', [id], function(err, results) {
-                con.release();
+            con.query('DELETE FROM modul_training WHERE IdTraining =?', [id], function(err, results) {
                 if (err) {
+                    con.release();
                     console.log(err);
                 } else {
-                    res.redirect('/MasterTraining/Index');
+                    con.query('DELETE FROM master_training WHERE IdTraining =?', [id], function(err, results) {
+                        con.release();
+                        if (err) {
+                            console.log(err);
+                        } else {
+                            res.redirect('/MasterTraining/Index');
+                        }
+                    });
                 }
             });
         });
