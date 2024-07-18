@@ -21,7 +21,6 @@ function MasterModul() {
 
         connection.acquire(function(err, con) {
             if (err) throw err;
-            // Fetch the maximum IdModul to calculate the next IdModul
             con.query('SELECT MAX(IdModul) AS maxId FROM master_modul', function(err, results) {
                 if (err) {
                     con.release();
@@ -100,14 +99,17 @@ function MasterModul() {
     this.submitUpdateModul = function(req, res) {
         var IdModul = req.params.id;
         var modulName = req.body.modulName;
-        var fileUpload = req.file ? req.file.filename : req.body.oldFile; 
+        var fileUpload = req.file ? req.file.filename : req.body.oldFile;
 
         connection.acquire(function(err, con) {
             if (err) {
                 console.log(err);
                 return res.redirect('/MasterModul/Edit?id=' + IdModul);
             }
-            con.query('UPDATE master_modul SET modulName = ?, fileUpload = ? WHERE IdModul = ?', [modulName, fileUpload, IdModul], function(err, results) {
+            var query = 'UPDATE master_modul SET modulName = ?, fileUpload = ?, modifiedAt = ?, modifiedBy = ? WHERE IdModul = ?';
+            var params = [modulName, fileUpload, new Date(), req.session.user.id, IdModul];
+
+            con.query(query, params, function(err, results) {
                 con.release();
                 if (err) {
                     console.log(err);
