@@ -159,19 +159,83 @@ function MasterTraining() {
         var participant = req.body.participant;
         var trainingStartDate = req.body.trainingStartDate;
         var trainingEndDate = req.body.trainingEndDate;
-
+        var modulNames = req.body.modulName;
+        var files = req.files; // Assuming you're using a file upload middleware like multer
+    
         connection.acquire(function(err, con) {
             if (err) throw err;
+    
+            // Update master_training table
             con.query('UPDATE master_training SET ? WHERE IdTraining = ?', [{ trainingName, participant, trainingStartDate, trainingEndDate }, id], function(err, results) {
-                con.release();
                 if (err) {
+                    con.release();
                     console.log(err);
+                    res.redirect('/MasterTraining/Edit?id=' + id);
                 } else {
-                    res.redirect('/MasterTraining/Index');
+                    // Update modul_training table
+                    if (modulNames) {
+                        modulNames = Array.isArray(modulNames) ? modulNames : [modulNames];
+    
+                        con.query('DELETE FROM modul_training WHERE IdTraining = ?', [id], async function(err, results) {
+                            if (err) {
+                                con.release();
+                                console.log(err);
+                            } else {
+                                try {
+                                    for (let modulName of modulNames) {
+                                        let modulId = await getModulId(modulName, con);
+                                        if (modulId) {
+                                            let nextIdModulTraining = await getNextIdModulTraining(con);
+                                            await insertModulTraining(con, {
+                                                IdModulTraining: nextIdModulTraining,
+                                                IdTraining: id,
+                                                IdModul: modulId,
+                                                createdAt: new Date(),
+                                                createdBy: req.session.user.id,
+                                                modifiedAt: new Date(),
+                                                modifiedBy: req.session.user.id
+                                            });
+                                        }
+                                    }
+    
+                                    // Update master_modul with file uploads
+                                    for (let file of files) {
+                                        let modulId = await getModulId(file.originalname, con);
+                                        if (modulId) {
+                                            await updateModulFile(con, modulId, file.filename);
+                                        }
+                                    }
+    
+                                    con.release();
+                                    res.redirect('/MasterTraining/Index');
+                                } catch (error) {
+                                    console.log(error);
+                                    con.release();
+                                    res.redirect('/MasterTraining/Edit?id=' + id);
+                                }
+                            }
+                        });
+                    } else {
+                        con.release();
+                        res.redirect('/MasterTraining/Index');
+                    }
                 }
             });
         });
     };
+    
+    function updateModulFile(con, modulId, fileName) {
+        return new Promise(function(resolve, reject) {
+            con.query('UPDATE master_modul SET fileUpload = ? WHERE IdModul = ?', [fileName, modulId], function(err, results) {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(results);
+                }
+            });
+        });
+    }
+    
 
     this.selectMasterTrain = function(req, res) {
         connection.acquire(function(err, con) {
