@@ -46,7 +46,8 @@
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                     <% files.forEach(function(file) { %>
                                         <div>
-                                            <a href="/MasterTraining/Download/<%= file.fileUpload %>"><%= file.modulName %> (Download)</a>
+                                            <a href="/MasterTraining/Download/<%= file.fileUpload %>" download><%= file.modulName %> (Download)</a> | 
+                                            <a href="/MasterTraining/ViewPDF/<%= file.fileUpload %>" target="_blank">Lihat</a>
                                         </div>
                                     <% }) %>
                                 </div>

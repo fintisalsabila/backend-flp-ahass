@@ -339,6 +339,23 @@ function MasterTraining() {
             }
         });
     };
+
+    this.viewPDF = function(req, res) {
+        var fileName = req.params.fileName;
+        var filePath = path.join(__dirname, '../../../uploads', fileName);
+    
+        // Set the correct MIME type for PDF files
+        res.contentType('application/pdf');
+    
+        // Pipe the file to the response
+        res.sendFile(filePath, function(err) {
+            if (err) {
+                console.log(err);
+                res.status(500).send('File not found.');
+            }
+        });
+    };
+    
 }    
 
 module.exports = MasterTraining;

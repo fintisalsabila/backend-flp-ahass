@@ -11,5 +11,7 @@ module.exports = {
         app.route('/MasterTraining/Delete').get(masterTraining.deleteMasterTrain);
         app.route('/MasterTraining/View').get(masterTraining.viewForm);
         app.route('/MasterTraining/Download/:fileName').get(masterTraining.downloadFile);
+        app.route('/MasterTraining/ViewPDF/:fileName').get(masterTraining.viewPDF);
+
     }
 };
