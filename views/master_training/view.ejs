@@ -46,8 +46,10 @@
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                     <% files.forEach(function(file) { %>
                                         <div>
-                                            <a href="/MasterTraining/Download/<%= file.fileUpload %>" download><%= file.modulName %> (Download)</a> | 
-                                            <a href="/MasterTraining/ViewPDF/<%= file.fileUpload %>" target="_blank">Lihat</a>
+                                            <label class="view-label col-md-7" for="fileUploads"><%= file.modulName %></label>
+                                            <button type="button" class="btn btn-success download-btn" data-file-url="<%= file.fileUpload %>">Download</button>
+                                            <br>
+                                            <button type="button" class="btn btn-info view-btn" data-file-url="<%= file.fileUpload %>">Lihat</button>
                                         </div>
                                     <% }) %>
                                 </div>
@@ -68,3 +70,19 @@
     <%- partial('../partials/footer') %>
     <!-- /footer content -->
 </div>
+
+<script>
+    document.querySelectorAll('.download-btn').forEach(function(button) {
+        button.addEventListener('click', function() {
+            var fileUrl = this.getAttribute('data-file-url');
+            window.location.href = '/MasterTraining/Download/' + fileUrl;
+        });
+    });
+
+    document.querySelectorAll('.view-btn').forEach(function(button) {
+        button.addEventListener('click', function() {
+            var fileUrl = this.getAttribute('data-file-url');
+            window.open('/MasterTraining/ViewPDF/' + fileUrl, '_blank');
+        });
+    });
+</script>
