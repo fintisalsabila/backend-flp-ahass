@@ -35,8 +35,18 @@
                                     <tr>
                                         <td><%= datas.trainingName %></td>
                                         <td><%= datas.participant %></td>
-                                        <td><%= datas.trainingStartDate %></td>
-                                        <td><%= datas.trainingEndDate %></td>
+                                        <% 
+                                        var startDate = new Date(datas.trainingStartDate);
+                                        var startDateString = startDate.getDate() + '/' + (startDate.getMonth() + 1) + '/' + startDate.getFullYear();
+                                    %>
+                                    <td><%= startDateString %></td>
+                                    <% 
+                                        var endDate = new Date(datas.trainingEndDate);
+                                        var endDateString = endDate.getDate() + '/' + (endDate.getMonth() + 1) + '/' + endDate.getFullYear();
+                                    %>
+                                    <td><%= endDateString %></td>
+                                        <!-- <td><%= datas.trainingStartDate %></td>
+                                        <td><%= datas.trainingEndDate %></td> -->
                                         <td><%= datas.modulNames %></td>
                                         <td>
                                             <a class="btn btn-primary btn-xs" href="/MasterTraining/View?id=<%= datas.IdTraining %>">

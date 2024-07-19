@@ -26,13 +26,25 @@
                             <div class="form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="trainingStartDate">Periode Awal:</label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <label class="view-label col-md-7" for="trainingStartDate"><%= data.trainingStartDate %></label>
+                                    <label class="view-label col-md-7" for="trainingStartDate">
+                                        <% 
+                                            var startDate = new Date(data.trainingStartDate);
+                                            var startDateString = startDate.getDate() + '/' + (startDate.getMonth() + 1) + '/' + startDate.getFullYear();
+                                        %>
+                                        <%= startDateString %>
+                                    </label>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="trainingEndDate">Periode Akhir:</label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <label class="view-label col-md-7" for="trainingEndDate"><%= data.trainingEndDate %></label>
+                                    <label class="view-label col-md-7" for="trainingEndDate">
+                                        <% 
+                                            var endDate = new Date(data.trainingEndDate);
+                                            var endDateString = endDate.getDate() + '/' + (endDate.getMonth() + 1) + '/' + endDate.getFullYear();
+                                        %>
+                                        <%= endDateString %>
+                                    </label>
                                 </div>
                             </div>
                             <div class="form-group">
