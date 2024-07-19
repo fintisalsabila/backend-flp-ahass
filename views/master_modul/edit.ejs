@@ -23,7 +23,7 @@
                             <div class="form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="fileUpload">File Upload</label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input type="file" id="fileUpload" name="fileUpload" class="form-control col-md-7 col-xs-12">
+                                    <input type="file" id="fileUpload" name="fileUpload" required="required" class="form-control col-md-7 col-xs-12">
                                     <input type="hidden" name="oldFile" value="<%= data.fileUpload %>">
                                     <a href="/uploads/<%= data.fileUpload %>" target="_blank"><%= data.fileUpload %></a>
                                 </div>
