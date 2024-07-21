@@ -1,5 +1,6 @@
 var connection = require("../../../config/db_prod");
 var uuidv1 = require('uuid/v1');
+var path = require('path');
 
 function MasterModul() {
     this.addModulForm = function(req, res) {
@@ -189,6 +190,19 @@ function MasterModul() {
                     });
                 }
             });
+        });
+    };
+
+    this.viewPDF = function(req, res) {
+        var fileName = req.params.fileName;
+        var filePath = path.join(__dirname, '../../../uploads', fileName);
+
+        res.contentType('application/pdf');
+        res.sendFile(filePath, function(err) {
+            if (err) {
+                console.log(err);
+                res.status(500).send('File not found.');
+            }
         });
     };
 }

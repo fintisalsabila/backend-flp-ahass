@@ -10,5 +10,6 @@ module.exports = {
         app.route('/MasterModul/EditSubmit/:id').post(masterModul.submitUpdateModul);
         app.route('/MasterModul/Delete').get(masterModul.deleteModul);
         app.route('/MasterModul/View').get(masterModul.viewForm);
+        app.route('/MasterModul/ViewPDF/:fileName').get(masterModul.viewPDF);
     }
 };

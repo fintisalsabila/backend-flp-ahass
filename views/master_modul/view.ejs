@@ -20,7 +20,9 @@
                             <div class="form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="fileUpload">File Upload:</label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <p class="form-control-static"><a href="<%= data.fileUpload %>" target="_blank"><%= data.fileUpload %></a></p>
+                                    <p class="form-control-static">
+                                        <button type="button" class="btn btn-primary" onclick="window.open('/MasterModul/ViewPDF/<%= data.fileUpload %>', '_blank')">Lihat</button>
+                                    </p>
                                 </div>
                             </div>
                             <div class="ln_solid"></div>
@@ -35,7 +37,14 @@
             </div>
         </div>
     </div>
-    <!-- footer content -->
     <%- partial('../partials/footer') %>
-    <!-- /footer content -->
 </div>
+
+<script>
+    document.querySelectorAll('.view-btn').forEach(function(button) {
+        button.addEventListener('click', function() {
+            var fileUrl = this.getAttribute('data-file-url');
+            window.open('/MasterModul/ViewPDF/' + fileUrl, '_blank');
+        });
+    });
+</script>
