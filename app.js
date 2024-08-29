@@ -17,6 +17,7 @@ var web_master_quiz = require("./routes/web/master/master_quiz");
 var web_master_training = require("./routes/web/master/master_training");
 var web_master_modul = require("./routes/web/master/master_modul");
 var web_master_tools = require("./routes/web/master/master_tools");
+var web_master_ordertools = require("./routes/web/master/master_ordertools");
 
 //report
 var web_report_login = require("./routes/web/report/report_login_harian");//hakim
@@ -210,6 +211,7 @@ web_master_quiz.configure(app);
 web_master_training.configure(app);
 web_master_modul.configure(app);
 web_master_tools.configure(app);
+web_master_ordertools.configure(app);
 
 web_report_login.configure(app);
 

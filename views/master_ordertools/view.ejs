@@ -1,0 +1,57 @@
+<% layout('../partials/layout') -%>
+<div class="right_col" role="main">
+    <div class="">
+        <div class="clearfix"></div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>View Order Tool</h2>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <form class="form-horizontal form-label-left">
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Tool Image</label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <p class="form-control-static"><%= data.tool_image %></p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Tool Part Number</label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <p class="form-control-static"><%= data.tool_part_number %></p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Tool Name</label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <p class="form-control-static"><%= data.tool_name %></p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Price</label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <p class="form-control-static"><%= data.price %></p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Stock</label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <p class="form-control-static"><%= data.stock %></p>
+                                </div>
+                            </div>
+                            <div class="ln_solid"></div>
+                            <div class="form-group">
+                                <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                                    <button type="button" class="btn btn-primary" onclick="window.location.href='/MasterOrderTools/Index'">Back</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<%- partial('../partials/footer') %>
